@@ -1,0 +1,22 @@
+package sion.mvc;
+
+public class ResponseProcessorFactory {
+
+	/*
+	 * TODO if/else 없애기
+	 */
+	public static ResponseProcessor getInstance(int statusCode) {
+		if (statusCode >= 200 && statusCode < 300) {
+			return new Status2XXResponseProcessor();
+		} else if (statusCode >= 300 && statusCode < 400) {
+			return new Status3XXResponseProcessor();
+		} else if (statusCode >= 400 && statusCode < 500) {
+			return new Status4XXResponseProcessor();
+		} else if (statusCode >= 500 && statusCode < 600) {
+			return new Status5XXResponseProcessor();
+		}
+		
+		throw new RuntimeException("StatusCode에 해당하는 response process가 없습니다."); 
+	}
+
+}
