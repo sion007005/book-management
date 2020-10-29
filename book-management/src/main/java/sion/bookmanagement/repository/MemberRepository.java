@@ -20,7 +20,7 @@ public class MemberRepository {
 	}
 	
 	public static MemberRepository getInstance() {
-		return memberRepository ;
+		return memberRepository;
 	}
 	
 	public int create(Member member) {

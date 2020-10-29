@@ -15,7 +15,7 @@ public class BookSearchController implements Controller {
 		String searchType = (String) httpRequest.getParameter("search-type");
 		String keyword = (String) httpRequest.getParameter("keyword");
 		
-		if (searchType == null) {
+		if (searchType == null || keyword == null) {
 			//TODO 추후에 body에 여러개의 데이터를 내려줄 수 있다면, list_none 페이지는 하나만 있어도 된다. 
 			return new HttpResponse<String>(null, "book_list_none");
 		} else {

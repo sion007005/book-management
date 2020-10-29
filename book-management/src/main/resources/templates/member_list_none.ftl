@@ -215,7 +215,7 @@
 	    width: 800px;
 	  	display: flex;
 	  	margin: 2px auto;	
-	  	justify-content: space-between;
+	  	justify-content: center;
 	  	color: #565051;
 	  	font-family: 'Noto Sans KR', sans-serif;
 	  }
@@ -307,16 +307,9 @@
       </div>
       <div id="result-container">
         <div class="result-area">
-         <#list body as item>
           <div class="group_flex">
-          <!-- 가급적 절대경로를 쓸 것 -->
-            <div><a href="/members/info?id=${item.id}">${item.name}</a></div>
-            <div>${item.gender}</div>
-            <div>${item.age}</div>
-            <div>${item.phone}</div>
-            <div>${item.email}</div>
+             <div class="no-result-msg">검색 결과가 없습니다.</div>
           </div>
-         </#list>
         </div>
       </div>
     </div>    

@@ -21,15 +21,18 @@ public class MemberSearchController implements Controller {
 		int ageTo = NumberUtils.parseInt(ageToStr, 200);
 		String keyword = (String) httpRequest.getParameter("keyword");
 
-		MemberSearchCondition condition = new MemberSearchCondition();
-		condition.setSearchType(searchType);
-		condition.setKeyword(keyword);
-		condition.setAgeFrom(ageFrom);
-		condition.setAgeTo(ageTo);
-		
-		List<Member> memberList =  memberService.search(condition);
-
-		return new HttpResponse<List<Member>>(memberList, "member_list");
+		if (searchType == null || keyword == null) {
+			return new HttpResponse<String>(null, "member_list_none");
+		} else {
+			MemberSearchCondition condition = new MemberSearchCondition();
+			condition.setSearchType(searchType);
+			condition.setKeyword(keyword);
+			condition.setAgeFrom(ageFrom);
+			condition.setAgeTo(ageTo);
+			
+			List<Member> memberList =  memberService.search(condition);
+			
+			return new HttpResponse<List<Member>>(memberList, "member_list");
+		}
 	}
-
 }

@@ -260,12 +260,11 @@
             <div class="select-box">
               <select name="search-type" id="form-search-select">
                 <option value="" noSelected>검색기준</option>
-                <option value="id">카테고리 ID</option>
                 <option value="name">카테고리 이름</option>
               </select>               
        	    </div>
        	    <div class="input input-box keyword">
-			  <input type="text" class="input input-text" placeholder="검색어*" name="keyword" value="" disabled>
+			  <input type="text" class="input input-text" placeholder="검색어*" name="keyword" value="">
 			</div>
 			<button type="submit" class="button btn-submit"><span>검색</span></button>
        	  </div>
@@ -303,28 +302,13 @@
     </div>    
     
     <script>
-      const searchSelectBox = document.querySelector('.select-box');
 	  const orderSelectBox = document.querySelector('#order-select');
-	  const keywordInput = document.querySelector('.input-text');
-	  const removeBtn = document.querySelector('.button-delete');
-	  
       orderSelectBox.addEventListener("click", submitOrderType);
-      searchSelectBox.addEventListener("click", toggleKeywordInput);
-      
-      function toggleKeywordInput(e) {
-    	  const selected = e.target.value;
-    	  
-    	  if(selected === 'age') {
-    		  keywordInput.disabled = true;
-    	  } else {
-    		  keywordInput.disabled = false;
-    	  }
-      }
       
       function submitOrderType(e) {
     	  const selected = e.target.value;
     	  
-    	  if(selected === 'noSelected' || selected === undefined) {
+    	  if(selected === '' || selected === undefined) {
     		  return;
     	  }
     	  
