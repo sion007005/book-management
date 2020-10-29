@@ -33,7 +33,7 @@ public class CategoryService {
 		categoryRepository.deleteById(categoryId);
 	}
 	
-	public List<Category> findAll(String orderType) {
+	public List<Category> findAll(CategoryOrderType orderType) {
 		List<Category> categoryList = categoryRepository.findAll(orderType);
 		return categoryList;
 	}

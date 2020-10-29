@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sion.bookmanagement.service.Book;
+import sion.bookmanagement.service.BookOrderType;
 import sion.bookmanagement.util.DateUtils;
 import sion.mvc.DBConnetctionCreator;
 
@@ -103,7 +104,7 @@ public class BookRepository {
 		}
 	}
 	
-	public List<Book> findAllBooks(String orderType) {
+	public List<Book> findAllBooks(BookOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

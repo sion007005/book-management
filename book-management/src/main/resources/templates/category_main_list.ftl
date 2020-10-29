@@ -259,7 +259,7 @@
           <div class="group_flex">
             <div class="select-box">
               <select name="search-type" id="form-search-select">
-                <option value="orderType" noSelected>검색기준</option>
+                <option value="" noSelected>검색기준</option>
                 <option value="id">카테고리 ID</option>
                 <option value="name">카테고리 이름</option>
               </select>               
@@ -276,8 +276,8 @@
         <div class="list-area">
           	<div class="select-box">
               <form action="/categories/list" id="order-select">
-              <select name="order-select" id="form-search-select">
-                <option value="noSelected" noSelected>정렬기준</option>
+              <select name="order-type" id="form-search-select">
+                <option value="" noSelected>정렬기준</option>
                 <option value="categoryId">카테고리 ID</option>
                 <option value="categoryName">카테고리 이름</option>
               </select>               

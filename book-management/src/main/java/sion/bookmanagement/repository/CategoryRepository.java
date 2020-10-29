@@ -9,6 +9,7 @@ import java.util.List;
 import com.mysql.jdbc.Statement;
 
 import sion.bookmanagement.service.Category;
+import sion.bookmanagement.service.CategoryOrderType;
 import sion.mvc.DBConnetctionCreator;
 
 public class CategoryRepository {
@@ -100,7 +101,7 @@ public class CategoryRepository {
 		}
 	}
 	
-	public List<Category> findAll(String orderType) {
+	public List<Category> findAll(CategoryOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

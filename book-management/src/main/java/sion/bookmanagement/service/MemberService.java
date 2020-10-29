@@ -45,8 +45,8 @@ public class MemberService {
 		memberRepository.deleteById(memberId);
 	};
 	
-	public List<Member> findAll(MemberSortingType sortingType) {
-		List<Member> memberList = memberRepository.findByAll(sortingType);
+	public List<Member> findAll(MemberOrderType orderType) {
+		List<Member> memberList = memberRepository.findByAll(orderType);
 		return memberList;
 	}
 

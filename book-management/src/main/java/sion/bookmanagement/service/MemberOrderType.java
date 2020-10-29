@@ -1,7 +1,7 @@
 package sion.bookmanagement.service;
 
 // 뷰 - 서버 연결시켜줌. (정해진 키워드가 아닌 문자가 오면 실행되지 않도록 함)
-public enum MemberSortingType {
+public enum MemberOrderType {
 	NAME("이름", "name"),
 	AGE("나이", "age"),
 	EMAIL("이메일", "email"),
@@ -10,7 +10,7 @@ public enum MemberSortingType {
 	private String name; 
 	private String columnName;
 	
-	private MemberSortingType(String name, String columnName) {
+	private MemberOrderType(String name, String columnName) {
 		this.name = name;
 		this.columnName = columnName;
 	}

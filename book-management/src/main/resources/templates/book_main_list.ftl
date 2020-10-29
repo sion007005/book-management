@@ -259,7 +259,7 @@
        	   <!-- TODO 카테고리 리스트 받아와서 카테고리 검색 select box 만들기  -->
             <div class="select-box">
               <select name="search-type" id="form-search-select">
-                <option value="orderType" noSelected>검색기준</option>
+                <option value="searchType" noSelected>검색기준</option>
                 <option value="title">제목</option>
                 <option value="author">저자</option>
               </select>               
@@ -276,8 +276,8 @@
         <div class="list-area">
           	<div class="select-box">
               <form action="/books/list" id="order-select">
-              <select name="order-select" id="form-search-select">
-                <option value="noSelected" noSelected>정렬기준</option>
+              <select name="order-type" id="form-search-select">
+                <option value="" noSelected>정렬기준</option>
                 <option value="title">제목</option>
                 <option value="author">저자</option>
                 <option value="price">가격</option>

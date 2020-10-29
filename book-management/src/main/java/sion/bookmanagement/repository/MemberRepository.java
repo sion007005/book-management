@@ -10,7 +10,7 @@ import com.mysql.jdbc.Statement;
 
 import sion.bookmanagement.service.Member;
 import sion.bookmanagement.service.MemberSearchCondition;
-import sion.bookmanagement.service.MemberSortingType;
+import sion.bookmanagement.service.MemberOrderType;
 import sion.mvc.DBConnetctionCreator;
 
 public class MemberRepository {
@@ -201,7 +201,7 @@ public class MemberRepository {
 		}
 	}
 	
-	public List<Member> findByAll(MemberSortingType sortingType) {
+	public List<Member> findByAll(MemberOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -212,9 +212,9 @@ public class MemberRepository {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			
 			//TODO 한칸 띄우는거 찾아서 고치기
-			if (sortingType != null) {
+			if (orderType != null) {
 				//TODO 쿼리문 수정 (쿼리문에 + 문자열을 해야할 때는 구조적으로 정해진 문자 말고는 들어오는 일이 없도록 해줘야 함)
-				query += (" ORDER BY " + sortingType.getColumnName());
+				query += (" ORDER BY " + orderType.getColumnName());
 			}
 			
 			pstm = conn.prepareStatement(query);

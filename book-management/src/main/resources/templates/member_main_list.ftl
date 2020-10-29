@@ -287,7 +287,7 @@
         <div class="list-area">
           	<div class="select-box">
               <form action="./list" id="order-select">
-              <select name="order-select" id="form-search-select">
+              <select name="order-type" id="form-order-select">
                 <option value="" noSelected>정렬기준</option>
                 <option value="NAME">이름</option>
                 <option value="AGE">나이</option>

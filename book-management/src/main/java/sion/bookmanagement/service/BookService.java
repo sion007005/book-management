@@ -36,7 +36,7 @@ public class BookService {
 		bookRepository.deleteById(bookId);
 	}
 	
-	public List<Book> getBookList(String orderType) {
+	public List<Book> getBookList(BookOrderType orderType) {
 		List<Book> bookList = bookRepository.findAllBooks(orderType);
 		return bookList;
 	}
