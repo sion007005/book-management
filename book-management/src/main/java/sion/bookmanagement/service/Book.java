@@ -12,8 +12,13 @@ public class Book {
 	private Integer price;
 	private Category category;
 	private Date created;
+	private String noResultMsg;
 	
 	public Book() {}
+	
+	public Book(String msg) {
+		this.noResultMsg = msg;
+	}
 	
 	public Book(Integer categoryId, String title, String author, Integer stock, 
 			Integer year, Integer price, Date created) {
@@ -24,6 +29,7 @@ public class Book {
 		this.year = year;
 		this.price = price;
 		this.created = created;
+		this.noResultMsg = "";
 	}
 	
 	public Book(Integer categoryId, String title, String author, Integer stock, 

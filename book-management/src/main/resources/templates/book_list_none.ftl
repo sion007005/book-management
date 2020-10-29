@@ -215,7 +215,7 @@
 	    width: 800px;
 	  	display: flex;
 	  	margin: 2px auto;	
-	  	justify-content: space-between;
+	  	justify-content: center;
 	  	color: #565051;
 	  	font-family: 'Noto Sans KR', sans-serif;
 	  }
@@ -238,9 +238,7 @@
 	  .button-delete:hover {
 	  	background: #32424B;
 	  	color: #eee;
-	  }
-	  
-	  
+	  }	  
     </style>
   </head>
   
@@ -297,22 +295,12 @@
       </div>
       <div id="result-container">
         <div class="result-area">
-         <#list body as item>
           <div class="group_flex">
-          <!-- 가급적 절대경로를 쓸 것 -->
-            <div><a href="/books/info?id=${item.id}">${item.title}</a></div>
-            <div>${item.author}</div>
-            <div>${item.price}</div>
-            <div>${item.year?replace(",","")}</div>
-            <div>${item.stock}</div>
+            <div class="no-result-msg">검색 결과가 없습니다.</div>
           </div>
-         </#list>
         </div>
       </div>
     </div>    
-    
-    <script>
-     
-    </script>
+
   </body>
 </html>

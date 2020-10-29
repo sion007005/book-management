@@ -50,6 +50,54 @@ public class BookRepository {
 		}
 	}
 	
+	public List<Book> search(String searchType, String keyword) {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Book> bookList = new ArrayList<Book>();
+		
+		String query = "SELECT book_id, category_id, title, author, stock, year, price FROM BOOKS where ";
+		if (searchType.equals("title")) {
+			query += "title like ?";
+		} else if (searchType.equals("author")) {
+			query += "author like ?";
+		} 
+		
+		try {
+			conn = DBConnetctionCreator.getInstance().getConnection();
+			
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, "%"+keyword+"%");
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				Book book = new Book();
+				
+				book.setId(rs.getInt("book_id"));
+				book.setCategoryId(rs.getInt("category_id"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setStock(rs.getInt("stock"));
+				book.setYear(rs.getInt("year"));
+				book.setPrice(rs.getInt("price"));
+				
+				bookList.add(book);
+			}
+		} catch(SQLException e) {
+			throw new DataProcessException(e);
+		} finally {
+			if(pstm != null) {
+				try {
+					pstm.close();
+				} catch(SQLException e) {
+					throw new DataProcessException(e);
+				}
+			}
+		}
+		
+		return bookList;
+	}
+	
 	public void update(Book book) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
@@ -228,53 +276,4 @@ public class BookRepository {
 		}
 		return null;
 	}
-
-	public List<Book> search(String searchType, String keyword) {
-		Connection conn = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		ArrayList<Book> bookList = new ArrayList<Book>();
-		
-		String query = "SELECT book_id, category_id, title, author, stock, year, price FROM BOOKS where ";
-		if(searchType.equals("title")) {
-			query += "title like ?";
-		} else if(searchType.equals("author")) {
-			query += "author like ?";
-		} 
-		
-		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
-			
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "%"+keyword+"%");
-			rs = pstm.executeQuery();
-			
-			while(rs.next()) {
-				Book book = new Book();
-				
-				book.setId(rs.getInt("book_id"));
-				book.setCategoryId(rs.getInt("category_id"));
-				book.setTitle(rs.getString("title"));
-				book.setAuthor(rs.getString("author"));
-				book.setStock(rs.getInt("stock"));
-				book.setYear(rs.getInt("year"));
-				book.setPrice(rs.getInt("price"));
-				
-				bookList.add(book);
-			}
-		} catch(SQLException e) {
-			throw new DataProcessException(e);
-		} finally {
-			if(pstm != null) {
-				try {
-					pstm.close();
-				} catch(SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
-		}
-		
-		return bookList;
-	}
-
 }
