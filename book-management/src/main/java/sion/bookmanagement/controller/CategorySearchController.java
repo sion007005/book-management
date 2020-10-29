@@ -24,7 +24,7 @@ public class CategorySearchController implements Controller {
 			categoryList = categoryService.searchByKeyword(keyword);
 		}
 		
-		return new HttpResponse<List<Category>>(categoryList, "category_main_list");
+		return new HttpResponse<List<Category>>(categoryList, "category_list");
 	}
 
 }

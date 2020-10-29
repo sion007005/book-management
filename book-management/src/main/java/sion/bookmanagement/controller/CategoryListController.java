@@ -22,7 +22,7 @@ public class CategoryListController implements Controller {
 		
 		List<Category> categoryList = categoryService.findAll(type);
 		
-		return new HttpResponse<>(categoryList, "category_main_list");
+		return new HttpResponse<>(categoryList, "category_list");
 	}
 	
 }

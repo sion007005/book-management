@@ -16,7 +16,7 @@ public class BookFormController implements Controller {
 	public HttpResponse<List<Category>> command(HttpRequest httpRequest) {
 		List<Category> categoryList = categoryService.findAll(null);
 		
-		return new HttpResponse<>(categoryList, "book_basic_form");
+		return new HttpResponse<>(categoryList, "book_form");
 	}
 
 }

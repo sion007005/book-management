@@ -16,7 +16,7 @@ public class BookSearchController implements Controller {
 		String keyword = (String) httpRequest.getParameter("keyword");
 		
 		List<Book> bookList = bookService.searchByKeyword(searchType, keyword);
-		return new HttpResponse<List<Book>>(bookList, "book_main_list");
+		return new HttpResponse<List<Book>>(bookList, "book_list");
 	}
 
 }

@@ -44,7 +44,7 @@ public class MemberSearchController implements Controller {
 //		} else {
 			
 			//TODO ftl 파일 명 member_list로 변경
-			return new HttpResponse<List<Member>>(memberList, "member_main_list");
+			return new HttpResponse<List<Member>>(memberList, "member_list");
 //		}
 		
 	}

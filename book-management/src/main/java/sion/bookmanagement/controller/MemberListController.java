@@ -24,7 +24,7 @@ public class MemberListController implements Controller {
 		List<Member> memberList = memberService.findAll(type);
 		
 		// TODO member_list /member_main_list 든지 컨트롤러명이랑 같이 전체적으로 이름을 통일시킬 것 
-		return new HttpResponse<List<Member>>(memberList, "member_main_list");
+		return new HttpResponse<List<Member>>(memberList, "member_list");
 	}
 	
 }

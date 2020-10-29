@@ -22,6 +22,6 @@ public class BookListController implements Controller {
 		
 		List<Book> bookList = bookService.getBookList(type);
 		
-		return new HttpResponse<List<Book>>(bookList, "book_main_list");
+		return new HttpResponse<List<Book>>(bookList, "book_list");
 	}	
 }
