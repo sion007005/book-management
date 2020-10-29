@@ -17,7 +17,7 @@ public class CategoryUpdateController implements Controller {
 		
 		Category category = new Category(categoryName);
 		category.setId(categoryId);
-		categoryService.updateCategory(category);
+		categoryService.update(category);
 		
 		return new HttpResponse<Category>(category, HttpResponse.REDIRECT_NAME + "/categories/info?id=" + categoryId);
 	}

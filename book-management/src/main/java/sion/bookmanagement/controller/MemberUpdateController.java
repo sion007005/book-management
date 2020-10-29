@@ -28,7 +28,7 @@ public class MemberUpdateController implements Controller {
 		member.setId(memberId);
 		member.setUpdatedAt(new Date());
 		memberValidator.validate(member);
-		memberService.updateMember(member);
+		memberService.update(member);
 		
 		return new HttpResponse<Member>(member, HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId); //forwarding이 아닌 redirect로 보내겠다!
 	}

@@ -13,7 +13,7 @@ public class CategoryCreateController implements Controller {
 		String categoryName = (String)httpRequest.getAttribute("name");
 		Category category = new Category(categoryName);
 
-		int categoryId = categoryService.registerCategory(category);
+		int categoryId = categoryService.create(category);
 		
 		return new HttpResponse<>(null, HttpResponse.REDIRECT_NAME + "/categories/info?id="+categoryId);
 	}

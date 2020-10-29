@@ -11,7 +11,7 @@ public class CategoryRemoveController implements Controller {
 	@Override
 	public HttpResponse<Integer> command(HttpRequest httpRequest) {
 		int id = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
-		categoryService.removeCategory(id);
+		categoryService.remove(id);
 		
 		return new HttpResponse<>(null, HttpResponse.REDIRECT_NAME + "/categories/list");
 	}

@@ -213,7 +213,7 @@ public class CategoryRepository {
 		return categoryList;
 	}
 	
-	public List<Category> searchByKeyword(String keyword) {
+	public List<Category> search(String keyword) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

@@ -15,15 +15,15 @@ public class CategoryService {
 		return categoryService;
 	}
 	
-	public int registerCategory(Category category) {
+	public int create(Category category) {
 		return categoryRepository.create(category);
 	}
 	
-	public void updateCategory(Category category) {
+	public void update(Category category) {
 		categoryRepository.update(category);
 	}
 	
-	public void removeCategory(Integer categoryId) {
+	public void remove(Integer categoryId) {
 		Category category = categoryRepository.findOneById(categoryId);
 		
 		if (category == null) {
@@ -42,8 +42,8 @@ public class CategoryService {
 		return categoryRepository.findOneById(categoryId);
 	}
 
-	public List<Category> searchByKeyword(String keyword) {
-		List<Category> categoryList = categoryRepository.searchByKeyword(keyword);
+	public List<Category> search(String keyword) {
+		List<Category> categoryList = categoryRepository.search(keyword);
 		return categoryList;
 	}
 

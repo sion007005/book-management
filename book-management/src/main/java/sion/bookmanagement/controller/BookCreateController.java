@@ -25,7 +25,7 @@ public class BookCreateController implements Controller {
 		
 		Book book = new Book(categoryId, trimedTitle, trimedAuthor, stock, year, price, new Date());
 		bookValidator.validate(book);
-		bookService.registerBook(book);
+		bookService.create(book);
 		
 		return new HttpResponse<>(book.getId(), HttpResponse.REDIRECT_NAME + "/books/list");
 	}

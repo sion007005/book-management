@@ -18,15 +18,15 @@ public class BookService {
 		return bookService;
 	}
 	
-	public void registerBook(Book book) {
+	public void create(Book book) {
 		bookRepository.create(book);
 	}
 	
-	public void updateBook(Book book) {
+	public void update(Book book) {
 		bookRepository.update(book);
 	}
 	
-	public void removeBook(Integer bookId) {
+	public void remove(Integer bookId) {
 		Book book = bookRepository.findOneById(bookId);
 		
 		if (book == null) {
@@ -36,8 +36,8 @@ public class BookService {
 		bookRepository.deleteById(bookId);
 	}
 	
-	public List<Book> getBookList(BookOrderType orderType) {
-		List<Book> bookList = bookRepository.findAllBooks(orderType);
+	public List<Book> findAll(BookOrderType orderType) {
+		List<Book> bookList = bookRepository.findAll(orderType);
 		return bookList;
 	}
 	
@@ -46,15 +46,15 @@ public class BookService {
 		return bookList;
 	}
 
-	public Book findOneBook(int id) {
+	public Book findOneById(int id) {
 		Book book = bookRepository.findOneById(id);
 		Category category = categoryRepository.findOneById(book.getCategoryId());
 		book.setCategory(category);
 		return book;
 	}
 	
-	public List<Book> searchByKeyword(String searchType, String keyword) {
-		List<Book> bookList = bookRepository.searchByKeyword(searchType, keyword);
+	public List<Book> search(String searchType, String keyword) {
+		List<Book> bookList = bookRepository.search(searchType, keyword);
 		return bookList;
 	}
 }

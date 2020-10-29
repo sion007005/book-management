@@ -16,7 +16,7 @@ public class BookRemoveController implements Controller {
 		
 		Validator<Integer> plusNumberValidater = new PlusNumberValidator();
 		plusNumberValidater.validate(id);
-		bookService.removeBook(id);
+		bookService.remove(id);
 		
 		return new HttpResponse<>(id, HttpResponse.REDIRECT_NAME + "/books/list");
 	}

@@ -12,7 +12,7 @@ public class BookInfoController implements Controller {
 	@Override
 	public HttpResponse<?> command(HttpRequest httpRequest) {
 		int id = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
-		Book book = bookService.findOneBook(id);
+		Book book = bookService.findOneById(id);
 		
 		return new HttpResponse<Book>(book, "book_info");
 		

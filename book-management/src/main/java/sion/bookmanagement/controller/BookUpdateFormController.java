@@ -11,7 +11,7 @@ public class BookUpdateFormController implements Controller {
 	
 	@Override
 	public HttpResponse<?> command(HttpRequest httpRequest) {
-		Book book = bookService.findOneBook(NumberUtils.parseInt((String) httpRequest.getParameter("id")));
+		Book book = bookService.findOneById(NumberUtils.parseInt((String) httpRequest.getParameter("id")));
 		return new HttpResponse<Book>(book, "book_update_form");
 	}
 

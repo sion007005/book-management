@@ -20,7 +20,7 @@ public class BookListController implements Controller {
 			type = BookOrderType.valueOf(orderType);
 		}
 		
-		List<Book> bookList = bookService.getBookList(type);
+		List<Book> bookList = bookService.findAll(type);
 		
 		return new HttpResponse<List<Book>>(bookList, "book_list");
 	}	

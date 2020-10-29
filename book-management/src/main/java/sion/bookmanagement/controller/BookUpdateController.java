@@ -27,7 +27,7 @@ public class BookUpdateController implements Controller {
 		Book book = new Book(categoryIdNumber, trimedTitle, trimedAuthor, stockNumber, yearNumber, priceNumber, new Date());
 		book.setId(bookIdNumber);
 		bookValidator.validate(book);
-		bookService.updateBook(book);
+		bookService.update(book);
 		
 		return new HttpResponse<Book>(book, HttpResponse.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
 	}

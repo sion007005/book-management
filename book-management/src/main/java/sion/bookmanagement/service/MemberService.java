@@ -20,22 +20,16 @@ public class MemberService {
 		return memberRepository.create(member);
 	};
 	
-	public List<Member> searchMemberByAge(int from, int to) {
-		List<Member> memberList = memberRepository.searchByAge(from, to);
-		return memberList;
-	};
-	
-	//TODO 파라미터가 세개 이상 넘어가면 클래스로 만들 것
 	public List<Member> search(MemberSearchCondition condition) {
 		List<Member> memberList = memberRepository.search(condition);
 		return memberList;
 	}
 	
-	public void updateMember(Member member) {
+	public void update(Member member) {
 		memberRepository.update(member);
 	}
 	
-	public void removeMember(Integer memberId) {
+	public void remove(Integer memberId) {
 		Member member = memberRepository.findOneById(memberId);
 		
 		if(member == null) {
@@ -46,7 +40,7 @@ public class MemberService {
 	};
 	
 	public List<Member> findAll(MemberOrderType orderType) {
-		List<Member> memberList = memberRepository.findByAll(orderType);
+		List<Member> memberList = memberRepository.findAll(orderType);
 		return memberList;
 	}
 

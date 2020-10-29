@@ -104,7 +104,7 @@ public class BookRepository {
 		}
 	}
 	
-	public List<Book> findAllBooks(BookOrderType orderType) {
+	public List<Book> findAll(BookOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -229,7 +229,7 @@ public class BookRepository {
 		return null;
 	}
 
-	public List<Book> searchByKeyword(String searchType, String keyword) {
+	public List<Book> search(String searchType, String keyword) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

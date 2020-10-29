@@ -20,14 +20,7 @@ public class MemberSearchController implements Controller {
 		int ageFrom = NumberUtils.parseInt(ageFromStr, 0);
 		int ageTo = NumberUtils.parseInt(ageToStr, 200);
 		String keyword = (String) httpRequest.getParameter("keyword");
-		
-//		if (ageFromStr == null || ageToStr == null) {
-//			if (ageFromStr == null) ageFrom = 0;
-//			if (ageToStr == null) ageTo = 200;
-//		} else {
-//			ageFrom = Integer.valueOf(ageFromStr);
-//			ageTo = Integer.valueOf(ageToStr);
-//		}
+
 		MemberSearchCondition condition = new MemberSearchCondition();
 		condition.setSearchType(searchType);
 		condition.setKeyword(keyword);
@@ -35,18 +28,8 @@ public class MemberSearchController implements Controller {
 		condition.setAgeTo(ageTo);
 		
 		List<Member> memberList =  memberService.search(condition);
-		
-//		if(searchType.equals("age")) {
-//			System.out.println("나이로만 검색");
-//			memberList = memberService.searchMemberByAge(ageFrom, ageTo);
-//			
-//			return new HttpResponse<List<Member>>(memberList, "member_main_list");
-//		} else {
-			
-			//TODO ftl 파일 명 member_list로 변경
-			return new HttpResponse<List<Member>>(memberList, "member_list");
-//		}
-		
+
+		return new HttpResponse<List<Member>>(memberList, "member_list");
 	}
 
 }

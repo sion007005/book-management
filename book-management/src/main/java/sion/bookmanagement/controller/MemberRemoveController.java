@@ -16,7 +16,7 @@ public class MemberRemoveController implements Controller {
 		
 		Validator<Integer> plusNumberValidater = new PlusNumberValidator();
 		plusNumberValidater.validate(id);
-		memberService.removeMember(id);
+		memberService.remove(id);
 		
 		return new HttpResponse<>(id,  HttpResponse.REDIRECT_NAME + "/members/list"); //forwarding이 아닌 전체 리스트로 redirect로 한다.
 	}

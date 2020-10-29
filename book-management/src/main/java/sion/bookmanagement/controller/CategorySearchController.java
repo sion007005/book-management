@@ -21,7 +21,7 @@ public class CategorySearchController implements Controller {
 		if (searchType.equals("id")) {
 			categoryList = categoryService.searchById(NumberUtils.parseInt(keyword));
 		} else {
-			categoryList = categoryService.searchByKeyword(keyword);
+			categoryList = categoryService.search(keyword);
 		}
 		
 		return new HttpResponse<List<Category>>(categoryList, "category_list");

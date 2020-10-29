@@ -9,8 +9,8 @@ import java.util.List;
 import com.mysql.jdbc.Statement;
 
 import sion.bookmanagement.service.Member;
-import sion.bookmanagement.service.MemberSearchCondition;
 import sion.bookmanagement.service.MemberOrderType;
+import sion.bookmanagement.service.MemberSearchCondition;
 import sion.mvc.DBConnetctionCreator;
 
 public class MemberRepository {
@@ -57,48 +57,6 @@ public class MemberRepository {
 				}
 			}
 		}
-	}
-	
-	public List<Member> searchByAge(int from, int to) {
-		Connection conn = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		String query = "SELECT member_id, name, gender, email, age, phone "
-							+ "FROM MEMBERS where age between " + from + " and " + to;
-		
-		ArrayList<Member> memberList = new ArrayList<Member>();
-
-		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
-			
-			pstm = conn.prepareStatement(query);
-			rs = pstm.executeQuery();
-			
-			while(rs.next()) {
-				Member member = new Member();
-				
-				member.setId(rs.getInt("member_id"));
-				member.setName(rs.getString("name"));
-				member.setGender(rs.getString("gender"));
-				member.setEmail(rs.getString("email"));
-				member.setAge(rs.getInt("age"));
-				member.setPhone(rs.getString("phone"));
-				
-				memberList.add(member);
-			}
-		} catch(SQLException e) {
-			throw new DataProcessException(e);
-		} finally {
-			if(pstm != null) {
-				try {
-					pstm.close();
-				} catch(SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
-		}
-		
-		return memberList;
 	}
 	
 	public List<Member> search(MemberSearchCondition condition) {
@@ -201,7 +159,7 @@ public class MemberRepository {
 		}
 	}
 	
-	public List<Member> findByAll(MemberOrderType orderType) {
+	public List<Member> findAll(MemberOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
