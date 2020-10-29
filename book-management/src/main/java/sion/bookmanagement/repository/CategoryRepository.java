@@ -104,7 +104,7 @@ public class CategoryRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		String query = "select * from categories";
+		String query = "select category_id, category_name from categories";
 		
 		ArrayList<Category> categoryList = new ArrayList<Category>();
 		try {
@@ -145,7 +145,7 @@ public class CategoryRepository {
 
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "select * from categories where category_id = ?";
+			String query = "select category_id, category_name from categories where category_id = ?";
 			pstm = conn.prepareStatement(query);
 
 			pstm.setInt(1, categoryId);

@@ -109,7 +109,7 @@ public class BookRepository {
 		ResultSet rs = null;
 		ArrayList<Book> bookList = new ArrayList<Book>();
 
-		String query = "SELECT * FROM BOOKS"; 
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created FROM BOOKS"; 
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			
@@ -124,11 +124,13 @@ public class BookRepository {
 				Book book = new Book();
 			
 				book.setId(rs.getInt("book_id"));
+				book.setCategoryId(rs.getInt("category_id"));
 				book.setTitle(rs.getString("title"));
 				book.setAuthor(rs.getString("author"));
 				book.setStock(rs.getInt("stock"));
 				book.setYear(rs.getInt("year"));
 				book.setPrice(rs.getInt("price"));
+				book.setCreatedDate(rs.getDate("created"));
 				
 				bookList.add(book);
 			}
@@ -156,7 +158,7 @@ public class BookRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "select * from books where category_id=?";
+			String query = "select book_id, category_id, title, author, stock, year, price, created from books where category_id=?";
 			
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
@@ -194,7 +196,7 @@ public class BookRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "select * from books where book_id=?";
+			String query = "select book_id, category_id, title, author, stock, year, price, created from books where book_id=?";
 			pstm = conn.prepareStatement(query);
 
 			pstm.setInt(1, bookId);

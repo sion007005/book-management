@@ -63,7 +63,8 @@ public class MemberRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM MEMBERS where age between " + from + " and " + to;
+		String query = "SELECT member_id, name, gender, email, age, phone "
+							+ "FROM MEMBERS where age between " + from + " and " + to;
 		
 		ArrayList<Member> memberList = new ArrayList<Member>();
 
@@ -204,7 +205,7 @@ public class MemberRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM MEMBERS";
+		String query = "SELECT member_id, name, gender, email, age, phone FROM MEMBERS";
 		
 		List<Member> memberList = new ArrayList<Member>();
 		try {
@@ -256,7 +257,7 @@ public class MemberRepository {
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			//TODO * 없애고 다 써주기
-			String query = "SELECT * FROM MEMBERS " + "WHERE member_id = ?";
+			String query = "SELECT member_id, name, gender, email, age, phone FROM MEMBERS WHERE member_id = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
 			rs = pstm.executeQuery();
