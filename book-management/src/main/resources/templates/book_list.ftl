@@ -278,11 +278,11 @@
               <form action="/books/list" id="order-select">
               <select name="order-type" id="form-search-select">
                 <option value="" noSelected>정렬기준</option>
-                <option value="title">제목</option>
-                <option value="author">저자</option>
-                <option value="price">가격</option>
-                <option value="year">출판년도</option>
-                <option value="stock">재고</option>
+                <option value="TITLE">제목</option>
+                <option value="AUTHOR">저자</option>
+                <option value="PRICE">가격</option>
+                <option value="YEAR">출판년도</option>
+                <option value="STOCK">재고</option>
               </select>               
               </form>
           	</div>
@@ -312,7 +312,19 @@
     </div>    
     
     <script>
-     
+      const orderSelectBox = document.querySelector('#order-select');
+      orderSelectBox.addEventListener("click", submitOrderType);
+    
+      function submitOrderType(e) {
+  	    const selected = e.target.value;
+  	  
+  	    if(selected === '' || selected === undefined) {
+  		  return;
+  	    }
+  	  
+  	    orderSelectBox.submit();
+    }
+   
     </script>
   </body>
 </html>

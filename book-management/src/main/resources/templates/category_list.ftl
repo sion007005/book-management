@@ -277,8 +277,8 @@
               <form action="/categories/list" id="order-select">
               <select name="order-type" id="form-search-select">
                 <option value="" noSelected>정렬기준</option>
-                <option value="categoryId">카테고리 ID</option>
-                <option value="categoryName">카테고리 이름</option>
+                <option value="ID">카테고리 ID</option>
+                <option value="NAME">카테고리 이름</option>
               </select>               
               </form>
           	</div>

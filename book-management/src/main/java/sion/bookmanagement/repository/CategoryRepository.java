@@ -118,7 +118,7 @@ public class CategoryRepository {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			
 			if (orderType != null) {
-				query += (" ORDER BY " + orderType);
+				query += (" ORDER BY " + orderType.getColumnName());
 			}
 			
 			pstm = conn.prepareStatement(query);

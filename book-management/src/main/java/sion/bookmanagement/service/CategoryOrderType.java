@@ -1,8 +1,8 @@
 package sion.bookmanagement.service;
 
 public enum CategoryOrderType {
-	ID("카테고리 ID", "categoryId"),
-	NAME("카테고리 이름", "categoryName");
+	ID("카테고리 ID", "category_id"),
+	NAME("카테고리 이름", "category_name");
 	
 	private String name;
 	private String columnName;
