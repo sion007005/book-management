@@ -12,7 +12,7 @@ public class CategoryInfoController implements Controller {
 	@Override
 	public HttpResponse<?> command(HttpRequest httpRequest) {
 		int id = NumberUtils.parseInt((String) httpRequest.getParameter("id"));
-		Category category = categoryService.findById(id);
+		Category category = categoryService.findOneById(id);
 		
 		return new HttpResponse<Category>(category, "category_info");
 	}

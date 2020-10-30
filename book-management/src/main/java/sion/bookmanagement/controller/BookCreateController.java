@@ -23,9 +23,12 @@ public class BookCreateController implements Controller {
 		int year = NumberUtils.parseInt((String)httpRequest.getAttribute("year"));
 		int stock = NumberUtils.parseInt((String)httpRequest.getAttribute("stock"));
 		
-		Book book = new Book(categoryId, trimedTitle, trimedAuthor, stock, year, price, new Date());
+		Book book = new Book(categoryId, trimedTitle, trimedAuthor, stock, year, price);
+		book.setCreatedAt(new Date());
+		book.setUpdatedAt(new Date());
+		
 		bookValidator.validate(book);
-		bookService.create(book);
+		int bookId = bookService.create(book);
 		
 		return new HttpResponse<>(book.getId(), HttpResponse.REDIRECT_NAME + "/books/list");
 	}

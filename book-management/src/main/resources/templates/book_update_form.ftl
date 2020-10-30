@@ -182,7 +182,6 @@
         </div>
         <form action="/books/update?id=${body.id}" method="POST">
         
-        
           <div class="form-input">
 		    <input type="text" class="input input-title" data-type="category" placeholder="카테고리*" name="category" value="${body.categoryId}">
 		  </div>
@@ -193,13 +192,16 @@
 			<input type="text" class="input input-author" data-type="author" placeholder="저자*" name="author" value="${body.author}">
 		  </div>
 		  <div class="form-input">
-		    <input type="text" class="input input-price" data-type="price" placeholder="가격*" name="price" value="${body.price}">
+		    <input type="text" class="input input-price" data-type="price" placeholder="가격*" name="price" value="${body.price?replace(',','')}">
 		  </div>
 		  <div class="form-input">
 		    <input type="text" class="input input-year" data-type="year" placeholder="출판년도*" name="year" value="${body.year?replace(',','')}">
 		  </div>
 		  <div class="form-input">
 		    <input type="text" class="input input-age" data-type="stock" placeholder="재고*" name="stock" value="${body.stock}">
+		  </div>
+		  <div class="form-input" style="display:none">
+			<input type="text" class="input input-created" data-type="created" placeholder=등록일* name="createdAt" value="${body.createdAt?string('yyyy-MM-dd hh:mm:ss')}">
 		  </div>
           <div class="form-input">
             <button class="btn-signup button button-primary" type="submit">수정하기</button>

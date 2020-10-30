@@ -6,15 +6,10 @@ import java.io.OutputStreamWriter;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
-import freemarker.cache.ClassTemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.SimpleObjectWrapper;
 import freemarker.template.Template;
-import freemarker.template.TemplateHashModel;
-import freemarker.template.TemplateModel;
-import freemarker.template.utility.TemplateModelUtils;
 
 public class HtmlRender {
 
@@ -47,7 +42,6 @@ public class HtmlRender {
 				try {
 					writer.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 

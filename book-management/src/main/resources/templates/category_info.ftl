@@ -89,50 +89,49 @@
 	 .content-container .content {
 	   position: relative;
        margin: 0 auto;
-       width: 200px;
+       width: 300px;
 	 }
 	 
 	 .content .content-row {
 	   margin-bottom: 10px;
 	 }
 	 
-		#modal {
-		display: none;
-		  position:relative;
-		  width:100%;
-		  height:100%;
-		  z-index:1;
-		}
+     #modal {
+	   display: none;
+	   position:relative;
+	   width:100%;
+	   height:100%;
+	   z-index:1;
+	 }
 		
-		#modal h2 {
-		  margin:0;   
-		}
+	 #modal h2 {
+	   margin:0;   
+	 }	
 		
-		#modal button {
-		  display:inline-block;
-		  width:100px;
-		  margin-left:calc(100% - 100px - 10px);
-		}
+	 #modal button {
+       display:inline-block;
+	   width:100px;
+	   margin-left:calc(100% - 100px - 10px);
+	 }
 		
-		#modal .modal_content {
-		  width:300px;
-		  margin:100px auto;
-		  padding:20px 10px;
-		  background:#fff;
-		  border:2px solid #666;
-		}
+	 #modal .modal_content {
+	   width:300px;
+	   margin:100px auto;
+	   padding:20px 10px;
+	   background:#fff;
+	   border:2px solid #666;
+	 }
 		
-		#modal .modal_layer {
-		  position:fixed;
-		  top:0;
-		  left:0;
-		  width:100%;
-		  height:100%;
-		  background:rgba(0, 0, 0, 0.5);
-		  z-index:-1;
-		}   
+	 #modal .modal_layer {
+	   position:fixed;
+	   top:0;
+	   left:0;
+	   width:100%;
+	   height:100%;
+	   background:rgba(0, 0, 0, 0.5);
+	   z-index:-1;
+	 }	   
     </style>
-	  
   </head>
   
   <body>
@@ -150,7 +149,14 @@
         <span>카테고리 명:</span>
         <span>${body.name}</span>
       </div>
-     
+      <div class="content-row">
+        <span>등록일:</span>
+        <span>${body.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+      </div>
+      <div class="content-row">
+        <span>최종 수정일:</span>
+        <span>${body.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+      </div>
       <a href="/categories/list">목록</a>
       <a href="/categories/update?id=${body.id}">수정</a>
         <button type="submit" id="modal_opne_btn">삭제</button>

@@ -206,6 +206,9 @@
                             <option value="직접입력">직접입력</option>
                         </select>
                     </div>
+                    <div class="form-input" style="display:none">
+						<input type="text" class="input input-created" data-type="created" placeholder=등록일* name="createdAt" value="${body.createdAt?string('yyyy-MM-dd hh:mm:ss')}">
+					</div>
 				   <div class="form-input has-button">
                       <input class="input phone" name="phone" value="${body.phone}"
                              data-type="phone" placeholder="휴대폰*" type="tel" maxlength="11" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">

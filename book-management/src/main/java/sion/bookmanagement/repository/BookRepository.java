@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +22,15 @@ public class BookRepository {
 		return bookRepository;
 	}
 	
-	public void create(Book book) {
+	public int create(Book book) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "INSERT INTO BOOKS(category_id, title, author, stock, year, price, created) VALUES(?, ?, ?, ?, ?, ?, ?)";
-			pstm = conn.prepareStatement(query);
+			String query = "INSERT INTO BOOKS(category_id, title, author, stock, year, price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			pstm.setInt(1, book.getCategoryId());
 			pstm.setString(2, book.getTitle());
@@ -35,8 +38,14 @@ public class BookRepository {
 			pstm.setInt(4, book.getStock());
 			pstm.setInt(5, book.getYear());
 			pstm.setInt(6, book.getPrice());
-			pstm.setDate(7, DateUtils.getSqlDate(book.getCreatedDate()));
+			pstm.setTimestamp(7, DateUtils.getTimestamp(book.getCreatedAt()));
+			pstm.setTimestamp(8, DateUtils.getTimestamp(book.getUpdatedAt()));
 			pstm.executeUpdate();
+			
+			rs = pstm.getGeneratedKeys();
+			rs.next();
+			
+			return rs.getInt(1); 
 		} catch(SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
@@ -56,7 +65,7 @@ public class BookRepository {
 		ResultSet rs = null;
 		ArrayList<Book> bookList = new ArrayList<Book>();
 		
-		String query = "SELECT book_id, category_id, title, author, stock, year, price FROM BOOKS where ";
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM BOOKS where ";
 		if (searchType.equals("title")) {
 			query += "title like ?";
 		} else if (searchType.equals("author")) {
@@ -65,31 +74,21 @@ public class BookRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%"+keyword+"%");
-			rs = pstm.executeQuery();
 			
+			rs = pstm.executeQuery();
 			while(rs.next()) {
-				Book book = new Book();
-				
-				book.setId(rs.getInt("book_id"));
-				book.setCategoryId(rs.getInt("category_id"));
-				book.setTitle(rs.getString("title"));
-				book.setAuthor(rs.getString("author"));
-				book.setStock(rs.getInt("stock"));
-				book.setYear(rs.getInt("year"));
-				book.setPrice(rs.getInt("price"));
-				
+				Book book = newBook(rs);
 				bookList.add(book);
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
+			if (pstm != null) {
 				try {
 					pstm.close();
-				} catch(SQLException e) {
+				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
 			}
@@ -104,7 +103,7 @@ public class BookRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "update books set title=?, author=?, stock=?, year=?, price=?, created=? where book_id=?";
+			String query = "update books set title=?, author=?, stock=?, year=?, price=?, created_at=?, updated_at=? where book_id=?";
 			pstm = conn.prepareStatement(query);
 			
 			pstm.setString(1, book.getTitle());
@@ -112,16 +111,18 @@ public class BookRepository {
 			pstm.setInt(3, book.getStock());
 			pstm.setInt(4, book.getYear());
 			pstm.setInt(5, book.getPrice());
-			pstm.setDate(6, DateUtils.getSqlDate(book.getCreatedDate()));
-			pstm.setInt(7, book.getId());
+			pstm.setTimestamp(6, DateUtils.getTimestamp(book.getCreatedAt()));
+			pstm.setTimestamp(7, DateUtils.getTimestamp(book.getUpdatedAt()));
+			pstm.setInt(8, book.getId());
+			
 			pstm.executeUpdate();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
+			if (pstm != null) {
 				try {
 					pstm.close();
-				} catch(SQLException e) {
+				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
 			}
@@ -136,16 +137,16 @@ public class BookRepository {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			String query = "delete from books where book_id=?";
 			pstm = conn.prepareStatement(query);
-			
 			pstm.setInt(1, bookId);
+			
 			pstm.executeUpdate();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
+			if (pstm != null) {
 				try {
 					pstm.close();
-				} catch(SQLException e) {
+				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
 			}
@@ -157,39 +158,29 @@ public class BookRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Book> bookList = new ArrayList<Book>();
-
-		String query = "SELECT book_id, category_id, title, author, stock, year, price, created FROM BOOKS"; 
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM BOOKS"; 
+		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			
-			if(orderType != null) {
+			if (orderType != null) {
 				query += (" ORDER BY " + orderType);
 			}
 			
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			
-			while(rs.next()) {
-				Book book = new Book();
-			
-				book.setId(rs.getInt("book_id"));
-				book.setCategoryId(rs.getInt("category_id"));
-				book.setTitle(rs.getString("title"));
-				book.setAuthor(rs.getString("author"));
-				book.setStock(rs.getInt("stock"));
-				book.setYear(rs.getInt("year"));
-				book.setPrice(rs.getInt("price"));
-				book.setCreatedDate(rs.getDate("created"));
-				
+			while (rs.next()) {
+				Book book = newBook(rs);
 				bookList.add(book);
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
+			if (pstm != null) {
 				try {
 					pstm.close();
-				} catch(SQLException e) {
+				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
 			}
@@ -245,35 +236,42 @@ public class BookRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "select book_id, category_id, title, author, stock, year, price, created from books where book_id=?";
+			String query = "select book_id, category_id, title, author, stock, year, price, created_at, updated_at from books where book_id=?";
 			pstm = conn.prepareStatement(query);
-
 			pstm.setInt(1, bookId);
-			rs = pstm.executeQuery();
 			
-			if(rs.next()) {
-				Book book = new Book();
-				book.setCategoryId(rs.getInt("category_id"));
-				book.setId(rs.getInt("book_id"));
-				book.setTitle(rs.getString("title"));
-				book.setAuthor(rs.getString("author"));
-				book.setStock(rs.getInt("stock"));
-				book.setYear(rs.getInt("year"));
-				book.setPrice(rs.getInt("price"));
-				book.setCreatedDate(rs.getDate("created"));
+			rs = pstm.executeQuery();
+			if (rs.next()) {
+				Book book = newBook(rs);
 				return book;
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
+			if (pstm != null) {
 				try {
 					pstm.close();
-				} catch(SQLException e) {
+				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
 			}
 		}
 		return null;
+	}
+	
+	private Book newBook(ResultSet rs) throws SQLException {
+		Book book = new Book();
+		
+		book.setCategoryId(rs.getInt("category_id"));
+		book.setId(rs.getInt("book_id"));
+		book.setTitle(rs.getString("title"));
+		book.setAuthor(rs.getString("author"));
+		book.setStock(rs.getInt("stock"));
+		book.setYear(rs.getInt("year"));
+		book.setPrice(rs.getInt("price"));
+		book.setCreatedAt(rs.getTimestamp("created_at"));
+		book.setUpdatedAt(rs.getTimestamp("updated_at"));
+		
+		return book;
 	}
 }

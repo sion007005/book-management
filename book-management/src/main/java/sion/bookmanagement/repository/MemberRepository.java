@@ -11,6 +11,7 @@ import com.mysql.jdbc.Statement;
 import sion.bookmanagement.service.Member;
 import sion.bookmanagement.service.MemberOrderType;
 import sion.bookmanagement.service.MemberSearchCondition;
+import sion.bookmanagement.util.DateUtils;
 import sion.mvc.DBConnetctionCreator;
 
 public class MemberRepository {
@@ -30,8 +31,7 @@ public class MemberRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "INSERT INTO MEMBERS(name, gender, email, age, phone) VALUES(?, ?, ?, ?, ?)";
-
+			String query = "INSERT INTO members(name, gender, email, age, phone, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			pstm.setString(1, member.getName());
@@ -39,20 +39,21 @@ public class MemberRepository {
 			pstm.setString(3, member.getEmail());
 			pstm.setInt(4, member.getAge());
 			pstm.setString(5, member.getPhone());
-			//TODO created 추가
+			pstm.setTimestamp(6, DateUtils.getTimestamp(member.getCreatedAt()));
+			pstm.setTimestamp(7, DateUtils.getTimestamp(member.getUpdatedAt()));
 			pstm.executeUpdate(); 
 			
 			rs = pstm.getGeneratedKeys();  
 			rs.next();  
-			int id = rs.getInt(1); //아이디 얻기  
-			return id;
-		} catch(SQLException e) {
+			
+			return rs.getInt(1); //아이디 얻기  
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
 			if(pstm != null) {
 				try {
 					pstm.close();
-				} catch(SQLException e) {
+				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
 			}
@@ -65,8 +66,7 @@ public class MemberRepository {
 		ResultSet rs = null;
 		ArrayList<Member> memberList = new ArrayList<Member>();
 		
-		//TODO search type이 넘어오지 않았을 때의 이슈 해결
-		String query = "SELECT member_id, name, gender, email, age, phone FROM MEMBERS where ";
+		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members WHERE ";
 		if (condition.getSearchType().equals("name")) {
 			query += "name like ?";
 		} else if (condition.getSearchType().equals("email")) {
@@ -80,18 +80,17 @@ public class MemberRepository {
 
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%"+ condition.getKeyword() +"%");
 			pstm.setInt(2, condition.getAgeFrom());
 			pstm.setInt(3, condition.getAgeTo());
-			rs = pstm.executeQuery();
 			
-			while(rs.next()) {
+			rs = pstm.executeQuery();
+			while (rs.next()) {
 				Member member = newMember(rs);
 				memberList.add(member);
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
 			if(pstm != null) {
@@ -112,20 +111,23 @@ public class MemberRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "UPDATE members set name=?, gender=?, email=?, age=?, phone=? where member_id=?";
+			String query = "UPDATE members SET name=?, gender=?, email=?, age=?, phone=?, created_at=?, updated_at=? WHERE member_id=?";
 			pstm = conn.prepareStatement(query);
+			
 			pstm.setString(1, member.getName());
 			pstm.setString(2, member.getGender());
 			pstm.setString(3, member.getEmail());
 			pstm.setInt(4, member.getAge());
 			pstm.setString(5, member.getPhone());
-			pstm.setInt(6, member.getId());
+			pstm.setTimestamp(6, DateUtils.getTimestamp(member.getCreatedAt()));
+			pstm.setTimestamp(7, DateUtils.getTimestamp(member.getUpdatedAt()));
+			pstm.setInt(8, member.getId());
 			
 			pstm.executeUpdate();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
+			if (pstm != null) {
 				try {
 					pstm.close();
 				} catch(SQLException e) {
@@ -141,18 +143,18 @@ public class MemberRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "DELETE FROM MEMBERS WHERE member_id" + "= ?";
-			
+			String query = "DELETE FROM members WHERE member_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
+			
 			pstm.executeUpdate();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
+			if (pstm != null) {
 				try {
 					pstm.close();
-				} catch(SQLException e) {
+				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
 			}
@@ -163,13 +165,12 @@ public class MemberRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		String query = "SELECT member_id, name, gender, email, age, phone FROM MEMBERS";
-		
 		List<Member> memberList = new ArrayList<Member>();
+		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM MEMBERS";
+		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			
-			//TODO 한칸 띄우는거 찾아서 고치기
 			if (orderType != null) {
 				//TODO 쿼리문 수정 (쿼리문에 + 문자열을 해야할 때는 구조적으로 정해진 문자 말고는 들어오는 일이 없도록 해줘야 함)
 				query += (" ORDER BY " + orderType.getColumnName());
@@ -179,16 +180,6 @@ public class MemberRepository {
 			rs = pstm.executeQuery();
 			
 			while (rs.next()) {
-//				Member member = new Member();
-//				member.setId(rs.getInt("member_id"));
-//				member.setName(rs.getString("name"));
-//				member.setGender(rs.getString("gender"));
-//				member.setEmail(rs.getString("email"));
-//				member.setAge(rs.getInt("age"));
-//				member.setPhone(rs.getString("phone"));
-				//TODO created 기능 넣기 
-				//member.setCreated(rs.getDate("created"));
-				
 				Member member = newMember(rs);
 				memberList.add(member);
 			}
@@ -214,10 +205,10 @@ public class MemberRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			//TODO * 없애고 다 써주기
-			String query = "SELECT member_id, name, gender, email, age, phone FROM MEMBERS WHERE member_id = ?";
+			String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members WHERE member_id = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
+			
 			rs = pstm.executeQuery();
 			if (rs.next()) {
 				Member member = newMember(rs);
@@ -237,16 +228,19 @@ public class MemberRepository {
 		
 		return null;
 	}
-
+	
 	private Member newMember(ResultSet rs) throws SQLException {
 		Member member = new Member();
+		
 		member.setId(rs.getInt("member_id"));
 		member.setName(rs.getString("name"));
 		member.setGender(rs.getString("gender"));
 		member.setEmail(rs.getString("email"));
 		member.setAge(rs.getInt("age"));
 		member.setPhone(rs.getString("phone"));
-		//TODO created도 세팅하기
+		member.setCreatedAt(rs.getTimestamp("created_at"));
+		member.setUpdatedAt(rs.getTimestamp("updated_at"));
+		
 		return member;
 	}
 }

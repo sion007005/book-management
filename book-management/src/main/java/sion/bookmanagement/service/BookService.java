@@ -18,8 +18,8 @@ public class BookService {
 		return bookService;
 	}
 	
-	public void create(Book book) {
-		bookRepository.create(book);
+	public int create(Book book) {
+		return bookRepository.create(book);
 	}
 	
 	public void update(Book book) {

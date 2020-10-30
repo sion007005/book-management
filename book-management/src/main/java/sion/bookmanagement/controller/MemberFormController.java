@@ -17,10 +17,10 @@ public class MemberFormController implements Controller {
 		
 		if (id == null || id.length() == 0) {
 			//TODO 파일 하나로 합치기 (basic / update -> member_form으로)
-			return new HttpResponse<Member>(new Member(), "member_basic_form");
+			return new HttpResponse<Member>(new Member(), "member_form");
 		} else {
 			Member member = memberService.findOneById(NumberUtils.parseInt(id));
-			return new HttpResponse<Member>(member, "member_update_form");
+			return new HttpResponse<Member>(member, "member_form");
 		}
 	}
 }

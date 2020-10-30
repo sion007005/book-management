@@ -89,7 +89,7 @@
 	 .content-container .content {
 	   position: relative;
        margin: 0 auto;
-       width: 200px;
+       width: 300px;
 	 }
 	 
 	 .content .content-row {
@@ -161,6 +161,14 @@
       <div class="content-row">
         <span>이메일:</span>
         <span>${body.email}</span>
+      </div>
+      <div class="content-row">
+        <span>등록일:</span>
+        <span>${body.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+      </div>
+      <div class="content-row">
+        <span>최종 수정일:</span>
+        <span>${body.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <a href="/members/list">목록</a>
       <a href="/members/update?id=${body.id}">수정</a>

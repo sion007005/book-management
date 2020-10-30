@@ -68,6 +68,7 @@ public class Excutor implements Runnable {
 
      UriParser uriParser = new UriParser();
      uriParser.parseQuery(queryString, parameters);
+     System.out.println("파라미터입니다아아아");
      parameters.forEach((k, v)->System.out.println("key : " + k + " / value : " + v));
      return parameters;
   }

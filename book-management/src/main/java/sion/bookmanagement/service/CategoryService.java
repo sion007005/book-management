@@ -38,17 +38,12 @@ public class CategoryService {
 		return categoryList;
 	}
 
-	public Category findById(int categoryId) {
+	public Category findOneById(int categoryId) {
 		return categoryRepository.findOneById(categoryId);
 	}
 
 	public List<Category> search(String keyword) {
 		List<Category> categoryList = categoryRepository.search(keyword);
-		return categoryList;
-	}
-
-	public List<Category> searchById(int id) {
-		List<Category> categoryList = categoryRepository.searchById(id);
 		return categoryList;
 	}
 }

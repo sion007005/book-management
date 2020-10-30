@@ -11,27 +11,11 @@ public class Book {
 	private Integer year;
 	private Integer price;
 	private Category category;
-	private Date created;
-	private String noResultMsg;
+	private Date createdAt;
+	private Date updatedAt;
 	
 	public Book() {}
-	
-	public Book(String msg) {
-		this.noResultMsg = msg;
-	}
-	
-	public Book(Integer categoryId, String title, String author, Integer stock, 
-			Integer year, Integer price, Date created) {
-		this.categoryId = categoryId;
-		this.title = title;
-		this.author = author;
-		this.stock = stock;
-		this.year = year;
-		this.price = price;
-		this.created = created;
-		this.noResultMsg = "";
-	}
-	
+
 	public Book(Integer categoryId, String title, String author, Integer stock, 
 			Integer year, Integer price) {
 		this.categoryId = categoryId;
@@ -106,12 +90,19 @@ public class Book {
 		this.category = category;
 	}
 	
-	public Date getCreatedDate() {
-		return created;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 	
-	public void setCreatedDate(Date date) {
-		this.created = date;
+	public void setCreatedAt(Date date) {
+		this.createdAt = date;
 	}
-	
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 }

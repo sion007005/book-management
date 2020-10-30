@@ -24,7 +24,9 @@ public class MemberCreateController implements Controller {
 		
 		String emailAddress = emailFront + "@" + emailEnd;
 		Member member = new Member(trimedName, trimedGender, emailAddress, ageNumber, phone);
-		member.setCreated(new Date());
+		member.setCreatedAt(new Date());
+		member.setUpdatedAt(new Date());
+		
 		memberValidator.validate(member);
 		int memberId = memberService.create(member);
 		

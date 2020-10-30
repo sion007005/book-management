@@ -1,6 +1,5 @@
 package sion.mvc;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequest {
@@ -43,6 +42,7 @@ public class HttpRequest {
 		if (attributes == null) {
 			return null;
 		}
+		
 		return attributes.get(key);
 	}
 }

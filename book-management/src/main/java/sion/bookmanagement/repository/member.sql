@@ -11,4 +11,7 @@ create table members(
 desc members;
 select * from members;
 
-drop table members;
+alter table `members` add `created_at` DATETIME COMMENT '등록날짜';
+alter table `members` add `updated_at` DATETIME COMMENT '수정날짜';
+
+DELETE FROM MEMBERS WHERE `created_at` is null || `updated_at` is null;

@@ -1,5 +1,7 @@
 package sion.bookmanagement.controller;
 
+import java.util.Date;
+
 import sion.bookmanagement.service.Category;
 import sion.bookmanagement.service.CategoryService;
 import sion.mvc.HttpRequest;
@@ -11,7 +13,10 @@ public class CategoryCreateController implements Controller {
 	@Override
 	public HttpResponse<Integer> command(HttpRequest httpRequest) {
 		String categoryName = (String)httpRequest.getAttribute("name");
+		
 		Category category = new Category(categoryName);
+		category.setCreatedAt(new Date());
+		category.setUpdatedAt(new Date());
 
 		int categoryId = categoryService.create(category);
 		

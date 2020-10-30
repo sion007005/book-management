@@ -10,7 +10,7 @@ public class CategoryUpdateFormController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	@Override
 	public HttpResponse<?> command(HttpRequest httpRequest) {
-		Category category = categoryService.findById(NumberUtils.parseInt((String) httpRequest.getParameter("id")));
+		Category category = categoryService.findOneById(NumberUtils.parseInt((String) httpRequest.getParameter("id")));
 		return new HttpResponse<Category>(category, "category_update_form");
 	}
 

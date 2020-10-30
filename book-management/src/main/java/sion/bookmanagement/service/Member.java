@@ -9,8 +9,7 @@ public class Member {
 	private String email;
 	private Integer age;
 	private String phone;
-	//TODO createdAt으로 바꾸기 
-	private Date created;
+	private Date createdAt;
 	private Date updatedAt; 
 	
 	public Member() {}
@@ -71,12 +70,12 @@ public class Member {
 		this.phone = phone;
 	}
 
-	public Date getCreated() {
-		return created;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated(Date created) {
-		this.created = created;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public Date getUpdatedAt() {
@@ -86,7 +85,4 @@ public class Member {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	
-	
 }

@@ -10,8 +10,11 @@ create table books(
   primary key(book_id)
 ); 
 
+alter table `books` CHANGE created created_at DATETIME;
+alter table `books` ADD `updated_at` DATETIME COMMENT '수정날짜';
+
 desc books;
 drop table books;
 select * from books;
 
-select count(*) from books where book_id=2;
+
