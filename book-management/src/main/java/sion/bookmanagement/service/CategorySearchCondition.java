@@ -1,15 +1,11 @@
 package sion.bookmanagement.service;
 
-public class MemberSearchCondition {
+public class CategorySearchCondition {
 	private SearchType searchType; 
 	private String keyword;
-	private int ageFrom;
-	private int ageTo;
 	
 	public enum SearchType {
-		NAME("이름", "name"),
-		EMAIL("이메일", "email"),
-		PHONE("휴대폰", "phone");
+		NAME("카테고리 이름", "category_name");
 		
 		private String name;
 		private String columnName;
@@ -43,21 +39,4 @@ public class MemberSearchCondition {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	
-	public int getAgeFrom() {
-		return ageFrom;
-	}
-	
-	public void setAgeFrom(int ageFrom) {
-		this.ageFrom = ageFrom;
-	}
-	
-	public int getAgeTo() {
-		return ageTo;
-	}
-	
-	public void setAgeTo(int ageTo) {
-		this.ageTo = ageTo;
-	}
-	
 }

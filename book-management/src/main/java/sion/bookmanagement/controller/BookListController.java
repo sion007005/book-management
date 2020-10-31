@@ -25,7 +25,7 @@ public class BookListController implements Controller {
 		List<Book> bookList = bookService.findAll(type);
 		
 		Model model = new Model();
-		model.put("bookList", "book_list");
+		model.put("bookList", bookList);
 		
 		return new HttpResponse(model, "book_list");
 	}	

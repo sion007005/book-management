@@ -10,6 +10,7 @@ import java.util.List;
 import sion.bookmanagement.DBConnetctionCreator;
 import sion.bookmanagement.service.Book;
 import sion.bookmanagement.service.BookOrderType;
+import sion.bookmanagement.service.BookSearchCondition;
 import sion.bookmanagement.util.DateUtils;
 
 public class BookRepository {
@@ -59,23 +60,23 @@ public class BookRepository {
 		}
 	}
 	
-	public List<Book> search(String searchType, String keyword) {
+	public List<Book> search(BookSearchCondition condition) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Book> bookList = new ArrayList<Book>();
 		
 		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM BOOKS where ";
-		if (searchType.equals("title")) {
+		if (condition.getSearchType().getColumnName().equals("title")) {
 			query += "title like ?";
-		} else if (searchType.equals("author")) {
+		} else if (condition.getSearchType().getColumnName().equals("author")) {
 			query += "author like ?";
 		} 
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "%"+keyword+"%");
+			pstm.setString(1, "%" + condition.getKeyword() + "%");
 			
 			rs = pstm.executeQuery();
 			while(rs.next()) {

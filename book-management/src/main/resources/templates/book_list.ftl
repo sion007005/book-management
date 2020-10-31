@@ -260,8 +260,8 @@
             <div class="select-box">
               <select name="search-type" id="form-search-select">
                 <option value="" noSelected>검색기준</option>
-                <option value="title">제목</option>
-                <option value="author">저자</option>
+                <option value="TITLE">제목</option>
+                <option value="AUTHOR">저자</option>
               </select>               
        	    </div>
        	    <div class="input input-box keyword">
@@ -297,7 +297,7 @@
       </div>
       <div id="result-container">
         <div class="result-area">
-         <#list body as item>
+         <#list bookList as item>
           <div class="group_flex">
           <!-- 가급적 절대경로를 쓸 것 -->
             <div><a href="/books/info?id=${item.id}">${item.title}</a></div>

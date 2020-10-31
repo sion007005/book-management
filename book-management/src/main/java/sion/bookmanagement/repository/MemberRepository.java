@@ -67,11 +67,11 @@ public class MemberRepository {
 		ArrayList<Member> memberList = new ArrayList<Member>();
 		
 		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members WHERE ";
-		if (condition.getSearchType().equals("name")) {
+		if (condition.getSearchType().getColumnName().equals("name")) {
 			query += "name like ?";
-		} else if (condition.getSearchType().equals("email")) {
+		} else if (condition.getSearchType().getColumnName().equals("email")) {
 			query += "email like ?";
-		} else if (condition.getSearchType().equals("phone")) {
+		} else if (condition.getSearchType().getColumnName().equals("phone")) {
 			query += "phone like ?";
 		}
 		

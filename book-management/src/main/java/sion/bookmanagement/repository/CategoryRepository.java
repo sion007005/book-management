@@ -11,6 +11,7 @@ import com.mysql.jdbc.Statement;
 import sion.bookmanagement.DBConnetctionCreator;
 import sion.bookmanagement.service.Category;
 import sion.bookmanagement.service.CategoryOrderType;
+import sion.bookmanagement.service.CategorySearchCondition;
 import sion.bookmanagement.util.DateUtils;
 
 public class CategoryRepository {
@@ -173,7 +174,7 @@ public class CategoryRepository {
 		return null;
 	}
 	
-	public List<Category> search(String keyword) {
+	public List<Category> search(CategorySearchCondition condition) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -184,7 +185,7 @@ public class CategoryRepository {
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "%"+keyword+"%");
+			pstm.setString(1, "%"+ condition.getKeyword() +"%");
 			
 			rs = pstm.executeQuery();
 			while (rs.next()) {

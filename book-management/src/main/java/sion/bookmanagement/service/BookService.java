@@ -53,8 +53,8 @@ public class BookService {
 		return book;
 	}
 	
-	public List<Book> search(String searchType, String keyword) {
-		List<Book> bookList = bookRepository.search(searchType, keyword);
+	public List<Book> search(BookSearchCondition condition) {
+		List<Book> bookList = bookRepository.search(condition);
 		return bookList;
 	}
 }

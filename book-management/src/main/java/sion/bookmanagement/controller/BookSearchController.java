@@ -3,6 +3,8 @@ package sion.bookmanagement.controller;
 import java.util.List;
 
 import sion.bookmanagement.service.Book;
+import sion.bookmanagement.service.BookSearchCondition;
+import sion.bookmanagement.service.BookSearchCondition.SearchType;
 import sion.bookmanagement.service.BookService;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
@@ -21,7 +23,11 @@ public class BookSearchController implements Controller {
 			//TODO 추후에 body에 여러개의 데이터를 내려줄 수 있다면, list_none 페이지는 하나만 있어도 된다. 
 			return new HttpResponse(null, "book_list_none");
 		} else {
-			List<Book> bookList = bookService.search(searchType, keyword);
+			BookSearchCondition condition = new BookSearchCondition();
+			condition.setSearchType(SearchType.valueOf(searchType));
+			condition.setKeyword(keyword);
+			
+			List<Book> bookList = bookService.search(condition);
 			
 			Model model = new Model();
 			model.put("bookList", bookList);

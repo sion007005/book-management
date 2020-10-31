@@ -3,6 +3,8 @@ package sion.bookmanagement.controller;
 import java.util.List;
 
 import sion.bookmanagement.service.Category;
+import sion.bookmanagement.service.CategorySearchCondition;
+import sion.bookmanagement.service.CategorySearchCondition.SearchType;
 import sion.bookmanagement.service.CategoryService;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
@@ -22,7 +24,11 @@ public class CategorySearchController implements Controller {
 			return new HttpResponse(null, "category_list_none");
 		}
 		
-		categoryList = categoryService.search(keyword);
+		CategorySearchCondition condition = new CategorySearchCondition();
+		condition.setSearchType(SearchType.valueOf(searchType));
+		condition.setKeyword(keyword);
+		
+		categoryList = categoryService.search(condition);
 		
 		Model model = new Model();
 		model.put("categoryList", categoryList);
