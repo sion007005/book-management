@@ -8,11 +8,11 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
+import sion.bookmanagement.DBConnetctionCreator;
 import sion.bookmanagement.service.Member;
 import sion.bookmanagement.service.MemberOrderType;
 import sion.bookmanagement.service.MemberSearchCondition;
 import sion.bookmanagement.util.DateUtils;
-import sion.mvc.DBConnetctionCreator;
 
 public class MemberRepository {
 	private static MemberRepository memberRepository = new MemberRepository();
@@ -76,8 +76,6 @@ public class MemberRepository {
 		}
 		
 		query += " AND age between ? and ?"; 
-				
-
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);

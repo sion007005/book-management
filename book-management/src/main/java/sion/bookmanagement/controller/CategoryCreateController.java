@@ -6,12 +6,14 @@ import sion.bookmanagement.service.Category;
 import sion.bookmanagement.service.CategoryService;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.Model;
+import sion.mvc.dispatcher.Controller;
 
 public class CategoryCreateController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override
-	public HttpResponse<Integer> command(HttpRequest httpRequest) {
+	public HttpResponse command(HttpRequest httpRequest) {
 		String categoryName = (String)httpRequest.getAttribute("name");
 		
 		Category category = new Category(categoryName);
@@ -20,7 +22,10 @@ public class CategoryCreateController implements Controller {
 
 		int categoryId = categoryService.create(category);
 		
-		return new HttpResponse<>(null, HttpResponse.REDIRECT_NAME + "/categories/info?id="+categoryId);
+		Model model = new Model();
+		model.put("categoryId", categoryId);
+		
+		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/categories/info?id="+categoryId);
 	}
 
 }

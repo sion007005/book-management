@@ -6,18 +6,23 @@ import sion.bookmanagement.util.validator.PlusNumberValidator;
 import sion.bookmanagement.util.validator.Validator;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.Model;
+import sion.mvc.dispatcher.Controller;
 
 public class MemberRemoveController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
-	public HttpResponse<Integer> command(HttpRequest httpRequest) {
+	public HttpResponse command(HttpRequest httpRequest) {
 		int id = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		
 		Validator<Integer> plusNumberValidater = new PlusNumberValidator();
 		plusNumberValidater.validate(id);
 		memberService.remove(id);
 		
-		return new HttpResponse<>(id,  HttpResponse.REDIRECT_NAME + "/members/list"); //forwarding이 아닌 전체 리스트로 redirect로 한다.
+		Model model = new Model();
+		model.put("memberId", id);
+		
+		return new HttpResponse(model,  HttpResponse.REDIRECT_NAME + "/members/list"); //forwarding이 아닌 전체 리스트로 redirect로 한다.
 	}
 }

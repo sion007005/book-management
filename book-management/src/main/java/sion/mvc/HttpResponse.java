@@ -1,15 +1,15 @@
 package sion.mvc;
 
-public class HttpResponse<T> {
+public class HttpResponse {
 	public static final String REDIRECT_NAME = "redirect:";
 	
 	private int statusCode;
-	private T body;//json이 될 수도 있고, html이 될 수도 있음
+	private Model model;
 	private String viewName;
 	private String redirectPath;
 	
-	public HttpResponse(T body, String viewName) {	
-		this.body = body;
+	public HttpResponse(Model model, String viewName) {	
+		this.model = model;
 		this.viewName = viewName;
 		makeStatusCode();
 		makeRedirectPath();
@@ -37,10 +37,6 @@ public class HttpResponse<T> {
 		return this.statusCode;
 	}
 	
-	public T getBody() {
-		return body;
-	}
-	
 	public String getViewName() {
 		return viewName;
 	}
@@ -52,5 +48,8 @@ public class HttpResponse<T> {
 	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
 	}
-	
+
+	public Model getModel() {
+		return model;
+	}
 }

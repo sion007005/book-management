@@ -11,6 +11,9 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import sion.mvc.dispatcher.Dispatcher;
+import sion.mvc.dispatcher.UriParser;
+
 public class Excutor implements Runnable {
 	
 	private final HttpExchange httpExchange;
@@ -30,7 +33,7 @@ public class Excutor implements Runnable {
 
          HttpRequest httpRequest = requestHandle(httpExchange);
          Dispatcher dispatcher = Dispatcher.getInstance();
-         HttpResponse<?> httpResponse = dispatcher.dispatch(httpRequest);
+         HttpResponse httpResponse = dispatcher.dispatch(httpRequest);
          
          responseHandle(httpExchange, httpResponse);
 		} catch (Exception e){
@@ -48,7 +51,7 @@ public class Excutor implements Runnable {
       return new HttpRequest(url, method, parameters, attributes);
   }
 
-  private void responseHandle(HttpExchange httpExchange, HttpResponse<?> httpResponse) throws IOException {
+  private void responseHandle(HttpExchange httpExchange, HttpResponse httpResponse) throws IOException {
      ResponseProcessor responseProcessor = ResponseProcessorFactory.getInstance(httpResponse.getStatusCode()); 
 	  responseProcessor.proccess(httpExchange, httpResponse);
   }

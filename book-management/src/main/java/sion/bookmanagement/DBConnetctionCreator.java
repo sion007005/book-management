@@ -1,7 +1,9 @@
-package sion.mvc;
+package sion.bookmanagement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+
+import sion.mvc.ServerContext;
 
 public class DBConnetctionCreator {
 	private static DBConnetctionCreator dbConnetctionCreator = new DBConnetctionCreator();
@@ -16,8 +18,11 @@ public class DBConnetctionCreator {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			String url = "jdbc:mysql://localhost/siondb";
-			Connection connection = DriverManager.getConnection(url, "sion", "1234");
+			String url = ServerContext.getDbUrl();
+			String id = ServerContext.getDbId();
+			String password = ServerContext.getDbPassword();
+			
+			Connection connection = DriverManager.getConnection(url, id, password);
 			System.out.println("Connected to DB!");
 			return connection;
 		} catch(ClassNotFoundException e) {

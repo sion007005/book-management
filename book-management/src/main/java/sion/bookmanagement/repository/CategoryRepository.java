@@ -8,10 +8,10 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
+import sion.bookmanagement.DBConnetctionCreator;
 import sion.bookmanagement.service.Category;
 import sion.bookmanagement.service.CategoryOrderType;
 import sion.bookmanagement.util.DateUtils;
-import sion.mvc.DBConnetctionCreator;
 
 public class CategoryRepository {
 	private static CategoryRepository categoryRepository = new CategoryRepository();

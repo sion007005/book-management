@@ -1,4 +1,4 @@
-package sion.mvc;
+package sion.mvc.dispatcher;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

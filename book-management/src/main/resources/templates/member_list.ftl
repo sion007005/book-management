@@ -259,9 +259,9 @@
             <div class="select-box">
               <select name="search-type" id="form-search-select">
                 <option value="" noSelected>검색기준</option>
-                <option value="name">이름</option>
-                <option value="email">이메일</option>
-                <option value="phone">휴대폰</option>
+                <option value="NAME">이름</option>
+                <option value="EMAIL">이메일</option>
+                <option value="PHONE">휴대폰</option>
               </select>               
        	    </div>
        	    <div class="input input-box keyword">
@@ -307,7 +307,7 @@
       </div>
       <div id="result-container">
         <div class="result-area">
-         <#list body as item>
+         <#list memberList as item>
           <div class="group_flex">
           <!-- 가급적 절대경로를 쓸 것 -->
             <div><a href="/members/info?id=${item.id}">${item.name}</a></div>

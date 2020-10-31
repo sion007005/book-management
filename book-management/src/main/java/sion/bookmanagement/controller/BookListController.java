@@ -7,12 +7,14 @@ import sion.bookmanagement.service.BookOrderType;
 import sion.bookmanagement.service.BookService;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.Model;
+import sion.mvc.dispatcher.Controller;
 
 public class BookListController implements Controller {
 	private BookService bookService = BookService.getInstance();
 	
 	@Override
-	public HttpResponse<?> command(HttpRequest httpRequest) {
+	public HttpResponse command(HttpRequest httpRequest) {
 		String orderType = (String) httpRequest.getParameter("order-type");
 		BookOrderType type = null;
 		
@@ -22,6 +24,9 @@ public class BookListController implements Controller {
 		
 		List<Book> bookList = bookService.findAll(type);
 		
-		return new HttpResponse<List<Book>>(bookList, "book_list");
+		Model model = new Model();
+		model.put("bookList", "book_list");
+		
+		return new HttpResponse(model, "book_list");
 	}	
 }

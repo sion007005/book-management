@@ -1,4 +1,4 @@
-package sion.mvc;
+package sion.mvc.render;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -10,10 +10,12 @@ import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
+import sion.mvc.FreemarkerConfigurationFactory;
+import sion.mvc.HttpResponse;
 
 public class HtmlRender {
 
-	public void render(HttpExchange httpExchange, HttpResponse<?> httpResponse) {
+	public void render(HttpExchange httpExchange, HttpResponse httpResponse) {
 		Configuration cfg = FreemarkerConfigurationFactory.getInstance(); 
 		OutputStreamWriter writer = null;
 		
@@ -33,12 +35,11 @@ public class HtmlRender {
 	      
 	      Template template = cfg.getTemplate(httpResponse.getViewName() + ".ftl");
 	      
-	      
-	      template.process(httpResponse, writer);    
-      }catch(Exception e){
+	      template.process(httpResponse.getModel(), writer); //모델만 넘겨준다.    
+      } catch (Exception e){
           e.printStackTrace();
-      }finally{
-      	if(writer != null)
+      } finally {
+      	if (writer != null)
 				try {
 					writer.close();
 				} catch (IOException e) {

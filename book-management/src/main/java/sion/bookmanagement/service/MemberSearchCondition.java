@@ -1,16 +1,38 @@
 package sion.bookmanagement.service;
 
 public class MemberSearchCondition {
-	private String searchType; //TODO 내부클래스로 enum으로 만들기
+	private SearchType searchType; //TODO 내부클래스로 enum으로 만들기
 	private String keyword;
 	private int ageFrom;
 	private int ageTo;
 	
-	public String getSearchType() {
+	public enum SearchType {
+		NAME("이름", "name"),
+		EMAIL("이메일", "email"),
+		PHONE("휴대폰", "phone");
+		
+		private String name;
+		private String columnName;
+		
+		private SearchType(String name, String columnName) {
+			this.name = name;
+			this.columnName = columnName;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getColumnName() {
+			return columnName;
+		}
+	}
+	
+	public SearchType getSearchType() {
 		return searchType;
 	}
 	
-	public void setSearchType(String searchType) {
+	public void setSearchType(SearchType searchType) {
 		this.searchType = searchType;
 	}
 	

@@ -1,14 +1,17 @@
-package sion.mvc;
+package sion.mvc.render;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import sion.mvc.HttpResponse;
+import sion.mvc.ResponseProcessor;
+
 public class Status5XXResponseProcessor implements ResponseProcessor {
 
 	@Override
-	public void proccess(HttpExchange httpExchange, HttpResponse<?> httpResponse) {
+	public void proccess(HttpExchange httpExchange, HttpResponse httpResponse) {
 		try {
 			httpExchange.sendResponseHeaders(500, 0); //상태코드, 바디사이즈
 			OutputStream outputStream = httpExchange.getResponseBody();

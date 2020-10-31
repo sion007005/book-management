@@ -144,41 +144,41 @@
       <div class="content">
       <div class="content-row">
         <span>이름:</span>
-        <span>${body.name}</span>
+        <span>${member.name}</span>
       </div>
       <div class="content-row">
         <span>성별:</span>
-        <span>${body.gender}</span>
+        <span>${member.gender}</span>
       </div>
       <div class="content-row">
         <span>나이:</span>
-        <span>${body.age}</span>
+        <span>${member.age}</span>
       </div>
       <div class="content-row">	
         <span>휴대폰:</span>
-        <span>${body.phone}</span>
+        <span>${member.phone}</span>
       </div>
       <div class="content-row">
         <span>이메일:</span>
-        <span>${body.email}</span>
+        <span>${member.email}</span>
       </div>
       <div class="content-row">
         <span>등록일:</span>
-        <span>${body.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+        <span>${member.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <div class="content-row">
         <span>최종 수정일:</span>
-        <span>${body.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+        <span>${member.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <a href="/members/list">목록</a>
-      <a href="/members/update?id=${body.id}">수정</a>
+      <a href="/members/update?id=${member.id}">수정</a>
         <button type="submit" id="modal_opne_btn">삭제</button>
       </div>
      <div id="modal">
           <div class="modal_content">
             <h2>소중한 우리의 Member...</h2>
             <p>정말 삭제하시겠어요?</p>
-            <form action="/members/remove?id=${body.id}" method="POST">
+            <form action="/members/remove?id=${member.id}" method="POST">
               <button type="submit" id="modal_remove_btn">삭제</button>
             </form>
             <button type="button" id="modal_close_btn">닫기</button>

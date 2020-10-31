@@ -5,15 +5,19 @@ import sion.bookmanagement.service.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.Model;
+import sion.mvc.dispatcher.Controller;
 
 public class MemberUpdateFormController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
-	public HttpResponse<?> command(HttpRequest httpRequest) {
+	public HttpResponse command(HttpRequest httpRequest) {
 		Member member = memberService.findOneById(NumberUtils.parseInt((String) httpRequest.getParameter("id")));
-		return new HttpResponse<Member>(member, "member_update_form");
+		Model model = new Model();
+		model.put("member", member);
+		
+		return new HttpResponse(model, "member_update_form");
 	}
-	
 }

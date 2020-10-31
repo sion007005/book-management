@@ -10,13 +10,15 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.Model;
+import sion.mvc.dispatcher.Controller;
 
 public class BookUpdateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
 	private BookService bookService = BookService.getInstance();
 
 	@Override
-	public HttpResponse<?> command(HttpRequest httpRequest) {
+	public HttpResponse command(HttpRequest httpRequest) {
 		int categoryIdNumber = NumberUtils.parseInt((String)httpRequest.getAttribute("category_id"));
 		String trimedTitle = StringUtils.trim((String)httpRequest.getAttribute("title"));
 		String trimedAuthor = StringUtils.trim((String)httpRequest.getAttribute("author"));
@@ -35,7 +37,10 @@ public class BookUpdateController implements Controller {
 		bookValidator.validate(book);
 		bookService.update(book);
 		
-		return new HttpResponse<Book>(book, HttpResponse.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
+		Model model = new Model();
+		model.put("book", book);
+		
+		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
 	}
 
 }
