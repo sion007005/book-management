@@ -19,7 +19,6 @@ public class MemberFormController implements Controller {
 		
 		if (id == null || id.length() == 0) {
 			//TODO 파일 하나로 합치기 (basic / update -> member_form으로)
-			model.put("member", new Member());
 			return new HttpResponse(model, "member_form");
 		} else {
 			Member member = memberService.findOneById(NumberUtils.parseInt(id));

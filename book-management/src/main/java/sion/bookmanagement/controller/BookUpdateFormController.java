@@ -5,7 +5,6 @@ import java.util.List;
 import sion.bookmanagement.service.Book;
 import sion.bookmanagement.service.BookService;
 import sion.bookmanagement.service.Category;
-import sion.bookmanagement.service.CategoryOrderType;
 import sion.bookmanagement.service.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.HttpRequest;
@@ -20,13 +19,13 @@ public class BookUpdateFormController implements Controller {
 	@Override
 	public HttpResponse command(HttpRequest httpRequest) {
 		Book book = bookService.findOneById(NumberUtils.parseInt((String) httpRequest.getParameter("id")));
-		List<Category> categoryList = categoryService.findAll(CategoryOrderType.NAME);
+		List<Category> categoryList = categoryService.findAll(null);
 		
 		Model model = new Model();
 		model.put("book", book);
 		model.put("categoryList", categoryList);
 		
-		return new HttpResponse(model, "book_update_form");
+		return new HttpResponse(model, "book_form");
 	}
 
 }

@@ -18,6 +18,6 @@ public class MemberUpdateFormController implements Controller {
 		Model model = new Model();
 		model.put("member", member);
 		
-		return new HttpResponse(model, "member_update_form");
+		return new HttpResponse(model, "member_form");
 	}
 }

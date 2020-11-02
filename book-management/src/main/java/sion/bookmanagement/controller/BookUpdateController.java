@@ -5,6 +5,7 @@ import java.util.Date;
 
 import sion.bookmanagement.service.Book;
 import sion.bookmanagement.service.BookService;
+import sion.bookmanagement.service.CategoryService;
 import sion.bookmanagement.util.DateUtils;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
@@ -16,6 +17,7 @@ import sion.mvc.dispatcher.Controller;
 public class BookUpdateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
 	private BookService bookService = BookService.getInstance();
+	private CategoryService categoryService = CategoryService.getInstance();
 
 	@Override
 	public HttpResponse command(HttpRequest httpRequest) {
@@ -28,7 +30,6 @@ public class BookUpdateController implements Controller {
 		Date createdAt = DateUtils.getDate((String)httpRequest.getAttribute("createdAt"));
 		int bookIdNumber = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		
-		System.out.println("업데이트한 가격은" +priceNumber);
 		Book book = new Book(categoryIdNumber, trimedTitle, trimedAuthor, stockNumber, yearNumber, priceNumber);
 		book.setId(bookIdNumber);
 		book.setCreatedAt(createdAt);

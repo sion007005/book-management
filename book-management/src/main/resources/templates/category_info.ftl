@@ -143,28 +143,28 @@
       <div class="content">
       <div class="content-row">
         <span>카테고리 ID:</span>
-        <span>${body.id}</span>
+        <span>${category.id}</span>
       </div>
       <div class="content-row">
         <span>카테고리 명:</span>
-        <span>${body.name}</span>
+        <span>${category.name}</span>
       </div>
       <div class="content-row">
         <span>등록일:</span>
-        <span>${body.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+        <span>${category.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <div class="content-row">
         <span>최종 수정일:</span>
-        <span>${body.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+        <span>${category.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <a href="/categories/list">목록</a>
-      <a href="/categories/update?id=${body.id}">수정</a>
+      <a href="/categories/update?id=${category.id}">수정</a>
         <button type="submit" id="modal_opne_btn">삭제</button>
       </div>
      <div id="modal">
           <div class="modal_content">
             <p>정말 삭제하시겠어요?</p>
-            <form action="/categories/remove?id=${body.id}" method="POST">
+            <form action="/categories/remove?id=${category.id}" method="POST">
               <button type="submit" id="modal_remove_btn">삭제</button>
             </form>
             <button type="button" id="modal_close_btn">닫기</button>

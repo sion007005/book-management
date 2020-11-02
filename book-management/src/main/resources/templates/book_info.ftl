@@ -144,41 +144,41 @@
       <div class="content">
       <div class="content-row">
         <span>제목:</span>
-        <span>${body.title}</span>
+        <span>${book.title}</span>
       </div>
       <div class="content-row">
         <span>저자:</span>
-        <span>${body.author}</span>
+        <span>${book.author}</span>
       </div>
       <div class="content-row">
         <span>출판년도:</span>
-        <span>${body.year?replace(",","")}</span>
+        <span>${book.year?replace(",","")}</span>
       </div>
       <div class="content-row">	
         <span>가격:</span>
-        <span>${body.price}</span>
+        <span>${book.price}</span>
       </div>
       <div class="content-row">
         <span>재고:</span>
-        <span>${body.stock}</span>
+        <span>${book.stock}</span>
       </div>
        <div class="content-row">
         <span>등록일:</span>
-        <span>${body.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+        <span>${book.createdAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <div class="content-row">
         <span>최종 수정일:</span>
-        <span>${body.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
+        <span>${book.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <a href="/books/list">목록</a>
-      <a href="/books/update?id=${body.id}">수정</a>
+      <a href="/books/update?id=${book.id}">수정</a>
         <button type="submit" id="modal_opne_btn">삭제</button>
       </div>
      <div id="modal">
           <div class="modal_content">
             <h2>소중한 우리의 Book...</h2>
             <p>정말 삭제하시겠어요?</p>
-            <form action="/books/remove?id=${body.id}" method="POST">
+            <form action="/books/remove?id=${book.id}" method="POST">
               <button type="submit" id="modal_remove_btn">삭제</button>
             </form>
             <button type="button" id="modal_close_btn">닫기</button>

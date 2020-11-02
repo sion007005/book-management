@@ -1,5 +1,7 @@
 package sion.bookmanagement.controller;
 
+import java.util.List;
+
 import sion.bookmanagement.service.Category;
 import sion.bookmanagement.service.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
@@ -13,10 +15,13 @@ public class CategoryUpdateFormController implements Controller {
 	@Override
 	public HttpResponse command(HttpRequest httpRequest) {
 		Category category = categoryService.findOneById(NumberUtils.parseInt((String) httpRequest.getParameter("id")));
+		List<Category> categoryList = categoryService.findAll(null);
 		
 		Model model = new Model();
 		model.put("category", category);
-		return new HttpResponse(model, "category_update_form");
+		model.put("categoryList", categoryList);
+		
+		return new HttpResponse(model, "category_form");
 	}
 
 }
