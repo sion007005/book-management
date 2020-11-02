@@ -6,5 +6,13 @@ public class ServerRunnerException extends RuntimeException {
 	public ServerRunnerException(Throwable t) {
 		super(t);
 	}
+	
+	public ServerRunnerException(String message) {
+		super(message);
+	}
+	
+	public ServerRunnerException(String message, Throwable t) {
+		super(message, t);
+	}
 
 }

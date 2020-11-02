@@ -1,9 +1,17 @@
 package sion.mvc.dispatcher;
 
-public class DispatcherException extends Exception {
+public class DispatcherException extends RuntimeException {
 
-	public DispatcherException(Exception e) {
-		// TODO Auto-generated constructor stub
+	public DispatcherException(Throwable e) {
+		super(e);
 	}
-
+	
+	public DispatcherException(String message) {
+		super(message);
+	}
+	
+	public DispatcherException(String message, Throwable t) {
+		super(message, t);
+	}
+	
 }

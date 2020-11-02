@@ -51,7 +51,7 @@ public class BookManagementControllerFactory implements ControllerFactory {
 		Controller controller = controllers.get(key);
 		
 		if (controller == null) {
-			throw new FileNotFoundException();
+			throw new FileNotFoundException("해당하는 controller가 없습니다.");
 		}
 		
 		return controllers.get(key);
