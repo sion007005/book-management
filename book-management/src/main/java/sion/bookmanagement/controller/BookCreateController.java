@@ -11,12 +11,14 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class BookCreateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
 	private BookService bookService = BookService.getInstance();
 	
 	@Override
+	@Login
 	public HttpResponse command(HttpRequest httpRequest) {	
 		String trimedTitle = StringUtils.trim((String)httpRequest.getAttribute("title"));
 		String trimedAuthor = StringUtils.trim((String)httpRequest.getAttribute("author"));

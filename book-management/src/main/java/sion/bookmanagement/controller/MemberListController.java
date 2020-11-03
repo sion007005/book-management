@@ -9,11 +9,13 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class MemberListController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 
 	@Override
+	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
 		String orderType = (String) httpRequest.getParameter("order-type");
 		MemberOrderType type = null;

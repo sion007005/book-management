@@ -11,11 +11,13 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class MemberSearchController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 
 	@Override
+	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
 		String searchType = (String) httpRequest.getParameter("search-type");
 		String ageFromStr = (String) httpRequest.getParameter("age-from");

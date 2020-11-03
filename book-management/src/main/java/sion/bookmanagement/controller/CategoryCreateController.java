@@ -8,11 +8,13 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class CategoryCreateController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override
+	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
 		String categoryName = (String)httpRequest.getAttribute("name");
 		

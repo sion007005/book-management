@@ -8,11 +8,13 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class CategoryFormController implements Controller {
 	CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override
+	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
 		List<Category> categoryList = categoryService.findAll(null);
 		

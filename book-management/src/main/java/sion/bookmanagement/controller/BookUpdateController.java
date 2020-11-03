@@ -13,6 +13,7 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class BookUpdateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
@@ -20,6 +21,7 @@ public class BookUpdateController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 
 	@Override
+	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
 		int categoryIdNumber = NumberUtils.parseInt((String)httpRequest.getAttribute("category_id"));
 		String trimedTitle = StringUtils.trim((String)httpRequest.getAttribute("title"));
