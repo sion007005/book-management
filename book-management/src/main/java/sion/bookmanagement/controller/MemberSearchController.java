@@ -17,7 +17,7 @@ public class MemberSearchController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 
 	@Override
-	@Login
+	@Login                                                                                                         
 	public HttpResponse command(HttpRequest httpRequest) {
 		String searchType = (String) httpRequest.getParameter("search-type");
 		String ageFromStr = (String) httpRequest.getParameter("age-from");

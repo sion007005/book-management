@@ -170,7 +170,6 @@ public class MemberRepository {
 			conn = DBConnetctionCreator.getInstance().getConnection();
 			
 			if (orderType != null) {
-				//TODO 쿼리문 수정 (쿼리문에 + 문자열을 해야할 때는 구조적으로 정해진 문자 말고는 들어오는 일이 없도록 해줘야 함)
 				query += (" ORDER BY " + orderType.getColumnName());
 			}
 			

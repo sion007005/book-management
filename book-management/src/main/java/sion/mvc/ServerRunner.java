@@ -5,8 +5,11 @@ import java.util.Properties;
 
 import com.sun.net.httpserver.HttpServer;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.mvc.support.PropertiesLoader;
 
+//(lombok에서 제공하는 annotation)
+@Slf4j 
 public class ServerRunner {
 	//private으로 선언 - 특별한 경우가 아니라면, 외부에서 참조할 수 없다.
 	private HttpServer server;
@@ -17,8 +20,9 @@ public class ServerRunner {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("HTTP Server Start!!");
-      ServerRunner runner = new ServerRunner();
+		log.info("Http Server Start!");
+		
+		ServerRunner runner = new ServerRunner();
       runner.preServerStart();
 		runner.serverStart();
 		runner.postServerStart();
@@ -37,7 +41,8 @@ public class ServerRunner {
 			server.createContext("/", new CustomHttpHandler());
 			server.start(); // httpServer start
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
+			// 어디서 에러가 생겼는지 정확히 알기 위해 e도 함께 넘긴다. 
 		}
 	}
 

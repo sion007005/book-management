@@ -3,6 +3,7 @@ package sion.bookmanagement.controller;
 import sion.bookmanagement.service.Member;
 import sion.bookmanagement.service.MemberService;
 import sion.bookmanagement.util.NumberUtils;
+import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
@@ -19,7 +20,7 @@ public class MemberFormController implements Controller {
 		String id = (String) httpRequest.getParameter("id");
 		Model model = new Model();
 		
-		if (id == null || id.length() == 0) {
+		if (StringUtils.isEmpty(id)) {
 			//TODO 파일 하나로 합치기 (basic / update -> member_form으로)
 			return new HttpResponse(model, "member_form");
 		} else {

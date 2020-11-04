@@ -2,11 +2,13 @@ package sion.mvc.dispatcher;
 
 import java.lang.reflect.Method; //reflection 검색! 자바 클래스의 메타정보(=데이터에 대한 데이터)를 제공함 
 
+import lombok.extern.slf4j.Slf4j;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.ServerContext;
 
+@Slf4j
 public class Dispatcher {
 	private static Dispatcher dispatcher = new Dispatcher();
 	
@@ -27,11 +29,15 @@ public class Dispatcher {
 			HttpResponse httpResponse = controller.command(httpRequest);
 			postCommand(httpRequest, httpResponse);
 			return httpResponse;
-		} catch (FileNotFoundException fe) {
+		} catch (FileNotFoundException e) {
+			log.error(e.getMessage(), e);
+
 			HttpResponse httpResponse = new HttpResponse(new Model(), "");
 			httpResponse.setStatusCode(404);
 			return httpResponse;
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			
 			Model model = new Model();
 			model.put("errorMessage", e.getMessage());
 			HttpResponse httpResponse = new HttpResponse(model, "");
