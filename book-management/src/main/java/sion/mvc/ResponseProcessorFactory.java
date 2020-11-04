@@ -2,7 +2,7 @@ package sion.mvc;
 
 import sion.mvc.render.Status2XXResponseProcessor;
 import sion.mvc.render.Status3XXResponseProcessor;
-import sion.mvc.render.Status4XXResponseProcessor;
+import sion.mvc.render.Status404ResponseProcessor;
 import sion.mvc.render.Status5XXResponseProcessor;
 
 public class ResponseProcessorFactory {
@@ -16,7 +16,7 @@ public class ResponseProcessorFactory {
 		} else if (statusCode >= 300 && statusCode < 400) {
 			return new Status3XXResponseProcessor();
 		} else if (statusCode >= 400 && statusCode < 500) {
-			return new Status4XXResponseProcessor();
+			return new Status404ResponseProcessor();
 		} else if (statusCode >= 500 && statusCode < 600) {
 			return new Status5XXResponseProcessor();
 		}
