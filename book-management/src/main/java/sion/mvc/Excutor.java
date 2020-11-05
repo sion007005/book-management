@@ -4,10 +4,11 @@ import java.io.IOException;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.mvc.dispatcher.Dispatcher;
 
+@Slf4j
 public class Excutor implements Runnable {
-	
 	private final HttpExchange httpExchange;
 
 	public Excutor(HttpExchange httpExchange) {
@@ -17,9 +18,9 @@ public class Excutor implements Runnable {
 	@Override
 	public void run() {
 		try {
-         System.out.println("URI : " + httpExchange.getRequestURI() + " Method : " + httpExchange.getRequestMethod());
+			log.info("URI : " + httpExchange.getRequestURI() + " Method : " + httpExchange.getRequestMethod());
          
-         if(httpExchange.getRequestURI().getPath().startsWith("/favicon.ico")) {
+         if (httpExchange.getRequestURI().getPath().startsWith("/favicon.ico")) {
          	return;
          }
 
@@ -28,13 +29,13 @@ public class Excutor implements Runnable {
          
          responseHandle(httpExchange, httpResponse);
 		} catch (Exception e){
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
 
   private void responseHandle(HttpExchange httpExchange, HttpResponse httpResponse) throws IOException {
      ResponseProcessor responseProcessor = ResponseProcessorFactory.getInstance(httpResponse.getStatusCode()); 
-	  responseProcessor.proccess(httpExchange, httpResponse);
+     responseProcessor.proccess(httpExchange, httpResponse);
   }
 
   

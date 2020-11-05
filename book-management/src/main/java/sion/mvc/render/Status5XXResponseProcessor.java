@@ -5,9 +5,11 @@ import java.io.OutputStream;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.mvc.HttpResponse;
 import sion.mvc.ResponseProcessor;
 
+@Slf4j
 public class Status5XXResponseProcessor implements ResponseProcessor {
 
 	@Override
@@ -18,7 +20,7 @@ public class Status5XXResponseProcessor implements ResponseProcessor {
 			outputStream.write("unexpected error...".getBytes());
 			outputStream.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
 

@@ -13,6 +13,7 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 
 import lombok.extern.slf4j.Slf4j;
+import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
@@ -42,11 +43,22 @@ public class Dispatcher {
 			HttpResponse httpResponse = controller.command(httpRequest);
 			postCommand(httpRequest, httpResponse);
 			return httpResponse;
-		} catch (UnAuthenticatedException e) {
+		} catch (ForbiddenException e) {
 			log.error(e.getMessage(), e);
-
-			HttpResponse httpResponse = new HttpResponse(new Model(), "");
+			
+			Model model = new Model();
+			model.put("_error_message", e.getMessage());
+			HttpResponse httpResponse = new HttpResponse(new Model(), "error/forbidden");
 			httpResponse.setStatusCode(403);
+			
+			return httpResponse;
+		} catch (FileNotFoundException e) {
+			log.error(e.getMessage(), e);
+			
+			Model model = new Model();
+			model.put("_error_message", e.getMessage());
+			HttpResponse httpResponse = new HttpResponse(new Model(), "error/not_found");
+			httpResponse.setStatusCode(404);
 			
 			return httpResponse;
 		} catch (Exception e) {
@@ -54,9 +66,9 @@ public class Dispatcher {
 			
 			Model model = new Model();
 			model.put("errorMessage", e.getMessage());
-			HttpResponse httpResponse = new HttpResponse(model, "");
+			HttpResponse httpResponse = new HttpResponse(model, "error/server_error");
 			httpResponse.setStatusCode(500);
-			e.printStackTrace();
+			
 			return httpResponse;
 		}
 	}
@@ -79,14 +91,16 @@ public class Dispatcher {
  	  if (uriString.contains("?")) {
  		  queryString = uriString.substring(uriString.indexOf("?") + 1, uriString.length());
  	  } 
-      System.out.println("query string : " + queryString);
+ 	  
+ 	  log.info("query string : " + queryString);
 
-      Map<String, Object> parameters = new HashMap<>();
+ 	  Map<String, Object> parameters = new HashMap<>();
 
-      UriParser uriParser = new UriParser();
-      uriParser.parseQuery(queryString, parameters);
-      parameters.forEach((k, v)->System.out.println("key : " + k + " / value : " + v));
-      return parameters;
+     UriParser uriParser = new UriParser();
+     uriParser.parseQuery(queryString, parameters);
+     parameters.forEach((k, v)-> log.info("key : " + k + " / value : " + v));
+     
+     return parameters;
    }
 
    private Map<String, Object> makeAttributes(HttpExchange httpExchange) throws IOException {
@@ -97,17 +111,20 @@ public class Dispatcher {
        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 
        StringBuffer response = new StringBuffer();
-       while((inputLine = br.readLine()) != null){
+       
+       while ((inputLine = br.readLine()) != null) {
            response.append(inputLine);
        }
+       
        String bodyString = response.toString();
-       System.out.println("body string : " + bodyString);
+       log.info("body string : " + bodyString);
 
        Map<String, Object> attributes = new HashMap<>();
 
        UriParser uriParser = new UriParser();
        uriParser.parseQuery(bodyString, attributes);
-       attributes.forEach((k, v)->System.out.println("key : " + k + " / value : " + v));
+       attributes.forEach((k, v)-> log.info("key : " + k + " / value : " + v));
+       
        return attributes;
    }
 
@@ -136,10 +153,13 @@ public class Dispatcher {
 			// sid=1&20201104112034 회원번호$년월일시분초 이런 형태로 쿠키에 set
 			// 쿠키에 이 값이 있으면 로그인이 된 것이고, 없으면 로그인이 필요하지만 안 된 것으로 판단-> 예외던짐(403 forbidden 접근금지)  
 			String sid = CookieUtils.getValue(httpExchange, "sid");
+			
 			//TODO  sid를 받아온 값이 있으면 통과 없으면 아래 예외 던지도록 
-//			throw new UnAuthenticatedException(); //TODO 메세지 넣기 : 권한이  없습니다!
+			//throw new UnAuthenticatedException(); //TODO 메세지 넣기 : 권한이  없습니다!
+			if (StringUtils.isEmpty(sid)) {
+				throw new ForbiddenException("권한이 없는 페이지입니다.");
+			} 
 	   } 
-	   
 	}
 
 	private void postCommand(HttpRequest httpRequest, HttpResponse httpResponse) {

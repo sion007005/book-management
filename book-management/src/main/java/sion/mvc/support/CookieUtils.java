@@ -4,6 +4,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import lombok.extern.slf4j.Slf4j;
+import sion.mvc.dispatcher.ForbiddenException;
 
 @Slf4j
 public class CookieUtils {
@@ -14,7 +15,23 @@ public class CookieUtils {
 		log.info("Cookie: "+ cookie);
 		
 		//TODO 첫번째 sid 에 대한 값을 파싱해서 리턴하기 (위에 주석에서는 1) 
-		return null;
+		if (cookie == null) {
+			return null;
+		}
+		
+		int sidIdx = cookie.indexOf("sid");
+		if (sidIdx < 0) {
+			return null;
+		}
+		
+		String temp = cookie.substring(sidIdx);
+		String sid = temp.substring(temp.indexOf("=")+1);
+		
+		if(sid.contains(";")) {
+			sid = sid.replace(";", "");
+		}
+		
+		return sid;
 	}
 	
 	// 아이디 패스워드를 로그인 페이지에서 치고 로그인 눌렀을 때, 맞는 정보일 경우 쿠키를 굽는다(http header에 set cookie하는 역할)

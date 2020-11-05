@@ -6,9 +6,11 @@ import java.io.OutputStream;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.mvc.HttpResponse;
 import sion.mvc.ResponseProcessor;
 
+@Slf4j
 public class Status3XXResponseProcessor implements ResponseProcessor {
 
 	@Override
@@ -17,12 +19,12 @@ public class Status3XXResponseProcessor implements ResponseProcessor {
    	Headers headers = httpExchange.getResponseHeaders();
    	headers.add("Location", httpResponse.getRedirectPath());
    	try {
-			httpExchange.sendResponseHeaders(302, 0);
+			httpExchange.sendResponseHeaders(302, 0); //상태코드, 바디사이즈
 			OutputStream outputStream = httpExchange.getResponseBody();
 			outputStream.write("".getBytes());
 			outputStream.close();
 		} catch (IOException e) {
-			e.printStackTrace();
-		} //상태코드, 바디사이즈
+			log.error(e.getMessage(), e);
+		}
    }      	
 }

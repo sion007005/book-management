@@ -3,6 +3,9 @@ package sion.bookmanagement.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class DateUtils {
 	public static java.util.Date getDate(String date) {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -11,7 +14,7 @@ public class DateUtils {
 		try {
 			created = fm.parse(date);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		return created;
 	}

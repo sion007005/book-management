@@ -3,8 +3,10 @@ package sion.bookmanagement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.mvc.ServerContext;
 
+@Slf4j
 public class DBConnetctionCreator {
 	private static DBConnetctionCreator dbConnetctionCreator = new DBConnetctionCreator();
 	private DBConnetctionCreator() {
@@ -23,7 +25,7 @@ public class DBConnetctionCreator {
 			String password = ServerContext.getDbPassword();
 			
 			Connection connection = DriverManager.getConnection(url, id, password);
-			System.out.println("Connected to DB!");
+			log.info("Connected to DB!");
 			return connection;
 		} catch(ClassNotFoundException e) {
 			throw new RuntimeException("드라이버 호출 실패", e);

@@ -7,10 +7,12 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class BookInfoController implements Controller {
 	private BookService bookService = BookService.getInstance();
 
+	@Login
 	@Override
 	public HttpResponse command(HttpRequest httpRequest) {
 		int id = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
