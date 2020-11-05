@@ -12,12 +12,15 @@ public class BookManagementControllerFactory implements ControllerFactory {
 	Map<String, Controller> controllers = new HashMap<>();
 	
 	public BookManagementControllerFactory() {
+		controllers.put("/login/form&GET", new LoginFormController());
+//		controllers.put("/login/check&POST", new LoginCheckController());
+		
 		controllers.put("/categories/intro&GET", new CategoryListController());
 		controllers.put("/categories/form&GET", new CategoryFormController());
 		controllers.put("/categories/create&POST", new CategoryCreateController());
 		controllers.put("/categories/list&GET", new CategoryListController());
 		controllers.put("/categories/info&GET", new CategoryInfoController());
-		controllers.put("/categories/update&GET", new CategoryUpdateFormController());
+		controllers.put("/categories/update&GET", new CategoryFormController());
 		controllers.put("/categories/update&POST", new CategoryUpdateController());
 		controllers.put("/categories/remove&POST", new CategoryRemoveController());
 		controllers.put("/categories/search&GET", new CategorySearchController());
@@ -29,13 +32,13 @@ public class BookManagementControllerFactory implements ControllerFactory {
 
 		controllers.put("/books/create&POST", new BookCreateController());
 		controllers.put("/books/update&POST", new BookUpdateController());
-		controllers.put("/books/update&GET", new BookUpdateFormController());
+		controllers.put("/books/update&GET", new BookFormController());
 		controllers.put("/books/remove&POST", new BookRemoveController());
 		controllers.put("/books/list&GET", new BookListController());
 		controllers.put("/books/info&GET", new BookInfoController());
 		
 		controllers.put("/members/intro&GET", new MemberListController());
-		controllers.put("/members/update&GET", new MemberUpdateFormController());
+		controllers.put("/members/update&GET", new MemberFormController());
 		controllers.put("/members/info&GET", new MemberInfoController());
 		controllers.put("/members/form&GET", new MemberFormController());
 		

@@ -17,16 +17,14 @@ public class MemberFormController implements Controller {
 	@Override
 	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
-		String id = (String) httpRequest.getParameter("id");
 		Model model = new Model();
 		
-		if (StringUtils.isEmpty(id)) {
-			//TODO 파일 하나로 합치기 (basic / update -> member_form으로)
-			return new HttpResponse(model, "member_form");
-		} else {
+		String id = (String) httpRequest.getParameter("id");
+		if (!StringUtils.isEmpty(id)) {
 			Member member = memberService.findOneById(NumberUtils.parseInt(id));
 			model.put("member", member);
-			return new HttpResponse(model, "member_form");
 		}
+		
+		return new HttpResponse(model, "member_form");
 	}
 }

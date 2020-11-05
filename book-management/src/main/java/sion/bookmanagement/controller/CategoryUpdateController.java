@@ -15,8 +15,8 @@ import sion.mvc.dispatcher.Login;
 public class CategoryUpdateController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
-	@Override
 	@Login
+	@Override
 	public HttpResponse command(HttpRequest httpRequest) {
 		int categoryId = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		String categoryName = (String)httpRequest.getAttribute("name");
