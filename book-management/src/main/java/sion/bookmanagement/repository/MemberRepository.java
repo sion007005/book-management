@@ -31,7 +31,7 @@ public class MemberRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "INSERT INTO members(name, gender, email, age, phone, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO members(name, gender, email, age, phone, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			pstm.setString(1, member.getName());
@@ -39,8 +39,9 @@ public class MemberRepository {
 			pstm.setString(3, member.getEmail());
 			pstm.setInt(4, member.getAge());
 			pstm.setString(5, member.getPhone());
-			pstm.setTimestamp(6, DateUtils.getTimestamp(member.getCreatedAt()));
-			pstm.setTimestamp(7, DateUtils.getTimestamp(member.getUpdatedAt()));
+			pstm.setString(6, member.getPassword());
+			pstm.setTimestamp(7, DateUtils.getTimestamp(member.getCreatedAt()));
+			pstm.setTimestamp(8, DateUtils.getTimestamp(member.getUpdatedAt()));
 			pstm.executeUpdate(); 
 			
 			rs = pstm.getGeneratedKeys();  
@@ -109,7 +110,7 @@ public class MemberRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "UPDATE members SET name=?, gender=?, email=?, age=?, phone=?, created_at=?, updated_at=? WHERE member_id=?";
+			String query = "UPDATE members SET name=?, gender=?, email=?, age=?, phone=?, password=?, created_at=?, updated_at=? WHERE member_id=?";
 			pstm = conn.prepareStatement(query);
 			
 			pstm.setString(1, member.getName());
@@ -117,9 +118,10 @@ public class MemberRepository {
 			pstm.setString(3, member.getEmail());
 			pstm.setInt(4, member.getAge());
 			pstm.setString(5, member.getPhone());
-			pstm.setTimestamp(6, DateUtils.getTimestamp(member.getCreatedAt()));
-			pstm.setTimestamp(7, DateUtils.getTimestamp(member.getUpdatedAt()));
-			pstm.setInt(8, member.getId());
+			pstm.setString(6, member.getPassword());
+			pstm.setTimestamp(7, DateUtils.getTimestamp(member.getCreatedAt()));
+			pstm.setTimestamp(8, DateUtils.getTimestamp(member.getUpdatedAt()));
+			pstm.setInt(9, member.getId());
 			
 			pstm.executeUpdate();
 		} catch (SQLException e) {
@@ -164,7 +166,7 @@ public class MemberRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Member> memberList = new ArrayList<Member>();
-		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM MEMBERS";
+		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM MEMBERS";
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
@@ -202,7 +204,7 @@ public class MemberRepository {
 		
 		try {
 			conn = DBConnetctionCreator.getInstance().getConnection();
-			String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members WHERE member_id = ?";
+			String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM members WHERE member_id = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
 			
@@ -235,6 +237,7 @@ public class MemberRepository {
 		member.setEmail(rs.getString("email"));
 		member.setAge(rs.getInt("age"));
 		member.setPhone(rs.getString("phone"));
+		member.setPassword(rs.getString("password"));
 		member.setCreatedAt(rs.getTimestamp("created_at"));
 		member.setUpdatedAt(rs.getTimestamp("updated_at"));
 		

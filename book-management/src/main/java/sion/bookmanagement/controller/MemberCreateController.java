@@ -24,9 +24,10 @@ public class MemberCreateController implements Controller {
 		String emailEnd = (String)httpRequest.getAttribute("form-email-select");
 		String phone = (String)httpRequest.getAttribute("phone");
 		int ageNumber = NumberUtils.parseInt((String)httpRequest.getAttribute("age"));
+		String password = (String)httpRequest.getAttribute("password");
 		
 		String emailAddress = emailFront + "@" + emailEnd;
-		Member member = new Member(trimedName, trimedGender, emailAddress, ageNumber, phone);
+		Member member = new Member(trimedName, trimedGender, emailAddress, ageNumber, phone, password);
 		member.setCreatedAt(new Date());
 		member.setUpdatedAt(new Date());
 		

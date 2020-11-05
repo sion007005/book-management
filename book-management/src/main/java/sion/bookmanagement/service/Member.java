@@ -9,17 +9,19 @@ public class Member {
 	private String email;
 	private Integer age;
 	private String phone;
+	private String password;
 	private Date createdAt;
 	private Date updatedAt; 
 	
 	public Member() {}
 	
-	public Member(String name, String gender, String email, Integer age, String phone) {
+	public Member(String name, String gender, String email, Integer age, String phone, String password) {
 		this.name = name;
 		this.gender = gender;
 		this.email = email;
 		this.age = age;
 		this.phone = phone;
+		this.password = password;
 	}
 	
 	public Integer getId() {
@@ -85,4 +87,14 @@ public class Member {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
 }

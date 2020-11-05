@@ -267,6 +267,17 @@
 					  </#if>
 					</select>
 				</div>
+				<div class="form-input">
+					<#if member??>
+					<input class="input password" name="password" data-type="password"
+					placeholder="비밀번호 변경*" type="password" maxlength="20" value=${member.password}
+					onkeyup="this.value=this.value.replace(/' '/g,'');">
+					<#else>
+					<input class="input password" name="password" data-type="password"
+					placeholder="비밀번호 설정*" type="password" maxlength="20" 
+					onkeyup="this.value=this.value.replace(/' '/g,'');">
+					</#if>
+				</div>
 				<div class="form-input has-button">
 					<#if member??>
 					<input class="input phone" name="phone" data-type="phone"
@@ -299,21 +310,22 @@
     
     
     <script>
-		const selectEmailBtn = document
-				.querySelector('#form-email-select');
+    	const selectEmailBtn = document.querySelector('#form-email-select');
 		selectEmailBtn.addEventListener('click', getEmailAddress);
+		
 		function getEmailAddress(e) {
-			const selected = e.target.value;
-			const emailInput = document.querySelector('.email-end');
-			if (selected === '직접입력') {
-				emailInput.placeholder = '';
-				emailInput.value = '';
-				emailInput.disabled = false;
-			} else {
-				emailInput.value = selected;
-				emailInput.disabled = true;
-			}
-		};
+    		const selected = e.target.value;
+    		const emailInput = document.querySelector('.email-end');
+        	
+    		if(selected === '직접입력') {
+        		emailInput.placeholder = '';
+        		emailInput.value = '';
+        		emailInput.disabled = false;
+        	} else {
+        		emailInput.value = selected;
+        		emailInput.disabled = true;
+        	}
+    	};
 	</script>
   </body>
 </html>

@@ -25,12 +25,13 @@ public class MemberUpdateController implements Controller {
 		String emailFront = (String)httpRequest.getAttribute("email-front");
 		String emailEnd = (String)httpRequest.getAttribute("form-email-select");
 		String phone = (String)httpRequest.getAttribute("phone");
+		String password = (String)httpRequest.getAttribute("password");
 		int age = NumberUtils.parseInt((String)httpRequest.getAttribute("age"));
 		int memberId = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		Date createdAt = DateUtils.getDate((String)httpRequest.getAttribute("createdAt"));
 		
 		String emailAddress = emailFront + "@" + emailEnd;
-		Member member = new Member(trimedName, gender, emailAddress, age, phone);
+		Member member = new Member(trimedName, gender, emailAddress, age, phone, password);
 		member.setId(memberId);
 		member.setCreatedAt(createdAt);
 		member.setUpdatedAt(new Date());

@@ -2,8 +2,8 @@ package sion.mvc.dispatcher;
 
 public class DispatcherException extends RuntimeException {
 
-	public DispatcherException(Throwable e) {
-		super(e);
+	public DispatcherException(Throwable t) {
+		super(t);
 	}
 	
 	public DispatcherException(String message) {
