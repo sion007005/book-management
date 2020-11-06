@@ -9,14 +9,12 @@ import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.dispatcher.Controller;
-import sion.mvc.dispatcher.Login;
 
 public class MemberCreateController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
-	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
 		String trimedName = StringUtils.trim((String)httpRequest.getAttribute("name"));
 		String trimedGender = StringUtils.trim((String)httpRequest.getAttribute("gender"));

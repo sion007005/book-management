@@ -30,7 +30,7 @@ public class Status403ResponseProcessor implements ResponseProcessor {
 				throw new Exception();
 			} 
 		} catch (Exception e) {
-		//TODO 프리마커 파일로 말고 원래코드대로 outputstream 해주는 코드
+		//프리마커 파일로 말고 원래코드대로 outputstream 해주는 코드
 			try {
 				httpExchange.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
 				OutputStream outputStream = httpExchange.getResponseBody();

@@ -42,6 +42,7 @@ public class Dispatcher {
 			preCommand(controller, httpExchange);
 			HttpResponse httpResponse = controller.command(httpRequest);
 			postCommand(httpRequest, httpResponse);
+			
 			return httpResponse;
 		} catch (ForbiddenException e) {
 			log.error(e.getMessage(), e);
@@ -134,9 +135,10 @@ public class Dispatcher {
    }
 
 	private void preCommand(Controller controller, HttpExchange httpExchange) throws DispatcherException {
-		//1. 로그인 체크 -> 필요한가(=@Login이 있는가)? 
-		// 1-1) 필요하다면, 로그인이 되었는가? 확인 
-		//  되었으면, controller.command 실행 / ㅏ안되었으면 로그인 페이지로 redirection
+		//로그인 체크 -> 필요한가(=@Login이 있는가)? 
+		// 1) 필요하다면, 
+		//   1-1) 로그인이 되었는가? 확인 후, controller.command 실행 
+		//   1-1) 로그인이 안 된 상태면, 로그인 페이지로 redirection
 		Login login = null;
 		
 		try {
@@ -148,14 +150,14 @@ public class Dispatcher {
 	   	throw new DispatcherException(e);
 	   }
 	   
+		// 1) 로그인이 필요한 작업이라면 
 		if (login != null) {
 	   	// 1-1) 로그인 되었는지 체크
 			// sid=1&20201104112034 회원번호$년월일시분초 이런 형태로 쿠키에 set
-			// 쿠키에 이 값이 있으면 로그인이 된 것이고, 없으면 로그인이 필요하지만 안 된 것으로 판단-> 예외던짐(403 forbidden 접근금지)  
+			// 쿠키에 sid 값이 있으면 로그인이 된 것이고, 없으면 로그인이 필요하지만 안 된 것으로 판단-> 예외던짐(403 forbidden 접근금지)  
 			String sid = CookieUtils.getValue(httpExchange, "sid");
 			
-			//TODO  sid를 받아온 값이 있으면 통과 없으면 아래 예외 던지도록 
-			//throw new UnAuthenticatedException(); //TODO 메세지 넣기 : 권한이  없습니다!
+			//sid 값이 없으면 예외를 던진다. (위에 dispatch 메서드가 예외를 받아서, 에러 페이지 띄운다) 
 			if (StringUtils.isEmpty(sid)) {
 				throw new ForbiddenException("권한이 없는 페이지입니다.");
 			} 
@@ -166,7 +168,6 @@ public class Dispatcher {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	public static Dispatcher getInstance() {
 		return dispatcher;

@@ -8,14 +8,12 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.Model;
 import sion.mvc.dispatcher.Controller;
-import sion.mvc.dispatcher.Login;
 
 public class MemberFormController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
-	@Login
 	public HttpResponse command(HttpRequest httpRequest) {
 		Model model = new Model();
 		

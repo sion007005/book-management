@@ -228,6 +228,39 @@ public class MemberRepository {
 		return null;
 	}
 	
+	public Member findOneByEmail(String email) {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnetctionCreator.getInstance().getConnection();
+			String query = "SELECT member_id, password FROM members WHERE email = ?";
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, email);
+			
+			rs = pstm.executeQuery();
+			if (rs.next()) {
+				Member member = new Member();
+				member.setId(rs.getInt("member_id"));
+				member.setPassword(rs.getString("password"));
+				return member;
+			}
+		} catch (SQLException e) {
+			throw new DataProcessException(e);
+		} finally {
+			if (pstm != null) {
+				try {
+					pstm.close();
+				} catch (SQLException e) {
+					throw new DataProcessException(e);
+				}
+			}
+		}
+		
+		return null;
+	}
+
 	private Member newMember(ResultSet rs) throws SQLException {
 		Member member = new Member();
 		
@@ -243,4 +276,5 @@ public class MemberRepository {
 		
 		return member;
 	}
+
 }
