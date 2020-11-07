@@ -6,7 +6,7 @@ import sion.bookmanagement.service.Category;
 import sion.bookmanagement.service.CategoryService;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -15,7 +15,7 @@ public class CategoryCreateController implements Controller {
 	
 	@Override
 	@Login
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		String categoryName = (String)httpRequest.getAttribute("name");
 		
 		Category category = new Category(categoryName);
@@ -24,10 +24,10 @@ public class CategoryCreateController implements Controller {
 
 		int categoryId = categoryService.create(category);
 		
-		Model model = new Model();
-		model.put("categoryId", categoryId);
+		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/info?id="+categoryId);
+		mav.put("categoryId", categoryId);
 		
-		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/categories/info?id="+categoryId);
+		return mav;
 	}
 
 }

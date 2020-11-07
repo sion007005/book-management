@@ -4,7 +4,7 @@ import sion.bookmanagement.service.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -13,14 +13,14 @@ public class CategoryRemoveController implements Controller {
 	
 	@Override
 	@Login
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		int id = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		categoryService.remove(id);
 		
-		Model model = new Model();
-		model.put("categoryId", id);
+		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/list");
+		mav.put("categoryId", id);
 		
-		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/categories/list");
+		return mav;
 	}
 
 }

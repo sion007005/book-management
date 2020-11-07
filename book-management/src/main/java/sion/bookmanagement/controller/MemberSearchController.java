@@ -9,7 +9,7 @@ import sion.bookmanagement.service.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -18,7 +18,7 @@ public class MemberSearchController implements Controller {
 
 	@Override
 	@Login                                                                                                         
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		String searchType = (String) httpRequest.getParameter("search-type");
 		String ageFromStr = (String) httpRequest.getParameter("age-from");
 		String ageToStr = (String) httpRequest.getParameter("age-to");
@@ -27,7 +27,8 @@ public class MemberSearchController implements Controller {
 		String keyword = (String) httpRequest.getParameter("keyword");
 
 		if (searchType == null || keyword == null) {
-			return new HttpResponse(null, "member_list_none");
+			ModelAndView mav = new ModelAndView("member_list_none");
+			return mav;
 		} else {
 			MemberSearchCondition condition = new MemberSearchCondition();
 			condition.setSearchType(SearchType.valueOf(searchType));
@@ -37,10 +38,10 @@ public class MemberSearchController implements Controller {
 			
 			List<Member> memberList =  memberService.search(condition);
 			
-			Model model = new Model();
-			model.put("memberList", memberList);
+			ModelAndView mav = new ModelAndView("member_list");
+			mav.put("memberList", memberList);
 			
-			return new HttpResponse(model, "member_list");
+			return mav;
 		}
 	}
 }

@@ -1,30 +1,33 @@
 package sion.mvc;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+
 public class HttpResponse {
 	public static final String REDIRECT_NAME = "redirect:";
 	
 	private HttpStatus httpStatus;
-	private Model model;
-	private String viewName;
+	private HttpExchange httpExchange;
+	private ModelAndView modelAndView;
 	private String redirectPath;
 	
-	public HttpResponse(Model model, String viewName) {	
-		this.model = model;
-		this.viewName = viewName;
-		makeStatusCode();
-		makeRedirectPath();
+	public HttpResponse(HttpExchange httpExchange) {
+		this.httpExchange = httpExchange;
 	} 
 	
 	private void makeRedirectPath() {
-		this.redirectPath = this.viewName.replace(REDIRECT_NAME, "");
+		this.redirectPath = this.modelAndView.getViewName().replace(REDIRECT_NAME, "");
 	}
 
 	private boolean makeStatusCode() {
-		if (viewName == null) {
+		if (modelAndView.getViewName() == null) {
 			return false;
 		}
 		
-		if (viewName.startsWith(REDIRECT_NAME)) {
+		if (modelAndView.getViewName().startsWith(REDIRECT_NAME)) {
 			this.httpStatus = HttpStatus.MOVED_PERMANENTLY;
 			return true;
 		} 			
@@ -37,16 +40,8 @@ public class HttpResponse {
 		return this.httpStatus.getCode();
 	}
 	
-	public String getViewName() {
-		return viewName;
-	}
-
 	public String getRedirectPath() {
 		return redirectPath;
-	}
-
-	public Model getModel() {
-		return model;
 	}
 
 	public HttpStatus getHttpStatus() {
@@ -55,5 +50,28 @@ public class HttpResponse {
 
 	public void setHttpStatus(HttpStatus httpStatus) {
 		this.httpStatus = httpStatus;
+	}
+	
+	public Headers getHeaders() {
+		return httpExchange.getResponseHeaders();
+	}
+
+	public ModelAndView getModelAndView() {
+		return modelAndView;
+	}
+
+	public void setModelAndView(ModelAndView modelAndView) {
+		this.modelAndView = modelAndView;
+		
+		makeStatusCode();
+		makeRedirectPath();
+	}
+
+	public void sendResponseHeaders(int statusCode, int contentLength) throws IOException {
+		httpExchange.sendResponseHeaders(statusCode, contentLength);
+	}
+
+	public OutputStream getResponseBody() {
+		return httpExchange.getResponseBody();
 	}
 }

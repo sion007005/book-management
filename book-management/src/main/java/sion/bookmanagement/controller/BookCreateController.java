@@ -9,7 +9,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -19,7 +19,7 @@ public class BookCreateController implements Controller {
 	
 	@Override
 	@Login
-	public HttpResponse command(HttpRequest httpRequest) {	
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {	
 		String trimedTitle = StringUtils.trim((String)httpRequest.getAttribute("title"));
 		String trimedAuthor = StringUtils.trim((String)httpRequest.getAttribute("author"));
 		int categoryId = NumberUtils.parseInt((String)httpRequest.getAttribute("form-category-select"));
@@ -34,9 +34,9 @@ public class BookCreateController implements Controller {
 		bookValidator.validate(book);
 		int bookId = bookService.create(book);
 		
-		Model model = new Model();
-		model.put("bookId", bookId);
+		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/books/info?id="+bookId);
+		mav.put("bookId", bookId);
 		
-		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/books/info?id="+bookId);
+		return mav;
 	}
 }

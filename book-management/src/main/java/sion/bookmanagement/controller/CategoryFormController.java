@@ -8,7 +8,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -17,17 +17,17 @@ public class CategoryFormController implements Controller {
 	
 	@Login
 	@Override
-	public HttpResponse command(HttpRequest httpRequest) {
-		Model model = new Model();
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
+		ModelAndView mav = new ModelAndView("category_form");
 		
 		String id = (String) httpRequest.getParameter("id");
 		if (!StringUtils.isEmpty(id)) {
 			Category category = categoryService.findOneById(NumberUtils.parseInt(id));
 			List<Category> categoryList = categoryService.findAll(null);
-			model.put("category", category);
-			model.put("categoryList", categoryList);
+			mav.put("category", category);
+			mav.put("categoryList", categoryList);
 		}
 		
-		return new HttpResponse(model, "category_form");
+		return mav;
 	}
 }

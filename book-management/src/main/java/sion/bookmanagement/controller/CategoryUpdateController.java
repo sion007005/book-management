@@ -8,7 +8,7 @@ import sion.bookmanagement.util.DateUtils;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -17,7 +17,7 @@ public class CategoryUpdateController implements Controller {
 	
 	@Login
 	@Override
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		int categoryId = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		String categoryName = (String)httpRequest.getAttribute("name");
 		Date createdAt = DateUtils.getDate((String)httpRequest.getAttribute("createdAt"));
@@ -29,9 +29,9 @@ public class CategoryUpdateController implements Controller {
 		
 		categoryService.update(category);
 		
-		Model model = new Model();
-		model.put("category", category);
+		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/info?id=" + categoryId);
+		mav.put("category", category);
 		
-		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/categories/info?id=" + categoryId);
+		return mav;
 	}
 }

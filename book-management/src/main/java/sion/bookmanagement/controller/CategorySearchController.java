@@ -8,20 +8,21 @@ import sion.bookmanagement.service.CategorySearchCondition.SearchType;
 import sion.bookmanagement.service.CategoryService;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 
 public class CategorySearchController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		String searchType = (String) httpRequest.getParameter("search-type");
 		String keyword = (String) httpRequest.getParameter("keyword");
 
 		List<Category> categoryList = null;
 		if (searchType == null || keyword == null) {
-			return new HttpResponse(null, "category_list_none");
+			ModelAndView mav = new ModelAndView("category_list_none");
+			return mav;
 		}
 		
 		CategorySearchCondition condition = new CategorySearchCondition();
@@ -30,10 +31,10 @@ public class CategorySearchController implements Controller {
 		
 		categoryList = categoryService.search(condition);
 		
-		Model model = new Model();
-		model.put("categoryList", categoryList);
+		ModelAndView mav = new ModelAndView("category_list");
+		mav.put("categoryList", categoryList);
 		
-		return new HttpResponse(model, "category_list");
+		return mav;
 	}
 
 }

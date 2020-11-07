@@ -8,6 +8,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 
 public class MemberCreateController implements Controller {
@@ -15,7 +16,7 @@ public class MemberCreateController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		String trimedName = StringUtils.trim((String)httpRequest.getAttribute("name"));
 		String trimedGender = StringUtils.trim((String)httpRequest.getAttribute("gender"));
 		String emailFront = (String)httpRequest.getAttribute("email-front");
@@ -32,7 +33,8 @@ public class MemberCreateController implements Controller {
 		memberValidator.validate(member);
 		int memberId = memberService.create(member);
 		
-		return new HttpResponse(null, HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId);
+		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId);
+		return mav;
 	}
 	
 }

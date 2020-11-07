@@ -7,14 +7,14 @@ import sion.bookmanagement.service.CategoryOrderType;
 import sion.bookmanagement.service.CategoryService;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 
 public class CategoryListController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		String orderType = (String) httpRequest.getParameter("order-type");
 		CategoryOrderType type = null;
 		
@@ -24,10 +24,10 @@ public class CategoryListController implements Controller {
 		
 		List<Category> categoryList = categoryService.findAll(type);
 		
-		Model model = new Model();
-		model.put("categoryList", categoryList);
+		ModelAndView mav = new ModelAndView("category_list");
+		mav.put("categoryList", categoryList);
 		
-		return new HttpResponse(model, "category_list");
+		return mav;
 	}
 	
 }

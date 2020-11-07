@@ -2,7 +2,8 @@ package sion.mvc.dispatcher;
 
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.ModelAndView;
 
 public interface Controller {
-	HttpResponse command(HttpRequest httpRequest);
+	ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse);
 }

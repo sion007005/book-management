@@ -9,7 +9,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -19,7 +19,7 @@ public class MemberUpdateController implements Controller {
 
 	@Override
 	@Login
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		String trimedName = StringUtils.trim((String)httpRequest.getAttribute("name"));
 		String gender = (String)httpRequest.getAttribute("gender");
 		String emailFront = (String)httpRequest.getAttribute("email-front");
@@ -39,10 +39,10 @@ public class MemberUpdateController implements Controller {
 		memberValidator.validate(member);
 		memberService.update(member);
 		
-		Model model = new Model();
-		model.put("member", member);
+		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId);
+		mav.put("member", member);
 		
-		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId); //forwarding이 아닌 redirect로 보내겠다!
+		return mav;
 	}
 
 }

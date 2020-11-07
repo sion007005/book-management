@@ -5,7 +5,7 @@ import sion.bookmanagement.service.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -14,14 +14,14 @@ public class CategoryInfoController implements Controller {
 	
 	@Login
 	@Override
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		int id = NumberUtils.parseInt((String) httpRequest.getParameter("id"));
 		Category category = categoryService.findOneById(id);
 		
-		Model model = new Model();
-		model.put("category", category);
+		ModelAndView mav = new ModelAndView("category_info");
+		mav.put("category", category);
 		
-		return new HttpResponse(model, "category_info");
+		return mav;
 	}
 	
 }

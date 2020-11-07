@@ -2,11 +2,42 @@ package sion.mvc;
 
 import java.util.Map;
 
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+
+import sion.mvc.dispatcher.DispatcherException;
+import sion.mvc.support.HttpUtils;
+
 public class HttpRequest {
-	private String url;
+	private String uriPath;
 	private String method;
+	private HttpExchange httpExchange;
 	private Map<String, Object> parameters;
 	private Map<String, Object> attributes;
+	
+	public HttpRequest(HttpExchange httpExchange) {
+		try {
+			this.httpExchange = httpExchange;
+			this.uriPath = HttpUtils.makeUriPath(httpExchange);
+			this.method = httpExchange.getRequestMethod();
+			this.parameters = HttpUtils.makeParameters(httpExchange);
+			this.attributes = HttpUtils.makeAttributes(httpExchange);
+
+			validate();
+		} catch (Exception e) {
+			throw new DispatcherException(e);
+		}
+	}
+
+	private void validate() {
+		if(uriPath == null || uriPath.length() == 0) {
+			throw new RuntimeException("url 값이 없습니다.");
+		}
+		
+		if(method == null || method.length() == 0) {
+			throw new RuntimeException("method 값이 없습니다.");
+		}
+	}
 	
 	public HttpRequest(String url, String method, Map<String, Object> parameters, Map<String, Object> attributes) {
 		if(url == null || url.length() == 0) {
@@ -17,14 +48,14 @@ public class HttpRequest {
 			throw new RuntimeException("method 값이 없습니다.");
 		}
 	
-		this.url = url;
+		this.uriPath = url;
 		this.method = method;
 		this.parameters = parameters;
 		this.attributes = attributes;
 	}
 	
 	public String getUrl() {
-		return url;
+		return uriPath;
 	}
 
 	public String getMethod() {
@@ -44,5 +75,9 @@ public class HttpRequest {
 		}
 		
 		return attributes.get(key);
+	}
+	
+	public Headers getHeaders() {
+		return httpExchange.getRequestHeaders(); 
 	}
 }

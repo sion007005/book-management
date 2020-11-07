@@ -6,7 +6,7 @@ import sion.bookmanagement.service.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -16,17 +16,17 @@ public class MemberInfoController implements Controller {
 	
 	@Override
 	@Login
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		int id = NumberUtils.parseInt((String) httpRequest.getParameter("id"));
 		
 		log.debug("id :"+ id);
 		
 		Member member = memberService.findOneById(id);
 		
-		Model model = new Model();
-		model.put("member", member);
+		ModelAndView mav = new ModelAndView("member_info");
+		mav.put("member", member);
 		
-		return new HttpResponse(model, "member_info");
+		return mav;
 	}
 
 }

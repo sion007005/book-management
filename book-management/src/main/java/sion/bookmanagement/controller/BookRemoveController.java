@@ -6,7 +6,7 @@ import sion.bookmanagement.util.validator.PlusNumberValidator;
 import sion.bookmanagement.util.validator.Validator;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -15,17 +15,17 @@ public class BookRemoveController implements Controller {
 	
 	@Override
 	@Login
-	public HttpResponse command(HttpRequest httpRequest) {
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		int id = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		
 		Validator<Integer> plusNumberValidater = new PlusNumberValidator();
 		plusNumberValidater.validate(id);
 		bookService.remove(id);
 		
-		Model model = new Model();
-		model.put("bookId", id);
+		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/books/list");
+		mav.put("bookId", id);
 		
-		return new HttpResponse(model, HttpResponse.REDIRECT_NAME + "/books/list");
+		return mav;
 	}
 
 }

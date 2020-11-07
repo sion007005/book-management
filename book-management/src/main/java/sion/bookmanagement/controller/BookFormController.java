@@ -12,7 +12,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 
@@ -22,18 +22,18 @@ public class BookFormController implements Controller {
 
 	@Override
 	@Login
-	public HttpResponse command(HttpRequest httpRequest) {
-		Model model = new Model();
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
+		ModelAndView mav = new ModelAndView("book_form");
 		List<Category> categoryList = categoryService.findAll(null);
-		model.put("categoryList", categoryList);
+		mav.put("categoryList", categoryList);
 		
 		String id = (String) httpRequest.getParameter("id");
 		if(!StringUtils.isEmpty(id)) {
 			Book book = bookService.findOneById(NumberUtils.parseInt(id));
-			model.put("book", book);
+			mav.put("book", book);
 		}
 		
-		return new HttpResponse(model, "book_form");
+		return mav;
 	}
 
 }

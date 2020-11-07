@@ -6,7 +6,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
-import sion.mvc.Model;
+import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 
 public class MemberFormController implements Controller {
@@ -14,15 +14,15 @@ public class MemberFormController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
-	public HttpResponse command(HttpRequest httpRequest) {
-		Model model = new Model();
+	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
+		ModelAndView mav = new ModelAndView("member_form");
 		
 		String id = (String) httpRequest.getParameter("id");
 		if (!StringUtils.isEmpty(id)) {
 			Member member = memberService.findOneById(NumberUtils.parseInt(id));
-			model.put("member", member);
+			mav.put("member", member);
 		}
 		
-		return new HttpResponse(model, "member_form");
+		return mav;
 	}
 }
