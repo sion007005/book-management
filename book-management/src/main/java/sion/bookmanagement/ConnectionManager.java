@@ -3,16 +3,18 @@ package sion.bookmanagement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.sql.DataSource;
+
 import lombok.extern.slf4j.Slf4j;
 import sion.mvc.ServerContext;
 
 @Slf4j
-public class DBConnetctionCreator {
-	private static DBConnetctionCreator dbConnetctionCreator = new DBConnetctionCreator();
-	private DBConnetctionCreator() {
+public class ConnectionManager {
+	private static ConnectionManager dbConnetctionCreator = new ConnectionManager();
+	private ConnectionManager() {
 	}
 	
-	public static DBConnetctionCreator getInstance() {
+	public static ConnectionManager getInstance() {
 		return dbConnetctionCreator;
 	}
 	
@@ -32,5 +34,15 @@ public class DBConnetctionCreator {
 		} catch(Exception e) {
 			throw new RuntimeException("에러", e);
 		} 
+	}
+	
+	//TODO 구현
+	public static DataSource getDataSource() {
+//		Class.forName("com.mysql.jdbc.Driver");
+//		
+//		String url = ServerContext.getDbUrl();
+//		String id = ServerContext.getDbId();
+//		String password = ServerContext.getDbPassword();
+		return null;
 	}
 }

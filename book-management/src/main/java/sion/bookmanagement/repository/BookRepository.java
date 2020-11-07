@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import sion.bookmanagement.DBConnetctionCreator;
+import sion.bookmanagement.ConnectionManager;
 import sion.bookmanagement.service.Book;
 import sion.bookmanagement.service.BookOrderType;
 import sion.bookmanagement.service.BookSearchCondition;
@@ -29,7 +29,7 @@ public class BookRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "INSERT INTO BOOKS(category_id, title, author, stock, year, price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
@@ -74,7 +74,7 @@ public class BookRepository {
 		} 
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%" + condition.getKeyword() + "%");
 			
@@ -103,7 +103,7 @@ public class BookRepository {
 		PreparedStatement pstm = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "update books set title=?, author=?, stock=?, year=?, price=?, created_at=?, updated_at=? where book_id=?";
 			pstm = conn.prepareStatement(query);
 			
@@ -135,7 +135,7 @@ public class BookRepository {
 		PreparedStatement pstm = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "delete from books where book_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, bookId);
@@ -162,7 +162,7 @@ public class BookRepository {
 		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM BOOKS"; 
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			
 			if (orderType != null) {
 				query += (" ORDER BY " + orderType);
@@ -198,7 +198,7 @@ public class BookRepository {
 		ArrayList<Book> bookList = new ArrayList<Book>();
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "select book_id, category_id, title, author, stock, year, price, created from books where category_id=?";
 			
 			pstm = conn.prepareStatement(query);
@@ -236,7 +236,7 @@ public class BookRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "select book_id, category_id, title, author, stock, year, price, created_at, updated_at from books where book_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, bookId);

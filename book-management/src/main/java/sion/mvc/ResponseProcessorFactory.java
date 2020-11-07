@@ -1,30 +1,34 @@
 package sion.mvc;
 
-import sion.mvc.render.Status2XXResponseProcessor;
-import sion.mvc.render.Status3XXResponseProcessor;
+import java.util.HashMap;
+import java.util.Map;
+
+import sion.mvc.render.Status200ResponseProcessor;
+import sion.mvc.render.Status301ResponseProcessor;
 import sion.mvc.render.Status403ResponseProcessor;
 import sion.mvc.render.Status404ResponseProcessor;
-import sion.mvc.render.Status5XXResponseProcessor;
+import sion.mvc.render.Status500ResponseProcessor;
 
 public class ResponseProcessorFactory {
-
+	private static final Map<HttpStatus, ResponseProcessor> instances = new HashMap<>();
+	static {
+		instances.put(HttpStatus.OK, new Status200ResponseProcessor());
+		instances.put(HttpStatus.MOVED_PERMANENTLY, new Status301ResponseProcessor());
+		instances.put(HttpStatus.FORBIDDEN, new Status403ResponseProcessor());
+		instances.put(HttpStatus.NOT_FOUND, new Status404ResponseProcessor());
+		instances.put(HttpStatus.INTERNAL_SERVER_ERROR, new Status500ResponseProcessor());
+	}
+	
 	/*
-	 * TODO if/else 없애기
+	 * if/else 없애기
 	 */
-	public static ResponseProcessor getInstance(int statusCode) {
-		if (statusCode >= 200 && statusCode < 300) {
-			return new Status2XXResponseProcessor();
-		} else if (statusCode >= 300 && statusCode < 400) {
-			return new Status3XXResponseProcessor();
-		} else if (statusCode == 403) {
-			return new Status403ResponseProcessor();
-		} else if (statusCode >= 400 && statusCode < 500) {
-			return new Status404ResponseProcessor();
-		} else if (statusCode >= 500 && statusCode < 600) {
-			return new Status5XXResponseProcessor();
+	public static ResponseProcessor getInstance(HttpStatus httpStatus) {
+		ResponseProcessor responseProcessor = instances.get(httpStatus);
+		if (responseProcessor == null) {
+			throw new RuntimeException("StatusCode에 해당하는 response process가 없습니다."); 
 		}
 		
-		throw new RuntimeException("StatusCode에 해당하는 response process가 없습니다."); 
+		return responseProcessor;
 	}
 
 }

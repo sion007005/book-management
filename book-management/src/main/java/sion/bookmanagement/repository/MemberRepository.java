@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
-import sion.bookmanagement.DBConnetctionCreator;
+import sion.bookmanagement.ConnectionManager;
 import sion.bookmanagement.service.Member;
 import sion.bookmanagement.service.MemberOrderType;
 import sion.bookmanagement.service.MemberSearchCondition;
@@ -30,7 +30,7 @@ public class MemberRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "INSERT INTO members(name, gender, email, age, phone, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -78,7 +78,7 @@ public class MemberRepository {
 		
 		query += " AND age between ? and ?"; 
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%"+ condition.getKeyword() +"%");
 			pstm.setInt(2, condition.getAgeFrom());
@@ -109,7 +109,7 @@ public class MemberRepository {
 		PreparedStatement pstm = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "UPDATE members SET name=?, gender=?, email=?, age=?, phone=?, password=?, created_at=?, updated_at=? WHERE member_id=?";
 			pstm = conn.prepareStatement(query);
 			
@@ -142,7 +142,7 @@ public class MemberRepository {
 		PreparedStatement pstm = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "DELETE FROM members WHERE member_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
@@ -169,7 +169,7 @@ public class MemberRepository {
 		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM MEMBERS";
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			
 			if (orderType != null) {
 				query += (" ORDER BY " + orderType.getColumnName());
@@ -203,7 +203,7 @@ public class MemberRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM members WHERE member_id = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
@@ -234,7 +234,7 @@ public class MemberRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "SELECT member_id, password FROM members WHERE email = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, email);

@@ -11,7 +11,7 @@ import sion.mvc.HttpResponse;
 import sion.mvc.ResponseProcessor;
 
 @Slf4j
-public class Status3XXResponseProcessor implements ResponseProcessor {
+public class Status301ResponseProcessor implements ResponseProcessor {
 
 	@Override
 	public void proccess(HttpExchange httpExchange, HttpResponse httpResponse) {

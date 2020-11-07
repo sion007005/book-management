@@ -33,6 +33,8 @@ public class ServerRunner {
 		//1. 설정 정보(포트, DB, controllerFactory 구현체 정보) 가져오기
 		Properties properties = propertiesLoader.load(PropertiesLoader.FILE_NAME);
 		ServerContext.addProperties(properties);
+		
+		//2. DB 커넥션을 미리 생성해서 pool에 담아둔다.
 	}
 
 	private void serverStart() {

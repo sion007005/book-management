@@ -3,7 +3,7 @@ package sion.mvc;
 public class HttpResponse {
 	public static final String REDIRECT_NAME = "redirect:";
 	
-	private int statusCode;
+	private HttpStatus httpStatus;
 	private Model model;
 	private String viewName;
 	private String redirectPath;
@@ -25,16 +25,16 @@ public class HttpResponse {
 		}
 		
 		if (viewName.startsWith(REDIRECT_NAME)) {
-			this.statusCode = 302;
+			this.httpStatus = HttpStatus.MOVED_PERMANENTLY;
 			return true;
 		} 			
 		
-		this.statusCode = 200; 
+		this.httpStatus = HttpStatus.OK; 
 		return false;
 	}
 
 	public int getStatusCode() {
-		return this.statusCode;
+		return this.httpStatus.getCode();
 	}
 	
 	public String getViewName() {
@@ -45,11 +45,15 @@ public class HttpResponse {
 		return redirectPath;
 	}
 
-	public void setStatusCode(int statusCode) {
-		this.statusCode = statusCode;
-	}
-
 	public Model getModel() {
 		return model;
+	}
+
+	public HttpStatus getHttpStatus() {
+		return httpStatus;
+	}
+
+	public void setHttpStatus(HttpStatus httpStatus) {
+		this.httpStatus = httpStatus;
 	}
 }

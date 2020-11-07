@@ -9,14 +9,14 @@ import com.sun.net.httpserver.HttpExchange;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
-import sion.mvc.FreemarkerConfigurationFactory;
+import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpResponse;
 
 @Slf4j
 public class HtmlRender {
 
 	public void render(HttpExchange httpExchange, HttpResponse httpResponse) {
-		Configuration cfg = FreemarkerConfigurationFactory.getInstance();
+		Configuration cfg = FreemarkerConfigurationManager.getInstance();
 		OutputStreamWriter writer = null;
 
 		try {
@@ -26,7 +26,7 @@ public class HtmlRender {
 			h.add("Content-Type", "text/html;charset=UTF-8"); // "application/json;charset=UTF-8"
 			h.add("Access-Control-Allow-Origin", "*");
 
-			httpExchange.sendResponseHeaders(200, 0);
+			httpExchange.sendResponseHeaders(httpResponse.getStatusCode(), 0);
 			writer = new OutputStreamWriter(httpExchange.getResponseBody(), "UTF-8");
 
 			Template template = cfg.getTemplate(httpResponse.getViewName() + ".ftl");

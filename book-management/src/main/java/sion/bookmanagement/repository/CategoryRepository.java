@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
-import sion.bookmanagement.DBConnetctionCreator;
+import sion.bookmanagement.ConnectionManager;
 import sion.bookmanagement.service.Category;
 import sion.bookmanagement.service.CategoryOrderType;
 import sion.bookmanagement.service.CategorySearchCondition;
@@ -30,7 +30,7 @@ public class CategoryRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "INSERT INTO categories(category_name, created_at, updated_at) VALUES(?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -61,7 +61,7 @@ public class CategoryRepository {
 		PreparedStatement pstm = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "UPDATE categories SET category_name=?, created_at=?, updated_at=? WHERE category_id=?";
 			pstm = conn.prepareStatement(query);
 			
@@ -89,7 +89,7 @@ public class CategoryRepository {
 		PreparedStatement pstm = null;
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "DELETE FROM categories WHERE category_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, categoryId);
@@ -116,7 +116,7 @@ public class CategoryRepository {
 		String query = "SELECT category_id, category_name, created_at, updated_at FROM categories";
 		
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			
 			if (orderType != null) {
 				query += (" ORDER BY " + orderType.getColumnName());
@@ -150,7 +150,7 @@ public class CategoryRepository {
 		ResultSet rs = null;
 
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			String query = "SELECT category_id, category_name, created_at, updated_at FROM categories WHERE category_id = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, categoryId);
@@ -183,7 +183,7 @@ public class CategoryRepository {
 		String query = "SELECT category_id, category_name, created_at, updated_at FROM CATEGORIES where category_name like ?";
 				
 		try {
-			conn = DBConnetctionCreator.getInstance().getConnection();
+			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%"+ condition.getKeyword() +"%");
 			

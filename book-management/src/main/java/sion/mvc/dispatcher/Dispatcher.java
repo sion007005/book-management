@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
+import sion.mvc.HttpStatus;
 import sion.mvc.Model;
 import sion.mvc.ServerContext;
 import sion.mvc.support.CookieUtils;
@@ -50,7 +51,7 @@ public class Dispatcher {
 			Model model = new Model();
 			model.put("_error_message", e.getMessage());
 			HttpResponse httpResponse = new HttpResponse(new Model(), "error/forbidden");
-			httpResponse.setStatusCode(403);
+			httpResponse.setHttpStatus(HttpStatus.FORBIDDEN);
 			
 			return httpResponse;
 		} catch (FileNotFoundException e) {
@@ -59,7 +60,7 @@ public class Dispatcher {
 			Model model = new Model();
 			model.put("_error_message", e.getMessage());
 			HttpResponse httpResponse = new HttpResponse(model, "error/not_found");
-			httpResponse.setStatusCode(404);
+			httpResponse.setHttpStatus(HttpStatus.NOT_FOUND);
 			
 			return httpResponse;
 		} catch (Exception e) {
@@ -68,7 +69,7 @@ public class Dispatcher {
 			Model model = new Model();
 			model.put("errorMessage", e.getMessage());
 			HttpResponse httpResponse = new HttpResponse(model, "error/server_error");
-			httpResponse.setStatusCode(500);
+			httpResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 			
 			return httpResponse;
 		}
@@ -165,7 +166,6 @@ public class Dispatcher {
 	}
 
 	private void postCommand(HttpRequest httpRequest, HttpResponse httpResponse) {
-		// TODO Auto-generated method stub
 	}
 
 	public static Dispatcher getInstance() {

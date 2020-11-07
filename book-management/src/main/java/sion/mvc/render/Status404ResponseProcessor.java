@@ -10,14 +10,14 @@ import com.sun.net.httpserver.HttpExchange;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
-import sion.mvc.FreemarkerConfigurationFactory;
+import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpResponse;
 import sion.mvc.ResponseProcessor;
 import sion.mvc.ServerRunnerException;
 
 @Slf4j
 public class Status404ResponseProcessor implements ResponseProcessor {
-	Configuration cfg = FreemarkerConfigurationFactory.getInstance();
+	Configuration cfg = FreemarkerConfigurationManager.getInstance();
 	
 	@Override
 	public void proccess(HttpExchange httpExchange, HttpResponse httpResponse) {

@@ -4,7 +4,6 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import lombok.extern.slf4j.Slf4j;
-import sion.mvc.dispatcher.ForbiddenException;
 
 @Slf4j
 public class CookieUtils {
@@ -27,7 +26,7 @@ public class CookieUtils {
 		String temp = cookie.substring(sidIdx);
 		String sid = temp.substring(temp.indexOf("=")+1);
 		
-		if(sid.contains(";")) {
+		if (sid.contains(";")) {
 			sid = sid.replace(";", "");
 		}
 		

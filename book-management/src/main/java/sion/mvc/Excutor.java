@@ -34,7 +34,7 @@ public class Excutor implements Runnable {
 	}
 
   private void responseHandle(HttpExchange httpExchange, HttpResponse httpResponse) throws IOException {
-     ResponseProcessor responseProcessor = ResponseProcessorFactory.getInstance(httpResponse.getStatusCode()); 
+     ResponseProcessor responseProcessor = ResponseProcessorFactory.getInstance(httpResponse.getHttpStatus()); 
      responseProcessor.proccess(httpExchange, httpResponse);
   }
 
