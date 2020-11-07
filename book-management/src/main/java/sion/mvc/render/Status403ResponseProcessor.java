@@ -17,7 +17,6 @@ import sion.mvc.ServerRunnerException;
 
 @Slf4j
 public class Status403ResponseProcessor implements ResponseProcessor {
-//TODO 404랑 500대 프로세서도 이렇게 수정 
 	Configuration cfg = FreemarkerConfigurationFactory.getInstance();
 
 	@Override
@@ -55,7 +54,6 @@ public class Status403ResponseProcessor implements ResponseProcessor {
 			//권한 없음, 접근 금지!
 			render(httpExchange, httpResponse);
 		} catch (IOException e) {
-			//TODO log 찍고 exception throw 하도록 (검색해서 일괄 수정할 것)
 			log.error(e.getMessage(), e);
 			throw new ServerRunnerException(e);
 		} 

@@ -58,7 +58,7 @@ public class Dispatcher {
 			
 			Model model = new Model();
 			model.put("_error_message", e.getMessage());
-			HttpResponse httpResponse = new HttpResponse(new Model(), "error/not_found");
+			HttpResponse httpResponse = new HttpResponse(model, "error/not_found");
 			httpResponse.setStatusCode(404);
 			
 			return httpResponse;
@@ -166,7 +166,6 @@ public class Dispatcher {
 
 	private void postCommand(HttpRequest httpRequest, HttpResponse httpResponse) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public static Dispatcher getInstance() {
