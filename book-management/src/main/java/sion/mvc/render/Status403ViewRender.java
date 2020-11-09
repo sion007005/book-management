@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import com.sun.net.httpserver.Headers;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
@@ -47,9 +45,7 @@ public class Status403ViewRender implements ViewRender {
 			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
 			//브라우저에게 html로 내려주겠다고 알려줌
 			//TODO 공통으로 분리하도록.... 
-			Headers h = httpResponse.getHeaders();
-			h.add("Content-Type", "text/html;charset=UTF-8"); //"application/json;charset=UTF-8"
-			h.add("Access-Control-Allow-Origin", "*");
+			addHtmlContextHeader(httpResponse.getHeaders());
 			
 			//OutputStream outputStream = httpExchange.getResponseBody();
 			//권한 없음, 접근 금지!

@@ -9,7 +9,7 @@ import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.support.CookieUtils;
 
-public class LoginCheckController implements Controller {
+public class LoginProcessController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
@@ -33,10 +33,7 @@ public class LoginCheckController implements Controller {
 			CookieUtils.setValue(httpResponse.getHeaders(), cookie);
 //			CookieUtils.setValue(httpExchange, "sid", member.getId());
 			
-			ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");
-			mav.put("email", email);
-			
-			return mav;
+			return new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");
 		} else {
 			return new ModelAndView(HttpResponse.REDIRECT_NAME + "/login/form");
 		}

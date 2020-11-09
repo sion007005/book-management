@@ -3,8 +3,6 @@ package sion.mvc.render;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import com.sun.net.httpserver.Headers;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +22,7 @@ public class Status200ViewRender implements ViewRender {
 
 		try {
 			// HttpResponse 받아서 클라이언트로 넘겨주기
-			Headers h = httpResponse.getHeaders();
-			h.add("Content-Type", "text/html;charset=UTF-8"); // "application/json;charset=UTF-8"
-			h.add("Access-Control-Allow-Origin", "*");
+			addHtmlContextHeader(httpResponse.getHeaders());
 
 			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0);
 			writer = new OutputStreamWriter(httpResponse.getResponseBody(), "UTF-8");

@@ -10,12 +10,12 @@ import sion.mvc.ServerContext;
 
 @Slf4j
 public class ConnectionManager {
-	private static ConnectionManager dbConnetctionCreator = new ConnectionManager();
+	private static ConnectionManager connectionManager = new ConnectionManager();
 	private ConnectionManager() {
 	}
 	
 	public static ConnectionManager getInstance() {
-		return dbConnetctionCreator;
+		return connectionManager;
 	}
 	
 	public Connection getConnection() {

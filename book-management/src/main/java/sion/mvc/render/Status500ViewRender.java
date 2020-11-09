@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import com.sun.net.httpserver.Headers;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +41,7 @@ public class Status500ViewRender implements ViewRender {
 		try {
 			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
 			//브라우저에게 html로 내려주겠다고 알려줌
-			Headers h = httpResponse.getHeaders();
-			h.add("Content-Type", "text/html;charset=UTF-8"); //"application/json;charset=UTF-8"
-			h.add("Access-Control-Allow-Origin", "*");
+			addHtmlContextHeader(httpResponse.getHeaders());
 			
 			//OutputStream outputStream = httpExchange.getResponseBody();
 			//권한 없음, 접근 금지!
@@ -61,6 +57,7 @@ public class Status500ViewRender implements ViewRender {
 		OutputStreamWriter writer = null;
 		
 		try {
+			//TODO application properties 파일에다가 저장해서, UTF-8(charset.name) .ftl(view.file.extension.name) 이런식으로 가져오기  
 	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), "UTF-8");
 	      Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
 	      template.process(mav.getModel(), writer); //모델만 넘겨준다.    

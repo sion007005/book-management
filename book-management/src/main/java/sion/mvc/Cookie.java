@@ -1,5 +1,7 @@
 package sion.mvc;
 
+import sion.bookmanagement.util.StringUtils;
+
 public class Cookie {
 	private String name;
 	private String value;
@@ -7,10 +9,14 @@ public class Cookie {
 	private String domain;
 	private String expires;
 	
-	public String setCookieValue() {
+	public String generateCookieValue() {
 		//sid=memberId; Path=/; Domain=localhost; Expires=Sun, 07 Nov 2021 11:43:50 GMT
 		//TODO 이 포맷에 맞게 넣어주기 
-		return null;
+		String cookieValue = StringUtils.getNullToEmpty(this.name)+"="+StringUtils.getNullToEmpty(this.value)
+									+"; Path="+StringUtils.getNullToEmpty(this.path)+"; Domain="+StringUtils.getNullToEmpty(this.domain)
+									+"; Expires="+StringUtils.getNullToEmpty(this.expires);
+		
+		return cookieValue;
 	}
 
 	public String getName() {
@@ -52,6 +58,4 @@ public class Cookie {
 	public void setExpires(String expires) {
 		this.expires = expires;
 	}
-	
-	
 }

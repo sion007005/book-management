@@ -1,16 +1,22 @@
 package sion.mvc.dispatcher;
 
 import java.lang.reflect.Method; //reflection 검색! 자바 클래스의 메타정보(=데이터에 대한 데이터)를 제공함 
+import java.util.Objects;
 
 import lombok.extern.slf4j.Slf4j;
-import sion.bookmanagement.util.StringUtils;
+import sion.bookmanagement.auth.BookManagementUser;
+import sion.bookmanagement.service.Member;
+import sion.bookmanagement.service.MemberService;
+import sion.bookmanagement.util.NumberUtils;
+import sion.mvc.FreemarkerViewRenderFactory;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.HttpStatus;
 import sion.mvc.ModelAndView;
-import sion.mvc.ViewRender;
-import sion.mvc.FreemarkerViewRenderFactory;
 import sion.mvc.ServerContext;
+import sion.mvc.ViewRender;
+import sion.mvc.auth.User;
+import sion.mvc.auth.UserContext;
 import sion.mvc.support.CookieUtils;
 
 @Slf4j
@@ -61,6 +67,29 @@ public class Dispatcher {
 	}
 	
 	private void preCommand(Controller controller, HttpRequest httpRequest, HttpResponse httpResponse) throws DispatcherException {
+		userSetting(httpRequest);
+		loginCheck(controller); 
+	}
+
+	/*
+	 * 쿠키에 저장된 sid값을 읽어와서, threadLocal에 user 저장
+	 */
+	private void userSetting(HttpRequest httpRequest) {
+		String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
+		Integer memberId = NumberUtils.parseInt(sid);
+		MemberService memberService = MemberService.getInstance();
+		Member member = memberService.findOneById(memberId);
+		
+		if (Objects.nonNull(member)) {
+			User loginUser = BookManagementUser.newLoginUser(memberId, member.getEmail(), member.getName(), httpRequest.getAccessIp()); 
+			UserContext.set(loginUser); // threadLocal에 user 저장 
+		} else { // 정상적으로 로그인 된 멤버가 없음 
+			User logoutUser = BookManagementUser.newLogoutUser(httpRequest.getAccessIp());
+			UserContext.set(logoutUser);
+		}
+	}
+
+	private void loginCheck(Controller controller) {
 		//로그인 체크 -> 필요한가(=@Login이 있는가)? 
 		// 1) 필요하다면, 
 		//   1-1) 로그인이 되었는가? 확인 후, controller.command 실행 
@@ -77,19 +106,26 @@ public class Dispatcher {
 	   }
 	   
 		// 1) 로그인이 필요한 작업이라면 
-		if (login != null) {
+		if (needLogin(login)) {
+			if (UserContext.isNotLogin()) {
+				throw new ForbiddenException("권한이 없는 페이지입니다.");
+			}
 	   	// 1-1) 로그인 되었는지 체크
 			// sid=1&20201104112034 회원번호$년월일시분초 이런 형태로 쿠키에 set
 			// 쿠키에 sid 값이 있으면 로그인이 된 것이고, 없으면 로그인이 필요하지만 안 된 것으로 판단-> 예외던짐(403 forbidden 접근금지)  
-			String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
-			
-			//TODO sid에 넣어준 아이디값이 db에 정말 있는 회원인지 체크해줘야 함  
-			
-			//sid 값이 없으면 예외를 던진다. (위에 dispatch 메서드가 예외를 받아서, 에러 페이지 띄운다) 
-			if (StringUtils.isEmpty(sid)) {
-				throw new ForbiddenException("권한이 없는 페이지입니다.");
-			} 
-	   } 
+//			String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
+//			
+//			//TODO sid에 넣어준 아이디값이 db에 정말 있는 회원인지 체크해줘야 함  
+//			
+//			//sid 값이 없으면 예외를 던진다. (위에 dispatch 메서드가 예외를 받아서, 에러 페이지 띄운다) 
+//			if (StringUtils.isEmpty(sid)) {
+//				throw new ForbiddenException("권한이 없는 페이지입니다.");
+//			} 
+	   }
+	}
+
+	private boolean needLogin(Login login) {
+		return login != null;
 	}
 
 	private void postCommand(HttpRequest httpRequest, HttpResponse httpResponse) {

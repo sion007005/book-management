@@ -13,7 +13,8 @@ public class BookManagementControllerFactory implements ControllerFactory {
 	
 	public BookManagementControllerFactory() {
 		controllers.put("/login/form&GET", new LoginFormController());
-		controllers.put("/login/check&POST", new LoginCheckController());
+		controllers.put("/login&POST", new LoginProcessController());
+		controllers.put("/logout&GET", new LogoutProcessController());
 		
 		controllers.put("/categories/intro&GET", new CategoryListController());
 		controllers.put("/categories/form&GET", new CategoryFormController());

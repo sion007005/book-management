@@ -1,15 +1,15 @@
 package sion.bookmanagement.util;
 
 public class NumberUtils {
-	public static int parseInt(String value) {
+	public static Integer parseInt(String value) {
 		try {
 			return Integer.parseInt(value);
 		} catch (Exception e) {
-			return 0;
+			return null;
 		}
 	}
 	
-	public static int parseInt(String value, int defaultValue) {
+	public static Integer parseInt(String value, Integer defaultValue) {
 		try {
 			return Integer.parseInt(value);
 		} catch (Exception e) {

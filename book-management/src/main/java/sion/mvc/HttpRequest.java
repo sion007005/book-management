@@ -80,4 +80,8 @@ public class HttpRequest {
 	public Headers getHeaders() {
 		return httpExchange.getRequestHeaders(); 
 	}
+	
+	public String getAccessIp() {
+		return httpExchange.getRemoteAddress().getHostName();
+	}
 }

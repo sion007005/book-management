@@ -1,5 +1,7 @@
 package sion.bookmanagement.util;
 
+import java.util.Objects;
+
 public class StringUtils {
 	
 	public static String trim(String text) {
@@ -15,5 +17,13 @@ public class StringUtils {
 		}
 		
 		return false;
+	}
+	
+	public static String getNullToEmpty(String value) {
+		if (Objects.isNull(value)) {
+			return "";
+		}
+		
+		return value;
 	}
 }
