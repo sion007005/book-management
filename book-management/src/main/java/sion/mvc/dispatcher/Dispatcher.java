@@ -38,8 +38,11 @@ public class Dispatcher {
 			Controller controller = controllerFactory.getInstance(controllerFactory.getKey(httpRequest));
 			
 			preCommand(controller, httpRequest, httpResponse);
+			
 			ModelAndView mav = controller.command(httpRequest, httpResponse);
 			httpResponse.setModelAndView(mav);
+			makeStatus(httpResponse, mav);
+			
 			postCommand(httpRequest, httpResponse);
 			
 			render(httpRequest, httpResponse, mav);
@@ -49,6 +52,7 @@ public class Dispatcher {
 			ModelAndView mav = new ModelAndView("error/forbidden");
 			mav.put("_error_message", e.getMessage());
 			httpResponse.setHttpStatus(HttpStatus.FORBIDDEN);
+			
 			render(httpRequest, httpResponse, mav);
 		} catch (FileNotFoundException e) {
 			log.error(e.getMessage(), e);
@@ -56,6 +60,7 @@ public class Dispatcher {
 			ModelAndView mav = new ModelAndView("error/not_found");
 			mav.put("_error_message", e.getMessage());
 			httpResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+			
 			render(httpRequest, httpResponse, mav);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -63,8 +68,23 @@ public class Dispatcher {
 			ModelAndView mav = new ModelAndView("error/server_error");
 			mav.put("errorMessage", e.getMessage());
 			httpResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+			
 			render(httpRequest, httpResponse, mav);
 		}
+		
+	}
+	
+	private void makeStatus(HttpResponse httpResponse, ModelAndView mav) {
+		if (mav.getViewName() == null) {
+			return;
+		}
+		
+		if (mav.getViewName().startsWith(HttpResponse.REDIRECT_NAME)) {
+			httpResponse.setHttpStatus(HttpStatus.MOVED_PERMANENTLY);
+			return;
+		} 			
+		
+		httpResponse.setHttpStatus(HttpStatus.OK);
 	}
 	
 	private void preCommand(Controller controller, HttpRequest httpRequest, HttpResponse httpResponse) throws DispatcherException {
@@ -141,29 +161,7 @@ public class Dispatcher {
 	private void render(HttpRequest httpRequest, HttpResponse httpResponse, ModelAndView mav) {
 	     ViewRender responseProcessor = FreemarkerViewRenderFactory.getInstance(httpResponse.getHttpStatus()); 
 	     responseProcessor.render(httpRequest, httpResponse, mav);
-	  }
+	}
 	
-//	private void statusCheck(Controller controller, HttpResponse httpResponse) {
-//		Redirect redirect = null;
-//		
-//		try {
-//			//getClass()로 controller 클래스의 메타정보를 가져와서 -> 그 중에서도 method 이름이 command이고 파라미터가 httpRequest인 것을 가져와라 
-//			Method method = controller.getClass().getMethod("command", HttpRequest.class, HttpResponse.class); 
-//			//그 메서드에서 선언된 어노테이션 정보를 가져와라
-//			 redirect = method.getDeclaredAnnotation(Redirect.class);
-//			 
-//			 if (needRedirect(redirect)) {
-//				 httpResponse.setHttpStatus(HttpStatus.MOVED_PERMANENTLY);
-//			 } else {
-//				 httpResponse.setHttpStatus(HttpStatus.OK);
-//			 }
-//		}  catch (Exception e) { 
-//	   	throw new DispatcherException(e);
-//	   }
-//	}
-//
-//	private boolean needRedirect(Redirect redirect) {
-//		return redirect != null;
-//	}
-
+	
 }

@@ -11,10 +11,10 @@ public class Cookie {
 	
 	public String generateCookieValue() {
 		//sid=memberId; Path=/; Domain=localhost; Expires=Sun, 07 Nov 2021 11:43:50 GMT
-		//TODO 이 포맷에 맞게 넣어주기 
+		//TODO expires null인 경우
 		String cookieValue = StringUtils.getNullToEmpty(this.name)+"="+StringUtils.getNullToEmpty(this.value)
 									+"; Path="+StringUtils.getNullToEmpty(this.path)+"; Domain="+StringUtils.getNullToEmpty(this.domain)
-									+"; Expires="+StringUtils.getNullToEmpty(this.expires);
+									+"; Expires="+this.expires;
 		
 		return cookieValue;
 	}
@@ -55,7 +55,7 @@ public class Cookie {
 		return expires;
 	}
 
-	public void setExpires(String expires) {
-		this.expires = expires;
+	public void setExpires(String cookieExpires) {
+		this.expires = cookieExpires;
 	}
 }

@@ -1,5 +1,10 @@
 package sion.bookmanagement.controller;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
 import sion.bookmanagement.service.Member;
 import sion.bookmanagement.service.MemberService;
 import sion.mvc.Cookie;
@@ -29,6 +34,16 @@ public class LoginProcessController implements Controller {
 			cookie.setPath("/");
 			cookie.setName("sid");
 			cookie.setValue(String.valueOf(member.getId()));
+			
+			OffsetDateTime oneHourFromNow 
+	        = OffsetDateTime.now(ZoneOffset.UTC)
+	        .plus(Duration.ofHours(1));
+
+			String cookieExpires 
+	        = DateTimeFormatter.RFC_1123_DATE_TIME
+	        .format(oneHourFromNow);
+			
+			cookie.setExpires(cookieExpires);
 			
 			CookieUtils.setValue(httpResponse.getHeaders(), cookie);
 //			CookieUtils.setValue(httpExchange, "sid", member.getId());

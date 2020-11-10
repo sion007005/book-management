@@ -24,19 +24,19 @@ public class HttpResponse {
 		this.redirectPath = this.modelAndView.getViewName().replace(REDIRECT_NAME, "");
 	}
 
-	private boolean makeStatusCode() {
-		if (modelAndView.getViewName() == null) {
-			return false;
-		}
-		
-		if (modelAndView.getViewName().startsWith(REDIRECT_NAME)) {
-			this.httpStatus = HttpStatus.MOVED_PERMANENTLY;
-			return true;
-		} 			
-		
-		this.httpStatus = HttpStatus.OK; 
-		return false;
-	}
+//	public boolean makeStatusCode() {
+//		if (modelAndView.getViewName() == null) {
+//			return false;
+//		}
+//		
+//		if (modelAndView.getViewName().startsWith(REDIRECT_NAME)) {
+//			this.httpStatus = HttpStatus.MOVED_PERMANENTLY;
+//			return true;
+//		} 			
+//		
+//		this.httpStatus = HttpStatus.OK; 
+//		return false;
+//	}
 
 	public int getStatusCode() {
 		return this.httpStatus.getCode();
@@ -64,8 +64,6 @@ public class HttpResponse {
 
 	public void setModelAndView(ModelAndView modelAndView) {
 		this.modelAndView = modelAndView;
-		
-		makeStatusCode();
 		makeRedirectPath();
 	}
 
