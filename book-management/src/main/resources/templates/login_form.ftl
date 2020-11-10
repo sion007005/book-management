@@ -180,7 +180,7 @@
 			<div class="title">
 				<h1>Login</h1>
 			</div>
-			<form action="/login/check" method="POST">
+			<form action="/login" method="POST">
 				<div class="form-input">
 					<input type="text" class="input input-name" data-type="name" placeholder="이메일*" name="email" value="">
 				</div>

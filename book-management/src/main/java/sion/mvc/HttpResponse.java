@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 public class HttpResponse {
 	public static final String REDIRECT_NAME = "redirect:";
 	
@@ -68,6 +70,9 @@ public class HttpResponse {
 	}
 
 	public void sendResponseHeaders(int statusCode, int contentLength) throws IOException {
+		log.debug("statuscode : {}", statusCode);
+		log.debug("contentLength : {}", contentLength);
+		log.debug("httpExchange : {}", httpExchange);
 		httpExchange.sendResponseHeaders(statusCode, contentLength);
 	}
 

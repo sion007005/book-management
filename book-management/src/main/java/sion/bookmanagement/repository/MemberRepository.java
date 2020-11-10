@@ -86,7 +86,7 @@ public class MemberRepository {
 			
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				Member member = newMember(rs);
+				Member member = newMemberWithoutPassword(rs);
 				memberList.add(member);
 			}
 		} catch (SQLException e) {
@@ -271,6 +271,21 @@ public class MemberRepository {
 		member.setAge(rs.getInt("age"));
 		member.setPhone(rs.getString("phone"));
 		member.setPassword(rs.getString("password"));
+		member.setCreatedAt(rs.getTimestamp("created_at"));
+		member.setUpdatedAt(rs.getTimestamp("updated_at"));
+		
+		return member;
+	}
+	
+	private Member newMemberWithoutPassword(ResultSet rs) throws SQLException {
+		Member member = new Member();
+		
+		member.setId(rs.getInt("member_id"));
+		member.setName(rs.getString("name"));
+		member.setGender(rs.getString("gender"));
+		member.setEmail(rs.getString("email"));
+		member.setAge(rs.getInt("age"));
+		member.setPhone(rs.getString("phone"));
 		member.setCreatedAt(rs.getTimestamp("created_at"));
 		member.setUpdatedAt(rs.getTimestamp("updated_at"));
 		

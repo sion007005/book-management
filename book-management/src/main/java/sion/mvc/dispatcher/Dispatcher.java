@@ -39,6 +39,7 @@ public class Dispatcher {
 			
 			preCommand(controller, httpRequest, httpResponse);
 			ModelAndView mav = controller.command(httpRequest, httpResponse);
+			httpResponse.setModelAndView(mav);
 			postCommand(httpRequest, httpResponse);
 			
 			render(httpRequest, httpResponse, mav);
@@ -68,8 +69,9 @@ public class Dispatcher {
 	
 	private void preCommand(Controller controller, HttpRequest httpRequest, HttpResponse httpResponse) throws DispatcherException {
 		userSetting(httpRequest);
-		loginCheck(controller); 
+		loginCheck(controller);
 	}
+
 
 	/*
 	 * 쿠키에 저장된 sid값을 읽어와서, threadLocal에 user 저장
@@ -78,9 +80,9 @@ public class Dispatcher {
 		String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
 		Integer memberId = NumberUtils.parseInt(sid);
 		MemberService memberService = MemberService.getInstance();
-		Member member = memberService.findOneById(memberId);
 		
-		if (Objects.nonNull(member)) {
+		if (Objects.nonNull(memberId)) {
+			Member member = memberService.findOneById(memberId);
 			User loginUser = BookManagementUser.newLoginUser(memberId, member.getEmail(), member.getName(), httpRequest.getAccessIp()); 
 			UserContext.set(loginUser); // threadLocal에 user 저장 
 		} else { // 정상적으로 로그인 된 멤버가 없음 
@@ -98,7 +100,7 @@ public class Dispatcher {
 		
 		try {
 			//getClass()로 controller 클래스의 메타정보를 가져와서 -> 그 중에서도 method 이름이 command이고 파라미터가 httpRequest인 것을 가져와라 
-			Method method = controller.getClass().getMethod("command", HttpRequest.class); 
+			Method method = controller.getClass().getMethod("command", HttpRequest.class, HttpResponse.class); 
 			//그 메서드에서 선언된 어노테이션 정보를 가져와라
 			 login = method.getDeclaredAnnotation(Login.class);
 		}  catch (Exception e) { 
@@ -129,6 +131,7 @@ public class Dispatcher {
 	}
 
 	private void postCommand(HttpRequest httpRequest, HttpResponse httpResponse) {
+		httpResponse.getModelAndView().getModel().put("_user", UserContext.get());
 	}
 
 	public static Dispatcher getInstance() {
@@ -139,5 +142,28 @@ public class Dispatcher {
 	     ViewRender responseProcessor = FreemarkerViewRenderFactory.getInstance(httpResponse.getHttpStatus()); 
 	     responseProcessor.render(httpRequest, httpResponse, mav);
 	  }
+	
+//	private void statusCheck(Controller controller, HttpResponse httpResponse) {
+//		Redirect redirect = null;
+//		
+//		try {
+//			//getClass()로 controller 클래스의 메타정보를 가져와서 -> 그 중에서도 method 이름이 command이고 파라미터가 httpRequest인 것을 가져와라 
+//			Method method = controller.getClass().getMethod("command", HttpRequest.class, HttpResponse.class); 
+//			//그 메서드에서 선언된 어노테이션 정보를 가져와라
+//			 redirect = method.getDeclaredAnnotation(Redirect.class);
+//			 
+//			 if (needRedirect(redirect)) {
+//				 httpResponse.setHttpStatus(HttpStatus.MOVED_PERMANENTLY);
+//			 } else {
+//				 httpResponse.setHttpStatus(HttpStatus.OK);
+//			 }
+//		}  catch (Exception e) { 
+//	   	throw new DispatcherException(e);
+//	   }
+//	}
+//
+//	private boolean needRedirect(Redirect redirect) {
+//		return redirect != null;
+//	}
 
 }
