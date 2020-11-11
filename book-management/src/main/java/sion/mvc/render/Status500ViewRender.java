@@ -11,6 +11,7 @@ import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.ModelAndView;
+import sion.mvc.ServerContext;
 import sion.mvc.ServerRunnerException;
 import sion.mvc.ViewRender;
 
@@ -57,9 +58,8 @@ public class Status500ViewRender implements ViewRender {
 		OutputStreamWriter writer = null;
 		
 		try {
-			//TODO application properties 파일에다가 저장해서, UTF-8(charset.name) .ftl(view.file.extension.name) 이런식으로 가져오기  
-	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), "UTF-8");
-	      Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
+	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), ServerContext.getCharsetType());
+	      Template template = cfg.getTemplate(mav.getViewName() + ServerContext.getViewFileType());
 	      template.process(mav.getModel(), writer); //모델만 넘겨준다.    
       } catch (Exception e){
       	log.error(e.getMessage(), e);

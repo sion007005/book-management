@@ -11,6 +11,7 @@ import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.ModelAndView;
+import sion.mvc.ServerContext;
 import sion.mvc.ServerRunnerException;
 import sion.mvc.ViewRender;
 
@@ -21,7 +22,7 @@ public class Status404ViewRender implements ViewRender {
 	@Override
 	public void render(HttpRequest httpRequest, HttpResponse httpResponse, ModelAndView mav) {
 		try {
-			Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
+			Template template = cfg.getTemplate(mav.getViewName() + ServerContext.getViewFileType());
 
 			if (template == null) {
 				throw new Exception();
@@ -58,8 +59,8 @@ public class Status404ViewRender implements ViewRender {
 		OutputStreamWriter writer = null;
 		
 		try {
-	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), "UTF-8");
-	      Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
+	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), ServerContext.getCharsetType());
+	      Template template = cfg.getTemplate(mav.getViewName() + ServerContext.getViewFileType());
 	      template.process(mav.getModel(), writer); //모델만 넘겨준다.    
 		} catch (Exception e){
       	log.error(e.getMessage(), e);

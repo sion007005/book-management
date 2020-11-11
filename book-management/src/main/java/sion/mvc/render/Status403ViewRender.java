@@ -11,6 +11,7 @@ import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.ModelAndView;
+import sion.mvc.ServerContext;
 import sion.mvc.ServerRunnerException;
 import sion.mvc.ViewRender;
 
@@ -23,10 +24,6 @@ public class Status403ViewRender implements ViewRender {
 		//TODO 최대한 단순하게 코드 정리 
 		try {
 			Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
-
-			if (template == null) { //null이 넘어오나? 불필요한코드가 아닌가?
-				throw new Exception();
-			} 
 		} catch (Exception e) {
 		//프리마커 파일로 말고 원래코드대로 outputstream 해주는 코드
 			try {
@@ -44,11 +41,7 @@ public class Status403ViewRender implements ViewRender {
 		try {
 			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
 			//브라우저에게 html로 내려주겠다고 알려줌
-			//TODO 공통으로 분리하도록.... 
 			addHtmlContextHeader(httpResponse.getHeaders());
-			
-			//OutputStream outputStream = httpExchange.getResponseBody();
-			//권한 없음, 접근 금지!
 			render(httpResponse, mav);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
@@ -60,8 +53,8 @@ public class Status403ViewRender implements ViewRender {
 		OutputStreamWriter writer = null;
 		
 		try {
-	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), "UTF-8");
-	      Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
+	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), ServerContext.getCharsetType());
+	      Template template = cfg.getTemplate(mav.getViewName() + ServerContext.getViewFileType());
 	      template.process(mav.getModel(), writer); //모델만 넘겨준다.    
       } catch (Exception e){
       	log.error(e.getMessage(), e);

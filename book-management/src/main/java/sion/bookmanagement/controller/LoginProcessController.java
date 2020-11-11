@@ -3,10 +3,6 @@ package sion.bookmanagement.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 
 import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.service.Member;
@@ -49,16 +45,16 @@ public class LoginProcessController implements Controller {
 				cookie.setValue(encryptUtil.encrypt(String.valueOf(member.getId())));
 				log.debug("cookie sid : {}", cookie.getValue());
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+				log.error(e.getMessage(), e);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				log.error(e.getMessage(), e);
 			} catch (GeneralSecurityException e) {
-				e.printStackTrace();
+				log.error(e.getMessage(), e);
 			}
 			
-			OffsetDateTime oneHourFromNow = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofHours(1));
-			String cookieExpires = DateTimeFormatter.RFC_1123_DATE_TIME.format(oneHourFromNow);
-			cookie.setExpires(cookieExpires);
+//			OffsetDateTime oneHourFromNow = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofHours(1));
+//			String cookieExpires = DateTimeFormatter.RFC_1123_DATE_TIME.format(oneHourFromNow);
+//			cookie.setExpires(cookieExpires);
 			CookieUtils.setValue(httpResponse.getHeaders(), cookie);
 			
 			return new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");

@@ -13,6 +13,8 @@ public class ServerContext {
 	private static final String NAME_DB_CLASS_NAME = "com.mysql.jdbc.Driver";
 	private static final String NAME_DB_ID = "db.id";
 	private static final String NAME_DB_PASSWORD = "db.password";
+	private static final String NAME_CHARSET = "charset.name";
+	private static final String NAME_VIEW_FILE = "view.file.extension.name";
 	
 	
 	private static Properties properties = new Properties();
@@ -68,5 +70,13 @@ public class ServerContext {
 			return null;
 		}
 		return dbPassword;
+	}
+	
+	public static String getCharsetType() {
+		return properties.getProperty(NAME_CHARSET);
+	}
+	
+	public static String getViewFileType() {
+		return properties.getProperty(NAME_VIEW_FILE);
 	}
 }

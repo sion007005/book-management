@@ -10,6 +10,7 @@ import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.ModelAndView;
+import sion.mvc.ServerContext;
 import sion.mvc.ViewRender;
 @Slf4j
 public class Status200ViewRender implements ViewRender {
@@ -25,9 +26,9 @@ public class Status200ViewRender implements ViewRender {
 			addHtmlContextHeader(httpResponse.getHeaders());
 
 			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0);
-			writer = new OutputStreamWriter(httpResponse.getResponseBody(), "UTF-8");
+			writer = new OutputStreamWriter(httpResponse.getResponseBody(), ServerContext.getCharsetType());
 
-			Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
+			Template template = cfg.getTemplate(mav.getViewName() + ServerContext.getViewFileType());
 			template.process(mav.getModel(), writer); // 모델만 넘겨준다.
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
