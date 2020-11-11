@@ -10,6 +10,7 @@ import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.support.SHA256Util;
 
 public class MemberCreateController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
@@ -24,11 +25,14 @@ public class MemberCreateController implements Controller {
 		String phone = (String)httpRequest.getAttribute("phone");
 		int ageNumber = NumberUtils.parseInt((String)httpRequest.getAttribute("age"));
 		String password = (String)httpRequest.getAttribute("password");
-		
+		String salt  = SHA256Util.generateSalt();
+      String newPassword = SHA256Util.getEncrypt(password, salt);
 		String emailAddress = emailFront + "@" + emailEnd;
-		Member member = new Member(trimedName, trimedGender, emailAddress, ageNumber, phone, password);
+		
+		Member member = new Member(trimedName, trimedGender, emailAddress, ageNumber, phone, newPassword);
 		member.setCreatedAt(new Date());
 		member.setUpdatedAt(new Date());
+		member.setSalt(salt);
 		
 		memberValidator.validate(member);
 		int memberId = memberService.create(member);

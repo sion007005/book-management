@@ -31,7 +31,7 @@ public class MemberRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "INSERT INTO members(name, gender, email, age, phone, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO members(name, gender, email, age, phone, password, salt, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			pstm.setString(1, member.getName());
@@ -40,8 +40,9 @@ public class MemberRepository {
 			pstm.setInt(4, member.getAge());
 			pstm.setString(5, member.getPhone());
 			pstm.setString(6, member.getPassword());
-			pstm.setTimestamp(7, DateUtils.getTimestamp(member.getCreatedAt()));
-			pstm.setTimestamp(8, DateUtils.getTimestamp(member.getUpdatedAt()));
+			pstm.setString(7, member.getSalt());
+			pstm.setTimestamp(8, DateUtils.getTimestamp(member.getCreatedAt()));
+			pstm.setTimestamp(9, DateUtils.getTimestamp(member.getUpdatedAt()));
 			pstm.executeUpdate(); 
 			
 			rs = pstm.getGeneratedKeys();  
@@ -235,7 +236,7 @@ public class MemberRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "SELECT member_id, password FROM members WHERE email = ?";
+			String query = "SELECT member_id, password, salt FROM members WHERE email = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, email);
 			
@@ -244,6 +245,7 @@ public class MemberRepository {
 				Member member = new Member();
 				member.setId(rs.getInt("member_id"));
 				member.setPassword(rs.getString("password"));
+				member.setSalt(rs.getString("salt"));
 				return member;
 			}
 		} catch (SQLException e) {

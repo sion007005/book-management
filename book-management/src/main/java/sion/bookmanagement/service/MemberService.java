@@ -51,5 +51,4 @@ public class MemberService {
 	public Member findOneByEmail(String email) {
 		return memberRepository.findOneByEmail(email);
 	}
-	
 }

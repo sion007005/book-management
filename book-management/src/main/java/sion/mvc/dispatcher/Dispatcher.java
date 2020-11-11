@@ -1,6 +1,9 @@
 package sion.mvc.dispatcher;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method; //reflection 검색! 자바 클래스의 메타정보(=데이터에 대한 데이터)를 제공함 
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,7 @@ import sion.mvc.ServerContext;
 import sion.mvc.ViewRender;
 import sion.mvc.auth.User;
 import sion.mvc.auth.UserContext;
+import sion.mvc.support.AES256Util;
 import sion.mvc.support.CookieUtils;
 
 @Slf4j
@@ -98,6 +102,21 @@ public class Dispatcher {
 	 */
 	private void userSetting(HttpRequest httpRequest) {
 		String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
+		
+		if (Objects.nonNull(sid)) {
+			try {
+				AES256Util encryptUtil = new AES256Util();
+				sid = encryptUtil.decrypt(sid);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (GeneralSecurityException e) {
+				e.printStackTrace();
+			}
+		}
+		log.debug("sid는 : {}", sid);
+		
 		Integer memberId = NumberUtils.parseInt(sid);
 		MemberService memberService = MemberService.getInstance();
 		
@@ -132,8 +151,8 @@ public class Dispatcher {
 			if (UserContext.isNotLogin()) {
 				throw new ForbiddenException("권한이 없는 페이지입니다.");
 			}
+			
 	   	// 1-1) 로그인 되었는지 체크
-			// sid=1&20201104112034 회원번호$년월일시분초 이런 형태로 쿠키에 set
 			// 쿠키에 sid 값이 있으면 로그인이 된 것이고, 없으면 로그인이 필요하지만 안 된 것으로 판단-> 예외던짐(403 forbidden 접근금지)  
 //			String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
 //			

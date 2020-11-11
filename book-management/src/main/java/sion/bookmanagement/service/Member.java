@@ -10,6 +10,7 @@ public class Member {
 	private Integer age;
 	private String phone;
 	private String password;
+	private String salt;
 	private Date createdAt;
 	private Date updatedAt; 
 	
@@ -94,6 +95,14 @@ public class Member {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 	
 	

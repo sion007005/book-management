@@ -14,8 +14,11 @@ select * from members;
 alter table `members` add `created_at` DATETIME COMMENT '등록날짜';
 alter table `members` add `updated_at` DATETIME COMMENT '수정날짜';
 alter table `members` add `password` int COMMENT '비밀번호';
+
 update members set password = '1234' where password is null;
 alter table members modify password varchar(20) not null;
+alter table members modify password varchar(100) not null;
 
+alter table `members` add `salt` varchar(100);
 
 DELETE FROM MEMBERS WHERE `created_at` is null || `updated_at` is null;
