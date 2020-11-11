@@ -22,39 +22,28 @@ public class Status500ViewRender implements ViewRender {
 	@Override
 	public void render(HttpRequest httpRequest, HttpResponse httpResponse, ModelAndView mav) {
 		try {
-			Template template = cfg.getTemplate(mav.getViewName() + ".ftl");
-
-			if (template == null) {
-				throw new Exception();
-			} 
+			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
+			addHtmlContextHeader(httpResponse.getHeaders());
+			displayViewPage(httpResponse, mav);
 		} catch (Exception e) {
 			try {
 				httpResponse.sendResponseHeaders(500, 0); //상태코드, 바디사이즈
-				OutputStream outputStream = httpResponse.getResponseBody();
-				outputStream.write("unexpected error...".getBytes());
-				outputStream.close();
+				writeMsgOnBrowser(httpResponse);
 			} catch (IOException e1) {
 				log.error(e.getMessage(), e1);
 				throw new ServerRunnerException(e1);
 			}
 		}
 		
-		try {
-			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
-			//브라우저에게 html로 내려주겠다고 알려줌
-			addHtmlContextHeader(httpResponse.getHeaders());
-			
-			//OutputStream outputStream = httpExchange.getResponseBody();
-			//권한 없음, 접근 금지!
-			render(httpResponse, mav);
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-			throw new ServerRunnerException(e);
-		} 
 	}
 
-	public void render(HttpResponse httpResponse, ModelAndView mav) {
-		 
+	private void writeMsgOnBrowser(HttpResponse httpResponse) throws IOException {
+		OutputStream outputStream = httpResponse.getResponseBody();
+		outputStream.write("unexpected error...".getBytes());
+		outputStream.close();
+	}
+
+	public void displayViewPage(HttpResponse httpResponse, ModelAndView mav) {
 		OutputStreamWriter writer = null;
 		
 		try {

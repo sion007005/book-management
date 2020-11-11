@@ -13,19 +13,23 @@ import sion.mvc.ViewRender;
 
 @Slf4j
 public class Status301ViewRender implements ViewRender {
-
 	@Override
 	public void render(HttpRequest httpRequest, HttpResponse httpResponse, ModelAndView mav) {
 		//REDIRECT
    	Headers headers = httpResponse.getHeaders();
    	headers.add("Location", httpResponse.getRedirectPath());
+   	
    	try {
    		httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
-			OutputStream outputStream = httpResponse.getResponseBody();
-			outputStream.write("".getBytes());
-			outputStream.close();
+   		writeMsgOnBrowser(httpResponse);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
-   }      	
+   }
+
+	private void writeMsgOnBrowser(HttpResponse httpResponse) throws IOException {
+		OutputStream outputStream = httpResponse.getResponseBody();
+		outputStream.write("".getBytes());
+		outputStream.close();
+	}      	
 }
