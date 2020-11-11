@@ -11,7 +11,7 @@ import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.ModelAndView;
-import sion.mvc.ServerContext;
+import sion.mvc.ApplicationContext;
 import sion.mvc.ServerRunnerException;
 import sion.mvc.ViewRender;
 
@@ -46,8 +46,8 @@ public class Status404ViewRender implements ViewRender {
 		OutputStreamWriter writer = null;
 		
 		try { //TODO template 값이 제대로 안 넘어오면?
-	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), ServerContext.getCharsetType());
-	      Template template = cfg.getTemplate(mav.getViewName() + ServerContext.getViewFileType());
+	      writer = new OutputStreamWriter(httpResponse.getResponseBody(), ApplicationContext.getCharsetType());
+	      Template template = cfg.getTemplate(mav.getViewName() + ApplicationContext.getViewFileType());
 	      template.process(mav.getModel(), writer); //모델만 넘겨준다.    
 		} catch (Exception e){
       	log.error(e.getMessage(), e);

@@ -54,7 +54,7 @@ public class HttpRequest {
 		this.attributes = attributes;
 	}
 	
-	public String getUrl() {
+	public String getUriPath() {
 		return uriPath;
 	}
 

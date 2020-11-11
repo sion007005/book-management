@@ -63,6 +63,6 @@ public class BookManagementControllerFactory implements ControllerFactory {
 	
 	@Override 
 	public String getKey(HttpRequest httpRequest) {
-		return httpRequest.getUrl() + "&" + httpRequest.getMethod();
+		return httpRequest.getUriPath() + "&" + httpRequest.getMethod();
 	}
 }

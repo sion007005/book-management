@@ -18,10 +18,6 @@ public class Excutor implements Runnable {
 		try {
 			log.info("URI : " + httpExchange.getRequestURI() + " Method : " + httpExchange.getRequestMethod());
          
-         if (httpExchange.getRequestURI().getPath().startsWith("/favicon.ico")) {
-         	return;
-         }
-         
          HttpRequest httpRequest = new HttpRequest(httpExchange);
 			HttpResponse httpResponse = new HttpResponse(httpExchange);
          Dispatcher dispatcher = Dispatcher.getInstance();

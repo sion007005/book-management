@@ -1,28 +1,33 @@
 package sion.mvc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.dispatcher.ControllerFactory;
+import sion.mvc.dispatcher.InterceptorRegistry;
 
-public class ServerContext {
+public class ApplicationContext {
 	private static final int DEFAULT_PORT = 3434;
 	private static final String NAME_SERVER_PORT = "server.port";
 	private static final String NAME_CONTROLLER_FACTORY_CLASS = "controller.factory.class";
+	private static final String NAME_INTERCEPTOR_REGISTRY_CLASS = "interceptor.registry.class";
 	private static final String NAME_DB_URL = "db.url";
 	private static final String NAME_DB_CLASS_NAME = "com.mysql.jdbc.Driver";
 	private static final String NAME_DB_ID = "db.id";
 	private static final String NAME_DB_PASSWORD = "db.password";
 	private static final String NAME_CHARSET = "charset.name";
 	private static final String NAME_VIEW_FILE = "view.file.extension.name";
-	
+	private static final String NAME_STATIC_RESOURCES_PATH = "static.resources.path";
 	
 	private static Properties properties = new Properties();
+	private static List<String> staticResourcesPathList;
 
 	public static void addProperties(Properties properties) {
 		properties.forEach((k, v) -> {
 			 String value = StringUtils.trim((String) v);
-			 ServerContext.properties.put(k, value);
+			 ApplicationContext.properties.put(k, value);
 		});
 	}
 
@@ -78,5 +83,33 @@ public class ServerContext {
 	
 	public static String getViewFileType() {
 		return properties.getProperty(NAME_VIEW_FILE);
+	}
+
+	public static InterceptorRegistry getInterceptorRegistry() {
+		try {
+			String className = properties.getProperty(NAME_INTERCEPTOR_REGISTRY_CLASS);
+			InterceptorRegistry object = (InterceptorRegistry) Class.forName(className).getConstructor().newInstance();
+			
+			return object;
+		} catch (Exception e) {
+			throw new ServerRunnerException(e);
+		}
+	}
+	
+	public static List<String> getStaticResourcePathList() {
+		if (staticResourcesPathList == null) {
+			staticResourcesPathList = new ArrayList<>();
+
+			String pathString = properties.getProperty(NAME_STATIC_RESOURCES_PATH);
+			String[] pathes = pathString.split(",");
+			
+			if (pathes != null) {
+				for (String path : pathes) {
+					staticResourcesPathList.add(path.trim());
+				}
+			}
+		}
+
+		return staticResourcesPathList;
 	}
 }
