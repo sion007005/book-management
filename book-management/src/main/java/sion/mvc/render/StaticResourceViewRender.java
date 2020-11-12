@@ -6,13 +6,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Objects;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.HttpStatus;
 import sion.mvc.ModelAndView;
 import sion.mvc.ViewRender;
 import sion.mvc.dispatcher.FileNotFoundException;
-
+@Slf4j
 public class StaticResourceViewRender implements ViewRender {
 
 	@Override

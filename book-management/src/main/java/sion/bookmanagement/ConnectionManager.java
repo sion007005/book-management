@@ -39,17 +39,16 @@ public class ConnectionManager {
 	
 	 private synchronized DataSource getDataSource() {
 		 //데이터 베이스 설정 넣기
-		 // TODO 하드코딩된 글자들 설정파일로 빼기
 		  HikariConfig hikariConfig = new HikariConfig();
-		  hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
+		  hikariConfig.setDriverClassName(ApplicationContext.getDbClassName());
 		  hikariConfig.setJdbcUrl(ApplicationContext.getDbUrl());
 		  hikariConfig.setUsername(ApplicationContext.getDbId());
 		  hikariConfig.setPassword(ApplicationContext.getDbPassword());
 		  // 커넥션 풀을 세개를 만들어 두고 재활용해라 
-		  hikariConfig.setMaximumPoolSize(3);
-		  hikariConfig.setConnectionTestQuery("SELECT 1");
-		  hikariConfig.setPoolName("bookManagementHikariCP");
-		  hikariConfig.setConnectionTimeout(3000);
+		  hikariConfig.setMaximumPoolSize(ApplicationContext.getDbConnectionPoolSize());
+		  hikariConfig.setConnectionTestQuery(ApplicationContext.getDbTestQuery());
+		  hikariConfig.setPoolName(ApplicationContext.getDbConnectionPoolName());
+		  hikariConfig.setConnectionTimeout(ApplicationContext.getDbConnectionTime());
 		  
 		  DataSource dataSource = new HikariDataSource(hikariConfig);
 		  return dataSource;

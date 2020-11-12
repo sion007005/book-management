@@ -10,13 +10,18 @@ import sion.mvc.dispatcher.InterceptorRegistry;
 
 public class ApplicationContext {
 	private static final int DEFAULT_PORT = 3434;
+	private static final int DEFAULT_POOL_SIZE = 3;
 	private static final String NAME_SERVER_PORT = "server.port";
 	private static final String NAME_CONTROLLER_FACTORY_CLASS = "controller.factory.class";
 	private static final String NAME_INTERCEPTOR_REGISTRY_CLASS = "interceptor.registry.class";
 	private static final String NAME_DB_URL = "db.url";
-	private static final String NAME_DB_CLASS_NAME = "com.mysql.jdbc.Driver";
+	private static final String NAME_DB_CLASS_NAME = "db.class.name";
 	private static final String NAME_DB_ID = "db.id";
 	private static final String NAME_DB_PASSWORD = "db.password";
+	private static final String NAME_DB_TEST_QUERY = "db.test.query";
+	private static final String NAME_DB_CONNECTION_POOL = "db.connection.pool.name";
+	private static final String SIZE_DB_CONNECTION_POOL = "db.connection.pool.size";
+	private static final String TIME_DB_CONNECTION = "db.connection.time";
 	private static final String NAME_CHARSET = "charset.name";
 	private static final String NAME_VIEW_FILE = "view.file.extension.name";
 	private static final String NAME_STATIC_RESOURCES_PATH = "static.resources.path";
@@ -111,5 +116,27 @@ public class ApplicationContext {
 		}
 
 		return staticResourcesPathList;
+	}
+	
+	public static String getDbTestQuery() {
+		return properties.getProperty(NAME_DB_TEST_QUERY);
+	}
+	
+	public static String getDbConnectionPoolName() {
+		return properties.getProperty(NAME_DB_CONNECTION_POOL);
+	}
+
+	public static int getDbConnectionPoolSize() {
+		String poolSize = properties.getProperty(SIZE_DB_CONNECTION_POOL);
+		
+		if (poolSize == null || poolSize.length() == 0) {
+			return DEFAULT_POOL_SIZE;
+		}
+		
+		return Integer.parseInt(poolSize);
+	}
+	
+	public static int getDbConnectionTime() {
+		return Integer.parseInt(properties.getProperty(TIME_DB_CONNECTION));
 	}
 }
