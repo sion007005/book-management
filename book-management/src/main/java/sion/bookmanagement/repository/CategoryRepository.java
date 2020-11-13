@@ -49,6 +49,7 @@ public class CategoryRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch(SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -77,6 +78,7 @@ public class CategoryRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -101,6 +103,7 @@ public class CategoryRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -135,6 +138,7 @@ public class CategoryRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -166,6 +170,7 @@ public class CategoryRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -198,6 +203,7 @@ public class CategoryRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}

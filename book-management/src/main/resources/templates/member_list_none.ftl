@@ -36,39 +36,6 @@
         min-width: 1190px;
 	  }
 	  
-	  #wrapper .join-container {
-	  	position: relative;
-        width: 1190px;
-        padding: 15px 30px;
-        margin: 0 auto;
-	  }
-	  
-	  .join-container div {
-	    width: 1190;
-        display: flex;
-        margin: 0 auto;
-        justify-content: flex-end;
-        color: #32424B;
-        
-	  }
-	  
-	  .join-container div .btn-join {
-	    height: 30px;
-        width: 120px;
-        font-size: 17px;
-        background-color: #fff;
-        border: 2px solid #828282;
-        cursor: pointer;
-        font-family: 'Caveat', cursive;
-	  }
-	  
-	  .join-container div .btn-join:hover {
-        background-color: #32424B;
-        border: 2px solid #fff;
-        color: #fff;
-        transition-duration: 0.3s;
-	  }
-	  
 	  #wrapper h1 {
 	    display: block;
         margin: 0 0 30;

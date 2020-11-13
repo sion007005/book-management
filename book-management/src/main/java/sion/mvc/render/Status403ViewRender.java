@@ -7,11 +7,11 @@ import java.io.OutputStreamWriter;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
+import sion.mvc.ApplicationContext;
 import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.HttpRequest;
 import sion.mvc.HttpResponse;
 import sion.mvc.ModelAndView;
-import sion.mvc.ApplicationContext;
 import sion.mvc.ServerRunnerException;
 import sion.mvc.ViewRender;
 
@@ -21,7 +21,6 @@ public class Status403ViewRender implements ViewRender {
 
 	@Override
 	public void render(HttpRequest httpRequest, HttpResponse httpResponse, ModelAndView mav) {
-		//TODO 최대한 단순하게 코드 정리 
 		try {
 			httpResponse.sendResponseHeaders(httpResponse.getStatusCode(), 0); //상태코드, 바디사이즈
 			addHtmlContextHeader(httpResponse.getHeaders());

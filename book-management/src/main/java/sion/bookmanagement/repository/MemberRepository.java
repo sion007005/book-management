@@ -55,6 +55,7 @@ public class MemberRepository {
 			if(pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -96,6 +97,7 @@ public class MemberRepository {
 			if(pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch(SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -131,6 +133,7 @@ public class MemberRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch(SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -155,6 +158,7 @@ public class MemberRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -189,6 +193,7 @@ public class MemberRepository {
 		   if (pstm != null) {
 		      try {
 		      	pstm.close();
+		      	conn.close();
 		      } catch (SQLException e) {
 		      	throw new DataProcessException(e);
 		      }
@@ -220,6 +225,7 @@ public class MemberRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -254,6 +260,7 @@ public class MemberRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}

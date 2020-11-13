@@ -53,6 +53,7 @@ public class BookRepository {
 			if(pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch(SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -89,6 +90,7 @@ public class BookRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -123,6 +125,7 @@ public class BookRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -147,6 +150,7 @@ public class BookRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -181,6 +185,7 @@ public class BookRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -221,6 +226,7 @@ public class BookRepository {
 			if(pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch(SQLException e) {
 					throw new DataProcessException(e);
 				}
@@ -252,6 +258,7 @@ public class BookRepository {
 			if (pstm != null) {
 				try {
 					pstm.close();
+					conn.close();
 				} catch (SQLException e) {
 					throw new DataProcessException(e);
 				}
