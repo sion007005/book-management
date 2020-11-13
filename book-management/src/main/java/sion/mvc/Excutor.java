@@ -21,7 +21,7 @@ public class Excutor implements Runnable {
          HttpRequest httpRequest = new HttpRequest(httpExchange);
 			HttpResponse httpResponse = new HttpResponse(httpExchange);
          Dispatcher dispatcher = Dispatcher.getInstance();
-         dispatcher.dispatch(httpRequest, httpResponse);
+         dispatcher.service(httpRequest, httpResponse);
          httpExchange.close();
 		} catch (Exception e){
 			log.error(e.getMessage(), e);

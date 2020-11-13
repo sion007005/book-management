@@ -22,7 +22,7 @@ public class MemberFormController implements Controller {
 		String id = (String) httpRequest.getParameter("id");
 		if (!StringUtils.isEmpty(id)) {
 			Member member = memberService.findOneById(NumberUtils.parseInt(id));
-			mav.put("member", member);
+			mav.addObject("member", member);
 		}
 		
 		return mav;

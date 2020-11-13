@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HttpResponse {
 	public static final String REDIRECT_NAME = "redirect:";
+	public static final String JSON_VIEW_NAME = "_json";
 	
 	private HttpStatus httpStatus;
 	private HttpExchange httpExchange;

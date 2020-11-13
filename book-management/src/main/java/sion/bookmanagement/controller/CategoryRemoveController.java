@@ -18,7 +18,7 @@ public class CategoryRemoveController implements Controller {
 		categoryService.remove(id);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/list");
-		mav.put("categoryId", id);
+		mav.addObject("categoryId", id);
 		
 		return mav;
 	}

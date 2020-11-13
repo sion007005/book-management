@@ -25,12 +25,12 @@ public class BookFormController implements Controller {
 	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		ModelAndView mav = new ModelAndView("book_form");
 		List<Category> categoryList = categoryService.findAll(null);
-		mav.put("categoryList", categoryList);
+		mav.addObject("categoryList", categoryList);
 		
 		String id = (String) httpRequest.getParameter("id");
 		if(!StringUtils.isEmpty(id)) {
 			Book book = bookService.findOneById(NumberUtils.parseInt(id));
-			mav.put("book", book);
+			mav.addObject("book", book);
 		}
 		
 		return mav;

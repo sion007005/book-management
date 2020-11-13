@@ -23,7 +23,7 @@ public class MemberRemoveController implements Controller {
 		memberService.remove(id);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");
-		mav.put("memberId", id);
+		mav.addObject("memberId", id);
 		
 		return mav; //forwarding이 아닌 전체 리스트로 redirect로 한다.
 	}

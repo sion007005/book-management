@@ -24,8 +24,8 @@ public class CategoryFormController implements Controller {
 		if (!StringUtils.isEmpty(id)) {
 			Category category = categoryService.findOneById(NumberUtils.parseInt(id));
 			List<Category> categoryList = categoryService.findAll(null);
-			mav.put("category", category);
-			mav.put("categoryList", categoryList);
+			mav.addObject("category", category);
+			mav.addObject("categoryList", categoryList);
 		}
 		
 		return mav;

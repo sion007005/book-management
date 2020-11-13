@@ -27,7 +27,7 @@ public class ModelAndView {
 		this.model = model;
 	}
 
-	public void put(String key, Object value) {
+	public void addObject(String key, Object value) {
 		model.put(key, value);
 	}
 

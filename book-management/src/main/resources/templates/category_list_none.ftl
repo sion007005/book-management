@@ -1,12 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko">
   <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
-	<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
-	<link href="/static/style.css" rel="stylesheet">
+    <#include "/common/head.ftl">
   </head>
   
   <body>
+  	<div><#include "/common/header.ftl"></div>
+    <div><#include "/common/menu.ftl"></div>
     <div id="wrapper">
       <div class="button join-container">
       	<div><form action="/categories/form"><button type="submit" class="btn-join">New Category</button></form></div>
@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>    
-    
+    <div><#include "/common/footer.ftl"></div>
     <script>
 	  const orderSelectBox = document.querySelector('#order-select');
       orderSelectBox.addEventListener("click", submitOrderType);

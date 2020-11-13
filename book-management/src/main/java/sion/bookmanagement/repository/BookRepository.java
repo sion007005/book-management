@@ -13,7 +13,7 @@ import sion.bookmanagement.service.BookOrderType;
 import sion.bookmanagement.service.BookSearchCondition;
 import sion.bookmanagement.util.DateUtils;
 
-public class BookRepository {
+public class BookRepository extends BaseRepository {
 	private static BookRepository bookRepository = new BookRepository();
 
 	private BookRepository() {				
@@ -50,14 +50,7 @@ public class BookRepository {
 		} catch(SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch(SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -87,14 +80,7 @@ public class BookRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return bookList;
@@ -122,14 +108,7 @@ public class BookRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -147,14 +126,7 @@ public class BookRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -182,14 +154,7 @@ public class BookRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return bookList;
@@ -223,14 +188,7 @@ public class BookRepository {
 		} catch(SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch(SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return bookList;
@@ -255,14 +213,7 @@ public class BookRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		return null;
 	}

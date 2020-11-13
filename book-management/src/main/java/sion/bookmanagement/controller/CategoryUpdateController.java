@@ -30,7 +30,7 @@ public class CategoryUpdateController implements Controller {
 		categoryService.update(category);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/info?id=" + categoryId);
-		mav.put("category", category);
+		mav.addObject("category", category);
 		
 		return mav;
 	}

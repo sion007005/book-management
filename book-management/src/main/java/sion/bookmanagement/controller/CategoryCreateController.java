@@ -25,7 +25,7 @@ public class CategoryCreateController implements Controller {
 		int categoryId = categoryService.create(category);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/info?id="+categoryId);
-		mav.put("categoryId", categoryId);
+		mav.addObject("categoryId", categoryId);
 		
 		return mav;
 	}

@@ -24,7 +24,7 @@ public class MemberListController implements Controller {
 		
 		List<Member> memberList = memberService.findAll(type);
 		ModelAndView mav = new ModelAndView("member_list");
-		mav.put("memberList", memberList);
+		mav.addObject("memberList", memberList);
 		 
 		return mav;
 	}

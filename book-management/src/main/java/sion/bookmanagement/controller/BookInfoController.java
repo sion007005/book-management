@@ -18,7 +18,7 @@ public class BookInfoController implements Controller {
 		int id = NumberUtils.parseInt((String)httpRequest.getParameter("id"));
 		Book book = bookService.findOneById(id);
 		ModelAndView mav = new ModelAndView("book_info");
-		mav.put("book", book);
+		mav.addObject("book", book);
 		
 		return mav;
 		

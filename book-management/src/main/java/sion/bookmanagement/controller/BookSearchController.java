@@ -31,7 +31,7 @@ public class BookSearchController implements Controller {
 			List<Book> bookList = bookService.search(condition);
 			
 			ModelAndView mav = new ModelAndView("book_list");
-			mav.put("bookList", bookList);
+			mav.addObject("bookList", bookList);
 			
 			return mav;
 		}

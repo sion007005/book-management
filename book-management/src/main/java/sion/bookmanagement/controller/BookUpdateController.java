@@ -41,7 +41,7 @@ public class BookUpdateController implements Controller {
 		bookService.update(book);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
-		mav.put("book", book);
+		mav.addObject("book", book);
 		
 		return mav;
 	}

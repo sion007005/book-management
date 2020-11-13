@@ -32,7 +32,7 @@ public class CategorySearchController implements Controller {
 		categoryList = categoryService.search(condition);
 		
 		ModelAndView mav = new ModelAndView("category_list");
-		mav.put("categoryList", categoryList);
+		mav.addObject("categoryList", categoryList);
 		
 		return mav;
 	}

@@ -35,7 +35,7 @@ public class BookCreateController implements Controller {
 		int bookId = bookService.create(book);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/books/info?id="+bookId);
-		mav.put("bookId", bookId);
+		mav.addObject("bookId", bookId);
 		
 		return mav;
 	}

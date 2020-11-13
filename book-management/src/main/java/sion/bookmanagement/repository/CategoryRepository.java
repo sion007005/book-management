@@ -14,7 +14,7 @@ import sion.bookmanagement.service.CategoryOrderType;
 import sion.bookmanagement.service.CategorySearchCondition;
 import sion.bookmanagement.util.DateUtils;
 
-public class CategoryRepository {
+public class CategoryRepository extends BaseRepository {
 	private static CategoryRepository categoryRepository = new CategoryRepository();
 	  
 	private CategoryRepository() {		
@@ -46,14 +46,7 @@ public class CategoryRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch(SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -75,14 +68,7 @@ public class CategoryRepository {
 		} catch(SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -100,14 +86,7 @@ public class CategoryRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -135,14 +114,7 @@ public class CategoryRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return categoryList;
@@ -167,14 +139,7 @@ public class CategoryRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		return null;
 	}
@@ -200,14 +165,7 @@ public class CategoryRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return categoryList;

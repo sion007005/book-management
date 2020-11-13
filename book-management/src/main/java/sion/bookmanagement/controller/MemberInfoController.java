@@ -24,7 +24,7 @@ public class MemberInfoController implements Controller {
 		Member member = memberService.findOneById(id);
 		
 		ModelAndView mav = new ModelAndView("member_info");
-		mav.put("member", member);
+		mav.addObject("member", member);
 		
 		return mav;
 	}

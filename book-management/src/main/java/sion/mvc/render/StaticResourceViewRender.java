@@ -23,7 +23,7 @@ public class StaticResourceViewRender implements ViewRender {
 
 		try {
 			//TODO css context로 변경해야 함
-			addHtmlContextHeader(httpResponse.getHeaders());
+			addStyleSheetContextHeader(httpResponse.getHeaders());
 			httpResponse.sendResponseHeaders(HttpStatus.OK.getCode(), 0);
 
 			InputStream is = getClass().getResourceAsStream(httpRequest.getUriPath()); // class path에서 찾는다. 

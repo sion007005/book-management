@@ -19,8 +19,8 @@ public class LoginFormController implements Controller {
 
 		String email = (String) httpRequest.getParameter("email");
 		if (!StringUtils.isEmpty(email)) {
-			mav.put("email", email);
-			mav.put("message", "아이디와 패스워드가 맞지 않습니다.");
+			mav.addObject("email", email);
+			mav.addObject("message", "아이디와 패스워드가 맞지 않습니다.");
 		}
 		
 		return mav;

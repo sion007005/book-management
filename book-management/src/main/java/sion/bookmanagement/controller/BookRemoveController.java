@@ -23,7 +23,7 @@ public class BookRemoveController implements Controller {
 		bookService.remove(id);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/books/list");
-		mav.put("bookId", id);
+		mav.addObject("bookId", id);
 		
 		return mav;
 	}

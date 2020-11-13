@@ -11,6 +11,7 @@ import sion.mvc.HttpResponse;
 import sion.mvc.HttpStatus;
 import sion.mvc.ModelAndView;
 import sion.mvc.ViewRender;
+import sion.mvc.render.JsonViewRender;
 import sion.mvc.render.StaticResourceViewRender;
 
 @Slf4j
@@ -33,7 +34,7 @@ public class Dispatcher {
 	 * 1. 요청 url에 맞는 controller를 찾아서 실행한다.
 	 * 2. status code를 최종적으로 결정한다.
 	 */
-	public void dispatch(HttpRequest httpRequest, HttpResponse httpResponse) {
+	public void service(HttpRequest httpRequest, HttpResponse httpResponse) {
 		try {
 			// 정적 리소스를 처리하는 로직
 			if (isStaticResourceRequest(httpRequest)) {
@@ -58,7 +59,7 @@ public class Dispatcher {
 			log.error(e.getMessage(), e);
 			
 			ModelAndView mav = new ModelAndView("error/forbidden");
-			mav.put("_error_message", e.getMessage());
+			mav.addObject("_error_message", e.getMessage());
 			httpResponse.setHttpStatus(HttpStatus.FORBIDDEN);
 			
 			render(httpRequest, httpResponse, mav);
@@ -66,7 +67,7 @@ public class Dispatcher {
 			log.error(e.getMessage(), e);
 			
 			ModelAndView mav = new ModelAndView("error/not_found");
-			mav.put("_error_message", e.getMessage());
+			mav.addObject("_error_message", e.getMessage());
 			httpResponse.setHttpStatus(HttpStatus.NOT_FOUND);
 			
 			render(httpRequest, httpResponse, mav);
@@ -74,7 +75,7 @@ public class Dispatcher {
 			log.error(e.getMessage(), e);
 			
 			ModelAndView mav = new ModelAndView("error/server_error");
-			mav.put("errorMessage", e.getMessage());
+			mav.addObject("errorMessage", e.getMessage());
 			httpResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 			
 			render(httpRequest, httpResponse, mav);
@@ -134,9 +135,14 @@ public class Dispatcher {
 	}
 
 	private void render(HttpRequest httpRequest, HttpResponse httpResponse, ModelAndView mav) {
-	     ViewRender responseProcessor = FreemarkerViewRenderFactory.getInstance(httpResponse.getHttpStatus()); 
-	     responseProcessor.render(httpRequest, httpResponse, mav);
+		if (HttpResponse.JSON_VIEW_NAME.equals(mav.getViewName())) {
+			ViewRender viewRender = new JsonViewRender();
+			viewRender.render(httpRequest, httpResponse, mav);
+			return;
+		}
+		
+		ViewRender responseProcessor = FreemarkerViewRenderFactory.getInstance(httpResponse.getHttpStatus()); 
+	   responseProcessor.render(httpRequest, httpResponse, mav);
 	}
-	
 	
 }

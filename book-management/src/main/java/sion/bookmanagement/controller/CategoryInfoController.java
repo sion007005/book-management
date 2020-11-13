@@ -19,7 +19,7 @@ public class CategoryInfoController implements Controller {
 		Category category = categoryService.findOneById(id);
 		
 		ModelAndView mav = new ModelAndView("category_info");
-		mav.put("category", category);
+		mav.addObject("category", category);
 		
 		return mav;
 	}

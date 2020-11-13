@@ -8,13 +8,15 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.ConnectionManager;
 import sion.bookmanagement.service.Member;
 import sion.bookmanagement.service.MemberOrderType;
 import sion.bookmanagement.service.MemberSearchCondition;
 import sion.bookmanagement.util.DateUtils;
 
-public class MemberRepository {
+@Slf4j
+public class MemberRepository extends BaseRepository {
 	private static MemberRepository memberRepository = new MemberRepository();
 	
 	private MemberRepository() {
@@ -51,18 +53,11 @@ public class MemberRepository {
 			return rs.getInt(1); //아이디 얻기  
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
-		} finally {
-			if(pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+		} finally {//TODO 나머지도 고치기 , 메서드는 항상 동사로!
+			closeDbResource(conn, pstm);
 		}
 	}
-	
+
 	public List<Member> search(MemberSearchCondition condition) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
@@ -94,14 +89,7 @@ public class MemberRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if(pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch(SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return memberList;
@@ -130,14 +118,7 @@ public class MemberRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch(SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -155,14 +136,7 @@ public class MemberRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 	}
 	
@@ -190,14 +164,7 @@ public class MemberRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-		   if (pstm != null) {
-		      try {
-		      	pstm.close();
-		      	conn.close();
-		      } catch (SQLException e) {
-		      	throw new DataProcessException(e);
-		      }
-		   }
+			closeDbResource(conn, pstm);
 		}
 		
 		return memberList;
@@ -222,14 +189,7 @@ public class MemberRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return null;
@@ -257,14 +217,7 @@ public class MemberRepository {
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
 		} finally {
-			if (pstm != null) {
-				try {
-					pstm.close();
-					conn.close();
-				} catch (SQLException e) {
-					throw new DataProcessException(e);
-				}
-			}
+			closeDbResource(conn, pstm);
 		}
 		
 		return null;

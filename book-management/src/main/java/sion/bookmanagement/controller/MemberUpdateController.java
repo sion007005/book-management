@@ -40,7 +40,7 @@ public class MemberUpdateController implements Controller {
 		memberService.update(member);
 		
 		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId);
-		mav.put("member", member);
+		mav.addObject("member", member);
 		
 		return mav;
 	}
