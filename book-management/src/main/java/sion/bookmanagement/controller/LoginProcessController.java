@@ -20,6 +20,7 @@ public class LoginProcessController implements Controller {
 	public ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse) {
 		//TODO validation check
 		String email = (String)httpRequest.getAttribute("email");
+		log.debug("넘어오는 이메일 값: {}", email);
 		String plainPassword = (String)httpRequest.getAttribute("password");
 		
 		//이메일이 db에 있는지 search 
@@ -52,10 +53,9 @@ public class LoginProcessController implements Controller {
 				throw new LoginProcessException(e.getMessage(), e);
 			} 
 		} else {
-			// TODO 메세지 보여주고, 이메일 값은 유지되어있도록 구현
-			ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/login/form");
-			mav.put("message", "아이디와 패스워드가 맞지 않습니다.");
-			mav.put("email", email);
+			ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/login/form?email="+email);
+//			mav.put("message", "아이디와 패스워드가 맞지 않습니다.");
+//			mav.put("email", email);
 			
 			return mav;
 		}
