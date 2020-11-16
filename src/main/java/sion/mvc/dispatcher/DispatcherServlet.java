@@ -149,7 +149,7 @@ public class DispatcherServlet extends HttpServlet {
 		String requestURI = request.getRequestURI();
 		for (String path : pathList) {
 			if (requestURI.startsWith(path)) {
-				log.info("request.getRequestURI: {}", request.getRequestURI());
+//				log.info("request.getRequestURI: {}", request.getRequestURI());
 				return true;
 			}
 		}
