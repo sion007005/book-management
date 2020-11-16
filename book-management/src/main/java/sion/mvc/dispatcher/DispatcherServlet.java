@@ -30,9 +30,9 @@ public class DispatcherServlet extends HttpServlet {
 	@Override 
 	public void init() { // 서블릿이 실행될 때 맨 처음 한번 실행되는 메서드 
 		log.info("init 메소드 실행!!!!!!!!!");
+		log.debug("ApplicationContext.properties : {}",ApplicationContext.getInterceptorRegistry());
 		log.debug("ApplicationContext.properties : {}",ApplicationContext.getProperties());
 		controllerFactory = ApplicationContext.getControllerFactory();
-		log.debug("controllerFactory : {}",controllerFactory);
 		interceptorRegistry = ApplicationContext.getInterceptorRegistry();
 		log.info("dispatcherServlet is initialized...");
 	}
