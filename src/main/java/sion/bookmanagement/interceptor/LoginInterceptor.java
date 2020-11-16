@@ -47,7 +47,11 @@ public class LoginInterceptor implements Interceptor {
 	 */
 	private void userSetting(HttpServletRequest request) {
 		Cookie[] list = request.getCookies();
-		String encryptedSid = null; 
+		String encryptedSid = null;
+
+		if (Objects.isNull(list)) {
+			return;
+		}
 
 		for (Cookie cookie : list) {
 			if (cookie.getName().equals("sid")) {

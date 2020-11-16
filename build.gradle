@@ -71,6 +71,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	// annotation으로 로거를 쉽게 쓸 수 있도록 함
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+	annotationProcessor("org.projectlombok:lombok:1.18.16")
 
 	
     // Use JUnit test framework

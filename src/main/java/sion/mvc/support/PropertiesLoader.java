@@ -5,10 +5,19 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import lombok.extern.slf4j.Slf4j;
+import sion.bookmanagement.util.StringUtils;
 import sion.http.ServerRunnerException;
 @Slf4j
 public class PropertiesLoader {
 	public static final String FILE_NAME = "/application.properties"; // src/main/resources 부터
+	
+	public Properties load() {
+		String fileName = System.getProperty("application.properties");
+		if (StringUtils.isEmpty(fileName)) {
+			fileName = PropertiesLoader.FILE_NAME;
+		}
+		return load(fileName);
+	}
 	
 	public Properties load(String fileName) {
 		Properties properties = new Properties();

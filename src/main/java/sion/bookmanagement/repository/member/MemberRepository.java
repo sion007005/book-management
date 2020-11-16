@@ -147,7 +147,7 @@ public class MemberRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Member> memberList = new ArrayList<Member>();
-		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM MEMBERS";
+		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM members";
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();

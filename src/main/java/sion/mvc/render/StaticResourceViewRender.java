@@ -1,7 +1,6 @@
 package sion.mvc.render;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class StaticResourceViewRender implements ViewRender {
 		try {
 			addStyleSheetContextHeader(response);
 			
-			in = new BufferedInputStream(new FileInputStream(request.getRequestURI()));
+			in = new BufferedInputStream(getClass().getResourceAsStream(request.getRequestURI()));
 			out = response.getOutputStream();
 
 			byte[] buf = new byte[512];

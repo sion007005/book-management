@@ -32,7 +32,7 @@ public class DispatcherServlet extends HttpServlet {
 	@Override 
 	public void init() { // 서블릿이 실행될 때 맨 처음 한번 실행되는 메서드 
 		log.info("init 메소드 실행!!!!!!!!!");
-		Properties properties = new PropertiesLoader().load(PropertiesLoader.FILE_NAME);
+		Properties properties = new PropertiesLoader().load();
 		ApplicationContext.addProperties(properties);
 
 		controllerFactory = ApplicationContext.getControllerFactory();
@@ -152,8 +152,9 @@ public class DispatcherServlet extends HttpServlet {
 	
 	private boolean isStaticResourceRequest(HttpServletRequest requeest) {
 		List<String> pathList = ApplicationContext.getStaticResourcePathList();
+		String requestURI = requeest.getRequestURI();
 		for (String path : pathList) {
-			if (requeest.getRequestURI().startsWith(path)) {
+			if (requestURI.startsWith(path)) {
 				return true;
 			}
 		}
