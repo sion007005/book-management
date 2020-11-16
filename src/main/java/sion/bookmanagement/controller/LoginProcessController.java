@@ -20,14 +20,14 @@ public class LoginProcessController implements Controller {
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		//TODO validation check
-		String email = (String)request.getAttribute("email");
+		String email = (String)request.getParameter("email");
 		log.debug("넘어오는 이메일 값: {}", email);
-		String plainPassword = (String)request.getAttribute("password");
+		String plainPassword = (String)request.getParameter("password");
+		log.debug("넘어오는 비밀번호 값: {}", plainPassword);
 		
 		//이메일이 db에 있는지 search 
 		//해당 이메일을 가진 멤버의  암호화된 비밀번호와 salt를 같이 꺼내와서 비교한다. 
 		Member member = memberService.findOneByEmail(email);
-		
 		String encryptedPassword = SHA256Util.getEncrypt(plainPassword, member.getSalt());
 		
 		//일치하면 set-cookie 후 멤버 전체 리스트(임시)로 / 일치하지 않으면 로그인 페이지로 redirection

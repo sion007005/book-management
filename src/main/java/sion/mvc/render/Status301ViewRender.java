@@ -17,7 +17,7 @@ public class Status301ViewRender implements ViewRender {
 		//REDIRECT
 //   	Headers headers = response.getHeaders();
 //   	headers.add("Location", response.getRedirectPath());
-   	response.addHeader("Location", mav.getViewName());
+   	response.addHeader("Location", mav.getRedirectURI());
    	
    	try {
 //   		response.sendResponseHeaders(response.getStatus(), 0); //상태코드, 바디사이즈

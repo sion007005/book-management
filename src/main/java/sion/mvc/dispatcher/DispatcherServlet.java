@@ -61,7 +61,7 @@ public class DispatcherServlet extends HttpServlet {
 			}
 			// 인터페이스의 구현체를 꽂아넣음
 			Controller controller = controllerFactory.getInstance(controllerFactory.getKey(request));
-			
+			log.debug("뭐 들어와 컨트롤러??? : {}", controller);
 			preCommand(controller, request, response);
 			
 			ModelAndView mav = controller.command(request, response);
@@ -72,12 +72,15 @@ public class DispatcherServlet extends HttpServlet {
 			render(request, response, mav);
 		
 		} catch (ForbiddenException e) {
-			log.error(e.getMessage(), e);
-			
-			ModelAndView mav = new ModelAndView("error/forbidden");
-			mav.addObject("_error_message", e.getMessage());
-			response.setStatus(HttpStatus.FORBIDDEN.getCode());
-			render(request, response, mav);
+			response.sendRedirect("/login/form");
+//			log.error(e.getMessage(), e);
+//			
+//			ModelAndView mav = new ModelAndView("error/forbidden");
+//			mav.addObject("_error_message", e.getMessage());
+//			response.setStatus(HttpStatus.FORBIDDEN.getCode());
+//			log.debug("HttpStatus.FORBIDDEN.getCode() : {}", HttpStatus.FORBIDDEN.getCode());
+//			log.debug("response.getStatus : {}", response.getStatus());
+//			render(request, response, mav);
 		} catch (FileNotFoundException e) {
 			log.error(e.getMessage(), e);
 			
@@ -146,6 +149,7 @@ public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 		
+		log.debug("여기까지이이이이이 response.getStatus() : {}", response.getStatus());
 		ViewRender responseProcessor = FreemarkerViewRenderFactory.getInstance(response.getStatus()); 
 	   responseProcessor.render(request, response, mav);
 	}

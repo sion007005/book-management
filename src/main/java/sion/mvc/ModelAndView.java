@@ -18,6 +18,14 @@ public class ModelAndView {
 	public void setViewName(String viewName) {
 		this.viewName = viewName;
 	}
+	
+	public String getRedirectURI() {
+		if (viewName.startsWith("redirect:")) {
+			return viewName.substring(viewName.indexOf(":") + 1);
+		}
+		
+		return null;
+	}
 
 	public Model getModel() {
 		return model;

@@ -3,7 +3,6 @@ package sion.bookmanagement.interceptor;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +19,7 @@ import sion.mvc.dispatcher.ForbiddenException;
 import sion.mvc.dispatcher.Interceptor;
 import sion.mvc.dispatcher.Login;
 import sion.mvc.support.AES256Util;
+import sion.mvc.support.CookieUtils;
 
 @Slf4j
 public class LoginInterceptor implements Interceptor {
@@ -46,19 +46,8 @@ public class LoginInterceptor implements Interceptor {
 	 * 쿠키에 저장된 sid값을 읽어와서, threadLocal에 user 저장
 	 */
 	private void userSetting(HttpServletRequest request) {
-		Cookie[] list = request.getCookies();
-		String encryptedSid = null;
+		String encryptedSid = CookieUtils.getValue(request, "sid");
 
-		if (Objects.isNull(list)) {
-			return;
-		}
-
-		for (Cookie cookie : list) {
-			if (cookie.getName().equals("sid")) {
-				encryptedSid = cookie.getValue();
-			}
-		}
-		
 		if (Objects.isNull(encryptedSid)) {
 			UserContext.set(BookManagementUser.newLogoutUser(request.getRemoteAddr()));
 			return;
