@@ -37,6 +37,9 @@ public class ConnectionManager {
 		}
 	}
 	
+	/*
+	 * DB connection pool 생성
+	 */
 	 private synchronized DataSource getDataSource() {
 		 //데이터 베이스 설정 넣기
 		  HikariConfig hikariConfig = new HikariConfig();

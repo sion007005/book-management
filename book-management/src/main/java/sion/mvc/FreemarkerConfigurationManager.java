@@ -4,6 +4,7 @@ import freemarker.cache.ClassTemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
+import sion.http.ServerRunner;
 
 public class FreemarkerConfigurationManager { //싱글톤 패턴
 	private static Configuration configuration;

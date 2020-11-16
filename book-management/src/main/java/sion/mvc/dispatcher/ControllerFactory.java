@@ -1,8 +1,8 @@
 package sion.mvc.dispatcher;
 
-import sion.mvc.HttpRequest;
+import javax.servlet.http.HttpServletRequest;
 
 public interface ControllerFactory {
 	Controller getInstance(String key);
-	String getKey(HttpRequest httpRequest);
+	String getKey(HttpServletRequest request);
 }

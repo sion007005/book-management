@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.util.StringUtils;
+import sion.http.ServerRunnerException;
 import sion.mvc.dispatcher.ControllerFactory;
 import sion.mvc.dispatcher.InterceptorRegistry;
-
+@Slf4j
 public class ApplicationContext {
 	private static final int DEFAULT_PORT = 3434;
 	private static final int DEFAULT_POOL_SIZE = 3;
@@ -37,11 +39,11 @@ public class ApplicationContext {
 	}
 
 	public static String getProperty(String key) {
-		return properties.getProperty(key);
+		return ApplicationContext.properties.getProperty(key);
 	}
 
 	public static int getPort() {
-		String portValue = properties.getProperty(NAME_SERVER_PORT);
+		String portValue = ApplicationContext.properties.getProperty(NAME_SERVER_PORT);
 
 		if (portValue == null || portValue.length() == 0) {
 			return DEFAULT_PORT;
@@ -51,7 +53,10 @@ public class ApplicationContext {
 
 	public static ControllerFactory getControllerFactory() {
 		try {
-			String className = properties.getProperty(NAME_CONTROLLER_FACTORY_CLASS);
+			log.debug("여기는 찍히나요 ApplicationContext.properties : {}", ApplicationContext.properties);
+			
+			String className = ApplicationContext.properties.getProperty(NAME_CONTROLLER_FACTORY_CLASS);
+			log.debug("여기는 찍히나요 className : {}", className);
 			//new 없이 객체 생성하는 방법
 			ControllerFactory object = (ControllerFactory) Class.forName(className).getConstructor().newInstance();
 			
@@ -62,19 +67,19 @@ public class ApplicationContext {
 	}
 	
 	public static String getDbUrl() {
-		return properties.getProperty(NAME_DB_URL);
+		return ApplicationContext.properties.getProperty(NAME_DB_URL);
 	}
 	
 	public static String getDbClassName() {
-		return properties.getProperty(NAME_DB_CLASS_NAME);
+		return ApplicationContext.properties.getProperty(NAME_DB_CLASS_NAME);
 	}
 	
 	public static String getDbId() {
-		return properties.getProperty(NAME_DB_ID);
+		return ApplicationContext.properties.getProperty(NAME_DB_ID);
 	}
 	
 	public static String getDbPassword() {
-		String dbPassword = properties.getProperty(NAME_DB_PASSWORD);
+		String dbPassword = ApplicationContext.properties.getProperty(NAME_DB_PASSWORD);
 
 		if (dbPassword == null || dbPassword.length() == 0) {
 			return null;
@@ -83,16 +88,16 @@ public class ApplicationContext {
 	}
 	
 	public static String getCharsetType() {
-		return properties.getProperty(NAME_CHARSET);
+		return ApplicationContext.properties.getProperty(NAME_CHARSET);
 	}
 	
 	public static String getViewFileType() {
-		return properties.getProperty(NAME_VIEW_FILE);
+		return ApplicationContext.properties.getProperty(NAME_VIEW_FILE);
 	}
 
 	public static InterceptorRegistry getInterceptorRegistry() {
 		try {
-			String className = properties.getProperty(NAME_INTERCEPTOR_REGISTRY_CLASS);
+			String className = ApplicationContext.properties.getProperty(NAME_INTERCEPTOR_REGISTRY_CLASS);
 			InterceptorRegistry object = (InterceptorRegistry) Class.forName(className).getConstructor().newInstance();
 			
 			return object;
@@ -105,7 +110,7 @@ public class ApplicationContext {
 		if (staticResourcesPathList == null) {
 			staticResourcesPathList = new ArrayList<>();
 
-			String pathString = properties.getProperty(NAME_STATIC_RESOURCES_PATH);
+			String pathString = ApplicationContext.properties.getProperty(NAME_STATIC_RESOURCES_PATH);
 			String[] pathes = pathString.split(",");
 			
 			if (pathes != null) {
@@ -119,15 +124,15 @@ public class ApplicationContext {
 	}
 	
 	public static String getDbTestQuery() {
-		return properties.getProperty(NAME_DB_TEST_QUERY);
+		return ApplicationContext.properties.getProperty(NAME_DB_TEST_QUERY);
 	}
 	
 	public static String getDbConnectionPoolName() {
-		return properties.getProperty(NAME_DB_CONNECTION_POOL);
+		return ApplicationContext.properties.getProperty(NAME_DB_CONNECTION_POOL);
 	}
 
 	public static int getDbConnectionPoolSize() {
-		String poolSize = properties.getProperty(SIZE_DB_CONNECTION_POOL);
+		String poolSize = ApplicationContext.properties.getProperty(SIZE_DB_CONNECTION_POOL);
 		
 		if (poolSize == null || poolSize.length() == 0) {
 			return DEFAULT_POOL_SIZE;
@@ -138,5 +143,13 @@ public class ApplicationContext {
 	
 	public static int getDbConnectionTime() {
 		return Integer.parseInt(properties.getProperty(TIME_DB_CONNECTION));
+	}
+
+	public static Properties getProperties() {
+		return properties;
+	}
+
+	public static void setProperties(Properties properties) {
+		ApplicationContext.properties = properties;
 	}
 }

@@ -3,7 +3,7 @@ package sion.mvc.support;
 import com.sun.net.httpserver.Headers;
 
 import lombok.extern.slf4j.Slf4j;
-import sion.mvc.Cookie;
+import sion.http.Cookie;
 
 @Slf4j
 public class CookieUtils {

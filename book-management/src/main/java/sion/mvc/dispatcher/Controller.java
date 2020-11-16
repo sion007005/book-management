@@ -1,9 +1,10 @@
 package sion.mvc.dispatcher;
 
-import sion.mvc.HttpRequest;
-import sion.mvc.HttpResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import sion.mvc.ModelAndView;
 
 public interface Controller {
-	ModelAndView command(HttpRequest httpRequest, HttpResponse httpResponse);
+	ModelAndView command(HttpServletRequest request, HttpServletResponse response);
 }

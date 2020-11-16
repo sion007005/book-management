@@ -1,11 +1,11 @@
 package sion.mvc.dispatcher;
 
-import sion.mvc.HttpRequest;
-import sion.mvc.HttpResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface Interceptor {
 	// 전처리 로직
-	boolean preHandle(HttpRequest httpRequest, HttpResponse httpResponse, Controller controller);
+	boolean preHandle(HttpServletRequest request, HttpServletResponse response, Controller controller);
 	// 후처리 로직
-	void postHandle(HttpRequest httpRequest, HttpResponse httpResponse, Controller controller);
+	void postHandle(HttpServletRequest request, HttpServletResponse response, Controller controller);
 }

@@ -3,7 +3,29 @@ package sion.bookmanagement.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import sion.mvc.HttpRequest;
+import javax.servlet.http.HttpServletRequest;
+
+import sion.bookmanagement.controller.book.BookCreateController;
+import sion.bookmanagement.controller.book.BookFormController;
+import sion.bookmanagement.controller.book.BookInfoController;
+import sion.bookmanagement.controller.book.BookListController;
+import sion.bookmanagement.controller.book.BookRemoveController;
+import sion.bookmanagement.controller.book.BookSearchController;
+import sion.bookmanagement.controller.book.BookUpdateController;
+import sion.bookmanagement.controller.category.CategoryCreateController;
+import sion.bookmanagement.controller.category.CategoryFormController;
+import sion.bookmanagement.controller.category.CategoryInfoController;
+import sion.bookmanagement.controller.category.CategoryListController;
+import sion.bookmanagement.controller.category.CategoryRemoveController;
+import sion.bookmanagement.controller.category.CategorySearchController;
+import sion.bookmanagement.controller.category.CategoryUpdateController;
+import sion.bookmanagement.controller.member.MemberCreateController;
+import sion.bookmanagement.controller.member.MemberFormController;
+import sion.bookmanagement.controller.member.MemberInfoController;
+import sion.bookmanagement.controller.member.MemberListController;
+import sion.bookmanagement.controller.member.MemberRemoveController;
+import sion.bookmanagement.controller.member.MemberSearchController;
+import sion.bookmanagement.controller.member.MemberUpdateController;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.ControllerFactory;
 import sion.mvc.dispatcher.FileNotFoundException;
@@ -12,6 +34,17 @@ public class BookManagementControllerFactory implements ControllerFactory {
 	Map<String, Controller> controllers = new HashMap<>();
 	
 	public BookManagementControllerFactory() {
+		initialize();
+//TODO		initializeOfAnnotation();
+	}
+
+	private void initializeOfAnnotation() {
+		// annotation을 가지고 와서 controller 실행하는 로직 구현
+		// 1. 모든 controller class를 가지고 온다. 
+		// 2. command 메소드에 request mapping annotaion을 찾아서 controllers map(13번 줄)을 생성한다.
+	}
+	
+	private void initialize() {
 		controllers.put("/login/form&GET", new LoginFormController());
 		controllers.put("/login&POST", new LoginProcessController());
 		controllers.put("/logout&GET", new LogoutProcessController());
@@ -62,7 +95,8 @@ public class BookManagementControllerFactory implements ControllerFactory {
 	}
 	
 	@Override 
-	public String getKey(HttpRequest httpRequest) {
-		return httpRequest.getUriPath() + "&" + httpRequest.getMethod();
+	public String getKey(HttpServletRequest request) {
+		return request.getRequestURI() + "&" + request.getMethod();
 	}
+	
 }
