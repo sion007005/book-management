@@ -3,6 +3,7 @@ package sion.mvc.dispatcher;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ import sion.mvc.ModelAndView;
 import sion.mvc.ViewRender;
 import sion.mvc.render.JsonViewRender;
 import sion.mvc.render.StaticResourceViewRender;
+import sion.mvc.support.PropertiesLoader;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -30,8 +32,9 @@ public class DispatcherServlet extends HttpServlet {
 	@Override 
 	public void init() { // 서블릿이 실행될 때 맨 처음 한번 실행되는 메서드 
 		log.info("init 메소드 실행!!!!!!!!!");
-		log.debug("ApplicationContext.properties : {}",ApplicationContext.getInterceptorRegistry());
-		log.debug("ApplicationContext.properties : {}",ApplicationContext.getProperties());
+		Properties properties = new PropertiesLoader().load(PropertiesLoader.FILE_NAME);
+		ApplicationContext.addProperties(properties);
+
 		controllerFactory = ApplicationContext.getControllerFactory();
 		interceptorRegistry = ApplicationContext.getInterceptorRegistry();
 		log.info("dispatcherServlet is initialized...");
