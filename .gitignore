@@ -15,3 +15,4 @@ querydsl
 .DS_Store
 temp
 .iml
+/gradle/wrapper/
