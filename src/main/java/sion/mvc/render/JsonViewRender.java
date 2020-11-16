@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import sion.mvc.ModelAndView;
-import sion.mvc.ViewRender;
 
 @Slf4j
 public class JsonViewRender implements ViewRender {

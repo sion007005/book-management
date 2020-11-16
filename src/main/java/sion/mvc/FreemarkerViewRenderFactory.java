@@ -9,6 +9,7 @@ import sion.mvc.render.Status301ViewRender;
 import sion.mvc.render.Status403ViewRender;
 import sion.mvc.render.Status404ViewRender;
 import sion.mvc.render.Status500ViewRender;
+import sion.mvc.render.ViewRender;
 public class FreemarkerViewRenderFactory {
 	private static final Map<Integer, ViewRender> instances = new HashMap<>();
 	static {

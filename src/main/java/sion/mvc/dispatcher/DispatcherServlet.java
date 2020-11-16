@@ -17,9 +17,9 @@ import sion.http.HttpStatus;
 import sion.mvc.ApplicationContext;
 import sion.mvc.FreemarkerViewRenderFactory;
 import sion.mvc.ModelAndView;
-import sion.mvc.ViewRender;
 import sion.mvc.render.JsonViewRender;
 import sion.mvc.render.StaticResourceViewRender;
+import sion.mvc.render.ViewRender;
 import sion.mvc.support.PropertiesLoader;
 
 @SuppressWarnings("serial")
@@ -43,14 +43,7 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//TODO request response get~/set~ 메서드들 다 찍어서 뭐 넘어오는지 확인해 볼 것 
-		log.info("req.getRequestURI: {}", request.getRequestURI());
-		log.info("req.getRequestURL: {}", request.getRequestURL());
-		log.info("req.getMethod: {}", request.getMethod());
 		
-//		ServletOutputStream out = response.getOutputStream();
-//		out.write("HelloWorld".getBytes());
-//		out.flush();
-//		out.close();
 		try {
 			// 정적 리소스를 처리하는 로직
 			if (isStaticResourceRequest(request)) {
@@ -59,31 +52,27 @@ public class DispatcherServlet extends HttpServlet {
 				
 				return;
 			}
+			
+			log.info("request.getRequestURI: {}", request.getRequestURI());
+			log.info("request.getRequestURL: {}", request.getRequestURL());
+			log.info("request.getMethod: {}", request.getMethod());
+			
 			// 인터페이스의 구현체를 꽂아넣음
 			Controller controller = controllerFactory.getInstance(controllerFactory.getKey(request));
-			log.debug("뭐 들어와 컨트롤러??? : {}", controller);
-			preCommand(controller, request, response);
+			log.debug("controller : {}", controller);
 			
+			preCommand(controller, request, response);
 			ModelAndView mav = controller.command(request, response);
 			makeStatus(response, mav);
-			
 			postCommand(controller, request, response);
-			
-			render(request, response, mav);
-		
+			render(request, response, mav);	
 		} catch (ForbiddenException e) {
-			log.debug("response ??? : {}", response);
-			response.sendRedirect("/login/form");
-//			log.error(e.getMessage(), e);
-//			
-//			ModelAndView mav = new ModelAndView("error/forbidden");
-//			mav.addObject("_error_message", e.getMessage());
-//			response.setStatus(HttpStatus.FORBIDDEN.getCode());
-//			log.debug("HttpStatus.FORBIDDEN.getCode() : {}", HttpStatus.FORBIDDEN.getCode());
-//			log.debug("response.getStatus : {}", response.getStatus());
-//			render(request, response, mav);
+			log.debug(e.getMessage());
+			
+			response.setStatus(HttpStatus.FORBIDDEN.getCode());
+			render(request, response, new ModelAndView(ViewRender.REDIRECT_NAME + "/login/form"));
 		} catch (FileNotFoundException e) {
-			log.error(e.getMessage(), e);
+			log.debug(e.getMessage());
 			
 			ModelAndView mav = new ModelAndView("error/not_found");
 			mav.addObject("_error_message", e.getMessage());
@@ -144,7 +133,7 @@ public class DispatcherServlet extends HttpServlet {
 	}
 	
 	private void render(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
-		if (HttpResponse.JSON_VIEW_NAME.equals(mav.getViewName())) {
+		if (ViewRender.JSON_VIEW_NAME.equals(mav.getViewName())) {
 			ViewRender viewRender = new JsonViewRender();
 			viewRender.render(request, response, mav);
 			return;
@@ -155,11 +144,12 @@ public class DispatcherServlet extends HttpServlet {
 	   responseProcessor.render(request, response, mav);
 	}
 	
-	private boolean isStaticResourceRequest(HttpServletRequest requeest) {
+	private boolean isStaticResourceRequest(HttpServletRequest request) {
 		List<String> pathList = ApplicationContext.getStaticResourcePathList();
-		String requestURI = requeest.getRequestURI();
+		String requestURI = request.getRequestURI();
 		for (String path : pathList) {
 			if (requestURI.startsWith(path)) {
+				log.info("request.getRequestURI: {}", request.getRequestURI());
 				return true;
 			}
 		}

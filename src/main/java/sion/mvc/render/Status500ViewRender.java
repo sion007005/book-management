@@ -14,7 +14,6 @@ import sion.http.ServerRunnerException;
 import sion.mvc.ApplicationContext;
 import sion.mvc.FreemarkerConfigurationManager;
 import sion.mvc.ModelAndView;
-import sion.mvc.ViewRender;
 
 @Slf4j
 public class Status500ViewRender implements ViewRender {
@@ -53,7 +52,8 @@ public class Status500ViewRender implements ViewRender {
       } catch (Exception e){
       	log.error(e.getMessage(), e);
       } finally {
-      	if (writer != null)
+      	//TODO in/out close 시켜주는 메소드를 만들어 사용하자.
+    	  if (writer != null)
 				try {
 					writer.close();
 				} catch (IOException e) {

@@ -8,10 +8,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.extern.slf4j.Slf4j;
 import sion.mvc.ModelAndView;
-import sion.mvc.ViewRender;
-@Slf4j
+
 public class StaticResourceViewRender implements ViewRender {
 
 	@Override
@@ -31,25 +29,10 @@ public class StaticResourceViewRender implements ViewRender {
 			while ((readByte = in.read(buf)) != -1) {
 				out.write(buf, 0, readByte);
 			}
-			
-			//			httpResponse.sendResponseHeaders(HttpStatus.OK.getCode(), 0);
-
-//			InputStream is = getClass().getResourceAsStream(request.getRequestURI()); // class path에서 찾는다. 
-//			if (is == null) {
-//				throw new FileNotFoundException("파일을 찾을 수 없습니다. " + request.getRequestURI());
-//			}
-//
-//			reader = new InputStreamReader(is, ApplicationContext.getCharsetType());
-//			writer = new OutputStreamWriter(response.getResponseBody(), ApplicationContext.getCharsetType());
-	
-//			char[] buffer = new char[512]; //512바이트를 한번에 읽어와서 쓰도록 함(원래는 1바이트씩)
-//			int readCount = 0;
-//			while ((readCount = reader.read(buffer)) != -1) {
-//원래코드				writer.write(buffer, 0, readCount);
-//			}
 		} catch (Exception e) {
 			throw new ViewRenderException(e);
 		} finally {
+			//TODO in/out close 시켜주는 메소드를 만들어 사용하자.
 			try {
 				if (Objects.nonNull(in)) {
 					in.close();
