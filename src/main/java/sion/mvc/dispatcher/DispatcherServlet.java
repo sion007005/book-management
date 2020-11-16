@@ -72,6 +72,7 @@ public class DispatcherServlet extends HttpServlet {
 			render(request, response, mav);
 		
 		} catch (ForbiddenException e) {
+			log.debug("response ??? : {}", response);
 			response.sendRedirect("/login/form");
 //			log.error(e.getMessage(), e);
 //			
