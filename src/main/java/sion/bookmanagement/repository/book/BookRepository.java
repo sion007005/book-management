@@ -32,7 +32,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "INSERT INTO BOOKS(category_id, title, author, stock, year, price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO books(category_id, title, author, stock, year, price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			pstm.setInt(1, book.getCategoryId());
@@ -62,7 +62,7 @@ public class BookRepository extends BaseRepository {
 		ResultSet rs = null;
 		ArrayList<Book> bookList = new ArrayList<Book>();
 		
-		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM BOOKS where ";
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books where ";
 		if (condition.getSearchType().getColumnName().equals("title")) {
 			query += "title like ?";
 		} else if (condition.getSearchType().getColumnName().equals("author")) {
@@ -137,7 +137,7 @@ public class BookRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Book> bookList = new ArrayList<Book>();
-		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM BOOKS"; 
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books"; 
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();

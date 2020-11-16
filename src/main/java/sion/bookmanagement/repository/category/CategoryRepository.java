@@ -152,7 +152,7 @@ public class CategoryRepository extends BaseRepository {
 		ResultSet rs = null;
 		ArrayList<Category> categoryList = new ArrayList<Category>();
 		
-		String query = "SELECT category_id, category_name, created_at, updated_at FROM CATEGORIES where category_name like ?";
+		String query = "SELECT category_id, category_name, created_at, updated_at FROM categories where category_name like ?";
 				
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
