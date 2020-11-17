@@ -13,10 +13,10 @@ import sion.bookmanagement.service.category.CategoryService;
 import sion.bookmanagement.util.DateUtils;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.render.ViewRender;
 @Slf4j
 public class BookUpdateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
@@ -43,7 +43,7 @@ public class BookUpdateController implements Controller {
 		bookValidator.validate(book);
 		bookService.update(book);
 		
-		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
+		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
 		mav.addObject("book", book);
 		
 		return mav;

@@ -7,10 +7,10 @@ import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.validator.PlusNumberValidator;
 import sion.bookmanagement.util.validator.Validator;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.render.ViewRender;
 
 public class MemberRemoveController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
@@ -24,7 +24,7 @@ public class MemberRemoveController implements Controller {
 		plusNumberValidater.validate(id);
 		memberService.remove(id);
 		
-		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");
+		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/members/list");
 		mav.addObject("memberId", id);
 		
 		return mav; //forwarding이 아닌 전체 리스트로 redirect로 한다.

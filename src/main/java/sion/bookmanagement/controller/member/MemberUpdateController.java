@@ -10,10 +10,10 @@ import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.DateUtils;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.render.ViewRender;
 
 public class MemberUpdateController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
@@ -41,7 +41,7 @@ public class MemberUpdateController implements Controller {
 		memberValidator.validate(member);
 		memberService.update(member);
 		
-		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId);
+		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/members/info?id=" + memberId);
 		mav.addObject("member", member);
 		
 		return mav;

@@ -13,7 +13,6 @@ public class CookieUtils {
 	public static String getValue(HttpServletRequest request, String name) {
 		Cookie[] list = request.getCookies();
 		
-		
 		if (list == null) 
 			return null;
 		

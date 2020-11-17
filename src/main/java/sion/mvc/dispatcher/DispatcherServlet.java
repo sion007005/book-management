@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
-import sion.http.HttpResponse;
 import sion.http.HttpStatus;
 import sion.mvc.ApplicationContext;
 import sion.mvc.FreemarkerViewRenderFactory;
@@ -52,10 +51,6 @@ public class DispatcherServlet extends HttpServlet {
 				
 				return;
 			}
-			
-			log.info("request.getRequestURI: {}", request.getRequestURI());
-			log.info("request.getRequestURL: {}", request.getRequestURL());
-			log.info("request.getMethod: {}", request.getMethod());
 			
 			// 인터페이스의 구현체를 꽂아넣음
 			Controller controller = controllerFactory.getInstance(controllerFactory.getKey(request));
@@ -112,7 +107,7 @@ public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 		
-		if (mav.getViewName().startsWith(HttpResponse.REDIRECT_NAME)) {
+		if (mav.getViewName().startsWith(ViewRender.REDIRECT_NAME)) {
 			response.setStatus(HttpStatus.MOVED_PERMANENTLY.getCode());
 			return;
 		} 			

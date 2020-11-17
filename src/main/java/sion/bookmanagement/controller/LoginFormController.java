@@ -15,8 +15,9 @@ public class LoginFormController implements Controller {
 //		if (UserContext.isLogin()) {
 //			return new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");
 //		}
-		
+		String returnUrl = request.getParameter("returnUrl");
 		ModelAndView mav = new ModelAndView("login_form");
+		mav.addObject("returnUrl", returnUrl);
 
 		String email = (String) request.getParameter("email");
 		if (!StringUtils.isEmpty(email)) {

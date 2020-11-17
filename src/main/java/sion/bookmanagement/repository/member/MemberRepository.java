@@ -64,7 +64,7 @@ public class MemberRepository extends BaseRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		ArrayList<Member> memberList = new ArrayList<Member>();
+		List<Member> memberList = new ArrayList<Member>();
 		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members WHERE ";
 		
 		if (condition.getSearchType().getColumnName().equals("name")) {
@@ -73,6 +73,8 @@ public class MemberRepository extends BaseRepository {
 			query += "email like ?";
 		} else if (condition.getSearchType().getColumnName().equals("phone")) {
 			query += "phone like ?";
+		} else {
+//TODO 			query += "email like ?"
 		}
 		
 		query += " AND age between ? and ?"; 

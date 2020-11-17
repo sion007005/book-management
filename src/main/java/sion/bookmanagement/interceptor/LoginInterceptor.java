@@ -23,7 +23,6 @@ import sion.mvc.support.CookieUtils;
 
 @Slf4j
 public class LoginInterceptor implements Interceptor {
-	//TODO 하드코딩 없애기 
 	MemberService memberService = MemberService.getInstance();
 
 	@Override

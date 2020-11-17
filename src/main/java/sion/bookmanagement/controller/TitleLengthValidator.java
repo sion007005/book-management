@@ -7,8 +7,6 @@ import sion.bookmanagement.util.validator.ValidateException;
 public class TitleLengthValidator extends StringLengthValidator {
 	@Override
 	public void validate(String title) {
-		log.debug("title은??? : {}", title);
-		log.debug("title.length??? : {}", title.length());
 		try {
 			if(title.length() > 100) {
 				throw new ValidateException("올바르지 않은 제목 길이");

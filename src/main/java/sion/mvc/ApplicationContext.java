@@ -53,10 +53,7 @@ public class ApplicationContext {
 
 	public static ControllerFactory getControllerFactory() {
 		try {
-			log.debug("여기는 찍히나요 ApplicationContext.properties : {}", ApplicationContext.properties);
-			
 			String className = ApplicationContext.properties.getProperty(NAME_CONTROLLER_FACTORY_CLASS);
-			log.debug("여기는 찍히나요 className : {}", className);
 			//new 없이 객체 생성하는 방법
 			ControllerFactory object = (ControllerFactory) Class.forName(className).getConstructor().newInstance();
 			

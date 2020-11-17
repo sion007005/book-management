@@ -10,12 +10,14 @@ import sion.bookmanagement.service.member.MemberOrderType;
 import sion.bookmanagement.service.member.MemberService;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
 
 public class MemberListController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 
 //	@GetMapper("/member/list")
 	@Override
+	@Login
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String orderType = (String) request.getParameter("order-type");
 		MemberOrderType type = null;

@@ -9,10 +9,10 @@ import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.bookmanagement.util.DateUtils;
 import sion.bookmanagement.util.NumberUtils;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.render.ViewRender;
 
 public class CategoryUpdateController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
@@ -31,7 +31,7 @@ public class CategoryUpdateController implements Controller {
 		
 		categoryService.update(category);
 		
-		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/info?id=" + categoryId);
+		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/categories/info?id=" + categoryId);
 		mav.addObject("category", category);
 		
 		return mav;

@@ -96,7 +96,7 @@ public class CategoryRepository extends BaseRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		ArrayList<Category> categoryList = new ArrayList<Category>();
+		List<Category> categoryList = new ArrayList<Category>();
 		String query = "SELECT category_id, category_name, created_at, updated_at FROM categories";
 		
 		try {
@@ -150,7 +150,7 @@ public class CategoryRepository extends BaseRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		ArrayList<Category> categoryList = new ArrayList<Category>();
+		List<Category> categoryList = new ArrayList<Category>();
 		
 		String query = "SELECT category_id, category_name, created_at, updated_at FROM categories where category_name like ?";
 			

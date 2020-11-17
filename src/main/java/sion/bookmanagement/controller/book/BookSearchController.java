@@ -25,27 +25,26 @@ public class BookSearchController implements Controller {
 			//TODO 추후에 body에 여러개의 데이터를 내려줄 수 있다면, list_none 페이지는 하나만 있어도 된다.
 			ModelAndView mav = new ModelAndView("book_list_none");
 			return mav;
-		} else {
-			BookSearchCondition condition = new BookSearchCondition();
-			condition.setSearchType(SearchType.valueOf(searchType));
-			condition.setKeyword(keyword);
-			
-			String orderType = (String) request.getParameter("order-type");
-			BookOrderType type = null;
-			
-			if (orderType != null && orderType.length() > 0) {
-				type = BookOrderType.valueOf(orderType);
-			}
-			
-			List<Book> bookList = bookService.search(condition, type);
-			
-			ModelAndView mav = new ModelAndView("book_list");
-			mav.addObject("bookList", bookList);
-			mav.addObject("searchCondition", condition);
-			mav.addObject("orderType", type);
-			
-			return mav;
 		}
+		
+		BookSearchCondition condition = new BookSearchCondition();
+		condition.setSearchType(SearchType.valueOf(searchType));
+		condition.setKeyword(keyword);
+		
+		String orderType = (String) request.getParameter("order-type");
+		BookOrderType type = null;
+		
+		if (orderType != null && orderType.length() > 0) {
+			type = BookOrderType.valueOf(orderType);
+		}
+		
+		List<Book> bookList = bookService.search(condition, type);
+		
+		ModelAndView mav = new ModelAndView("book_list");
+		mav.addObject("bookList", bookList);
+		mav.addObject("searchCondition", condition);
+		mav.addObject("orderType", type);
+		
+		return mav;
 	}
-
 }

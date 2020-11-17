@@ -24,7 +24,6 @@ public class JsonViewRender implements ViewRender {
 //			response.sendResponseHeaders(response.getStatusCode(), 0);
 			//model에 있는 데이터를 json value로 만들어준다.
 			String jsonValue = mapper.writeValueAsString(mav.getModel());
-			log.info("jsonvalue: {}", jsonValue);
 			
 			out = response.getOutputStream();
 			out.write(jsonValue.getBytes());

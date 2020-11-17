@@ -15,7 +15,6 @@ public class Status301ViewRender implements ViewRender {
 	public void render(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 		// REDIRECT
 		try {
-			log.debug("mav : {}", mav);
 			response.sendRedirect(mav.getRedirectURI());
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);

@@ -24,7 +24,6 @@ public class BookListController implements Controller {
 		}
 		
 		List<Book> bookList = bookService.findAll(type);
-//		ModelAndView mav = new ModelAndView(HttpResponse.JSON_VIEW_NAME);
 		ModelAndView mav = new ModelAndView("book_list");
 		mav.addObject("bookList", bookList);
 		

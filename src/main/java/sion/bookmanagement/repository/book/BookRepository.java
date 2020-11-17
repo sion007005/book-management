@@ -60,7 +60,7 @@ public class BookRepository extends BaseRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		ArrayList<Book> bookList = new ArrayList<Book>();
+		List<Book> bookList = new ArrayList<Book>();
 		
 		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books where ";
 		if (condition.getSearchType().getColumnName().equals("title")) {
@@ -140,7 +140,7 @@ public class BookRepository extends BaseRepository {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		ArrayList<Book> bookList = new ArrayList<Book>();
+		List<Book> bookList = new ArrayList<Book>();
 		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books"; 
 		
 		try {
@@ -171,7 +171,7 @@ public class BookRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		
-		ArrayList<Book> bookList = new ArrayList<Book>();
+		List<Book> bookList = new ArrayList<Book>();
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();

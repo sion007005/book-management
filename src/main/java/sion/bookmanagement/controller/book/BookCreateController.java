@@ -10,10 +10,10 @@ import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.render.ViewRender;
 
 public class BookCreateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
@@ -36,7 +36,7 @@ public class BookCreateController implements Controller {
 		bookValidator.validate(book);
 		int bookId = bookService.create(book);
 		
-		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/books/info?id="+bookId);
+		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/books/info?id="+bookId);
 		mav.addObject("bookId", bookId);
 		
 		return mav;

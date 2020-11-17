@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryService;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.render.ViewRender;
 
 public class CategoryCreateController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
@@ -26,7 +26,7 @@ public class CategoryCreateController implements Controller {
 
 		int categoryId = categoryService.create(category);
 		
-		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/categories/info?id="+categoryId);
+		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/categories/info?id="+categoryId);
 		mav.addObject("categoryId", categoryId);
 		
 		return mav;

@@ -9,9 +9,10 @@ import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Login;
+import sion.mvc.render.ViewRender;
 import sion.mvc.support.SHA256Util;
 
 public class MemberCreateController implements Controller {
@@ -20,6 +21,7 @@ public class MemberCreateController implements Controller {
 	
 // @PostMapper("/member/create")
 	@Override
+	@Login
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String trimedName = StringUtils.trim((String)request.getParameter("name"));
 		String trimedGender = StringUtils.trim((String)request.getParameter("gender"));
@@ -40,7 +42,7 @@ public class MemberCreateController implements Controller {
 		memberValidator.validate(member);
 		int memberId = memberService.create(member);
 		
-		ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/info?id=" + memberId);
+		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/members/info?id=" + memberId);
 		return mav;
 	}
 	

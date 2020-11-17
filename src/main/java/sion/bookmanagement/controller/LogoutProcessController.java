@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import sion.bookmanagement.auth.BookManagementUser;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
 import sion.mvc.auth.UserContext;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.render.ViewRender;
 
 public class LogoutProcessController implements Controller {
 	@Override
@@ -20,8 +20,7 @@ public class LogoutProcessController implements Controller {
 		UserContext.remove(); 
 		UserContext.set(BookManagementUser.newLogoutUser(request.getLocalAddr()));
 		response.addCookie(cookie);
-//		CookieUtils.setValue(response.getHeaders(), cookie);
 		
-		return new ModelAndView(HttpResponse.REDIRECT_NAME + "/login/form");
+		return new ModelAndView(ViewRender.REDIRECT_NAME + "/login/form");
 	}
 }
