@@ -31,7 +31,4 @@ public class CookieUtils {
 	public static void setValue(Headers headers, Cookie cookie) {
 //		headers.add("Set-Cookie", cookie.generateCookieValue());
 	}
-	
-	
-	
 }

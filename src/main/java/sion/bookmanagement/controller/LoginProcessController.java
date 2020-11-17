@@ -1,5 +1,7 @@
 package sion.bookmanagement.controller;
 
+import java.util.Objects;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +14,7 @@ import sion.mvc.ModelAndView;
 import sion.mvc.auth.LoginProcessException;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.support.AES256Util;
+import sion.mvc.support.CookieUtils;
 import sion.mvc.support.SHA256Util;
 @Slf4j
 public class LoginProcessController implements Controller {
@@ -19,11 +22,11 @@ public class LoginProcessController implements Controller {
 	
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = null;
+		
 		//TODO validation check
 		String email = (String)request.getParameter("email");
-		log.debug("넘어오는 이메일 값: {}", email);
 		String plainPassword = (String)request.getParameter("password");
-		log.debug("넘어오는 비밀번호 값: {}", plainPassword);
 		
 		//이메일이 db에 있는지 search 
 		//해당 이메일을 가진 멤버의  암호화된 비밀번호와 salt를 같이 꺼내와서 비교한다. 
@@ -42,16 +45,21 @@ public class LoginProcessController implements Controller {
 				cookie.setPath("/");
 				
 				response.addCookie(cookie);
-				log.debug("cookie sid : {}", cookie.getValue());
-				ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME +"/members/list");
+
+				String redirectPath = CookieUtils.getValue(request, "backPageURI");
+				String id = CookieUtils.getValue(request, "backPageInfoId");
+
+				if (Objects.nonNull(id)) {
+					return new ModelAndView(HttpResponse.REDIRECT_NAME + redirectPath + "?id=" + id);
+				} 
 				
-				return mav;
+				return new ModelAndView(HttpResponse.REDIRECT_NAME + redirectPath);
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 				throw new LoginProcessException(e.getMessage(), e);
 			} 
 		} else {
-			ModelAndView mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/login/form?email="+email);
+			mav = new ModelAndView(HttpResponse.REDIRECT_NAME + "/login/form?email="+email);
 //			mav.put("message", "아이디와 패스워드가 맞지 않습니다.");
 //			mav.put("email", email);
 			

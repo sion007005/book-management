@@ -5,18 +5,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.util.StringUtils;
-import sion.http.HttpResponse;
 import sion.mvc.ModelAndView;
-import sion.mvc.auth.UserContext;
 import sion.mvc.dispatcher.Controller;
 @Slf4j
 public class LoginFormController implements Controller {
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		log.info("여기 실행???????");
-		if (UserContext.isLogin()) {
-			return new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");
-		}
+//		TODO 불필요한 코드가 아닌가 ? interceptor에서 체크하고 넘어오니까  
+//		if (UserContext.isLogin()) {
+//			return new ModelAndView(HttpResponse.REDIRECT_NAME + "/members/list");
+//		}
 		
 		ModelAndView mav = new ModelAndView("login_form");
 

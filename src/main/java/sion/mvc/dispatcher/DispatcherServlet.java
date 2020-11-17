@@ -94,6 +94,7 @@ public class DispatcherServlet extends HttpServlet {
 	
 	private void preCommand(Controller controller, HttpServletRequest request, HttpServletResponse response) throws DispatcherException {
 		List<Interceptor> interceptors = interceptorRegistry.getInterceptors();
+		
 		if (Objects.isNull(interceptors)) {
 			return;
 		}
@@ -140,7 +141,7 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		
 		ViewRender responseProcessor = FreemarkerViewRenderFactory.getInstance(response.getStatus()); 
-	   responseProcessor.render(request, response, mav);
+		responseProcessor.render(request, response, mav);
 	}
 	
 	private boolean isStaticResourceRequest(HttpServletRequest request) {
