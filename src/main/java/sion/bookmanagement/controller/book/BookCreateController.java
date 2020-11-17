@@ -22,12 +22,12 @@ public class BookCreateController implements Controller {
 	@Override
 	@Login
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {	
-		String trimedTitle = StringUtils.trim((String)request.getAttribute("title"));
-		String trimedAuthor = StringUtils.trim((String)request.getAttribute("author"));
-		int categoryId = NumberUtils.parseInt((String)request.getAttribute("form-category-select"));
-		int price = NumberUtils.parseInt((String)request.getAttribute("price"));
-		int year = NumberUtils.parseInt((String)request.getAttribute("year"));
-		int stock = NumberUtils.parseInt((String)request.getAttribute("stock"));
+		String trimedTitle = StringUtils.trim((String)request.getParameter("title"));
+		String trimedAuthor = StringUtils.trim((String)request.getParameter("author"));
+		int categoryId = NumberUtils.parseInt((String)request.getParameter("form-category-select"));
+		int price = NumberUtils.parseInt((String)request.getParameter("price"));
+		int year = NumberUtils.parseInt((String)request.getParameter("year"));
+		int stock = NumberUtils.parseInt((String)request.getParameter("stock"));
 		
 		Book book = new Book(categoryId, trimedTitle, trimedAuthor, stock, year, price);
 		book.setCreatedAt(new Date());

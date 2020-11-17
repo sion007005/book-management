@@ -21,13 +21,13 @@ public class MemberCreateController implements Controller {
 // @PostMapper("/member/create")
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		String trimedName = StringUtils.trim((String)request.getAttribute("name"));
-		String trimedGender = StringUtils.trim((String)request.getAttribute("gender"));
-		String emailFront = (String)request.getAttribute("email-front");
-		String emailEnd = (String)request.getAttribute("form-email-select");
-		String phone = (String)request.getAttribute("phone");
-		int ageNumber = NumberUtils.parseInt((String)request.getAttribute("age"));
-		String password = (String)request.getAttribute("password");
+		String trimedName = StringUtils.trim((String)request.getParameter("name"));
+		String trimedGender = StringUtils.trim((String)request.getParameter("gender"));
+		String emailFront = (String)request.getParameter("email-front");
+		String emailEnd = (String)request.getParameter("form-email-select");
+		String phone = (String)request.getParameter("phone");
+		int ageNumber = NumberUtils.parseInt((String)request.getParameter("age"));
+		String password = (String)request.getParameter("password");
 		String salt  = SHA256Util.generateSalt();
       String newPassword = SHA256Util.getEncrypt(password, salt);
 		String emailAddress = emailFront + "@" + emailEnd;

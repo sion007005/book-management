@@ -22,15 +22,15 @@ public class MemberUpdateController implements Controller {
 	@Override
 	@Login
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		String trimedName = StringUtils.trim((String)request.getAttribute("name"));
-		String gender = (String)request.getAttribute("gender");
-		String emailFront = (String)request.getAttribute("email-front");
-		String emailEnd = (String)request.getAttribute("form-email-select");
-		String phone = (String)request.getAttribute("phone");
-		String password = (String)request.getAttribute("password");
-		int age = NumberUtils.parseInt((String)request.getAttribute("age"));
+		String trimedName = StringUtils.trim((String)request.getParameter("name"));
+		String gender = (String)request.getParameter("gender");
+		String emailFront = (String)request.getParameter("email-front");
+		String emailEnd = (String)request.getParameter("form-email-select");
+		String phone = (String)request.getParameter("phone");
+		String password = (String)request.getParameter("password");
+		int age = NumberUtils.parseInt((String)request.getParameter("age"));
 		int memberId = NumberUtils.parseInt((String)request.getParameter("id"));
-		Date createdAt = DateUtils.getDate((String)request.getAttribute("createdAt"));
+		Date createdAt = DateUtils.getDate((String)request.getParameter("createdAt"));
 		
 		String emailAddress = emailFront + "@" + emailEnd;
 		Member member = new Member(trimedName, gender, emailAddress, age, phone, password);

@@ -139,7 +139,6 @@ public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 		
-		log.debug("여기까지이이이이이 response.getStatus() : {}", response.getStatus());
 		ViewRender responseProcessor = FreemarkerViewRenderFactory.getInstance(response.getStatus()); 
 	   responseProcessor.render(request, response, mav);
 	}

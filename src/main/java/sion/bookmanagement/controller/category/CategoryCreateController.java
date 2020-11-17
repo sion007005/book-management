@@ -18,7 +18,7 @@ public class CategoryCreateController implements Controller {
 	@Override
 	@Login
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		String categoryName = (String)request.getAttribute("name");
+		String categoryName = (String)request.getParameter("name");
 		
 		Category category = new Category(categoryName);
 		category.setCreatedAt(new Date());
