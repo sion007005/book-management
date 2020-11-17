@@ -21,8 +21,8 @@ public class CategoryUpdateController implements Controller {
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int categoryId = NumberUtils.parseInt((String)request.getParameter("id"));
-		String categoryName = (String)request.getAttribute("name");
-		Date createdAt = DateUtils.getDate((String)request.getAttribute("createdAt"));
+		String categoryName = (String)request.getParameter("name");
+		Date createdAt = DateUtils.getDate((String)request.getParameter("createdAt"));
 		
 		Category category = new Category(categoryName);
 		category.setId(categoryId);

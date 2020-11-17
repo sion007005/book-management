@@ -31,7 +31,6 @@ public class DispatcherServlet extends HttpServlet {
 	
 	@Override 
 	public void init() { // 서블릿이 실행될 때 맨 처음 한번 실행되는 메서드 
-		log.info("init 메소드 실행!!!!!!!!!");
 		Properties properties = new PropertiesLoader().load();
 		ApplicationContext.addProperties(properties);
 
@@ -43,7 +42,8 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//TODO request response get~/set~ 메서드들 다 찍어서 뭐 넘어오는지 확인해 볼 것 
-		
+		request.setCharacterEncoding(ApplicationContext.getCharsetType()); //데이터를 읽을 때
+
 		try {
 			// 정적 리소스를 처리하는 로직
 			if (isStaticResourceRequest(request)) {
@@ -148,7 +148,6 @@ public class DispatcherServlet extends HttpServlet {
 		String requestURI = request.getRequestURI();
 		for (String path : pathList) {
 			if (requestURI.startsWith(path)) {
-//				log.info("request.getRequestURI: {}", request.getRequestURI());
 				return true;
 			}
 		}
