@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import sion.bookmanagement.service.category.Category;
+import sion.bookmanagement.service.category.CategoryOrderType;
 import sion.bookmanagement.service.category.CategorySearchCondition;
 import sion.bookmanagement.service.category.CategorySearchCondition.SearchType;
 import sion.bookmanagement.service.category.CategoryService;
@@ -20,7 +21,6 @@ public class CategorySearchController implements Controller {
 		String searchType = (String) request.getParameter("search-type");
 		String keyword = (String) request.getParameter("keyword");
 
-		List<Category> categoryList = null;
 		if (searchType == null || keyword == null) {
 			ModelAndView mav = new ModelAndView("category_list_none");
 			return mav;
@@ -30,10 +30,19 @@ public class CategorySearchController implements Controller {
 		condition.setSearchType(SearchType.valueOf(searchType));
 		condition.setKeyword(keyword);
 		
-		categoryList = categoryService.search(condition);
+		String orderType = (String) request.getParameter("order-type");
+		CategoryOrderType type = null;
+		
+		if (orderType != null && orderType.length() > 0) {
+			type = CategoryOrderType.valueOf(orderType);
+		}
+		
+		List<Category> categoryList = categoryService.search(condition, type);
 		
 		ModelAndView mav = new ModelAndView("category_list");
 		mav.addObject("categoryList", categoryList);
+		mav.addObject("searchCondition", condition);
+		mav.addObject("orderType", type);
 		
 		return mav;
 	}

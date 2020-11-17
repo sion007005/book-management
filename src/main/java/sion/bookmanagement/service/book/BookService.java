@@ -54,8 +54,8 @@ public class BookService {
 		return book;
 	}
 	
-	public List<Book> search(BookSearchCondition condition) {
-		List<Book> bookList = bookRepository.search(condition);
+	public List<Book> search(BookSearchCondition condition, BookOrderType orderType) {
+		List<Book> bookList = bookRepository.search(condition, orderType);
 		return bookList;
 	}
 }

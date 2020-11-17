@@ -20,8 +20,8 @@ public class MemberService {
 		return memberRepository.create(member);
 	};
 	
-	public List<Member> search(MemberSearchCondition condition) {
-		List<Member> memberList = memberRepository.search(condition);
+	public List<Member> search(MemberSearchCondition condition, MemberOrderType orderType) {
+		List<Member> memberList = memberRepository.search(condition, orderType);
 		return memberList;
 	}
 	

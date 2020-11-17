@@ -60,13 +60,13 @@ public class MemberRepository extends BaseRepository {
 		}
 	}
 
-	public List<Member> search(MemberSearchCondition condition) {
+	public List<Member> search(MemberSearchCondition condition, MemberOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Member> memberList = new ArrayList<Member>();
-		
 		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members WHERE ";
+		
 		if (condition.getSearchType().getColumnName().equals("name")) {
 			query += "name like ?";
 		} else if (condition.getSearchType().getColumnName().equals("email")) {
@@ -76,6 +76,11 @@ public class MemberRepository extends BaseRepository {
 		}
 		
 		query += " AND age between ? and ?"; 
+		
+		if (orderType != null) {
+			query += (" ORDER BY " + orderType);
+		}
+		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);

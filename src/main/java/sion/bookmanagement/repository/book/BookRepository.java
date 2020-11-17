@@ -56,7 +56,7 @@ public class BookRepository extends BaseRepository {
 		}
 	}
 	
-	public List<Book> search(BookSearchCondition condition) {
+	public List<Book> search(BookSearchCondition condition,  BookOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -68,6 +68,10 @@ public class BookRepository extends BaseRepository {
 		} else if (condition.getSearchType().getColumnName().equals("author")) {
 			query += "author like ?";
 		} 
+		
+		if (orderType != null) {
+			query += (" ORDER BY " + orderType);
+		}
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();

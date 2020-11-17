@@ -146,14 +146,18 @@ public class CategoryRepository extends BaseRepository {
 		return null;
 	}
 	
-	public List<Category> search(CategorySearchCondition condition) {
+	public List<Category> search(CategorySearchCondition condition, CategoryOrderType orderType) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Category> categoryList = new ArrayList<Category>();
 		
 		String query = "SELECT category_id, category_name, created_at, updated_at FROM categories where category_name like ?";
-				
+			
+		if (orderType != null) {
+			query += (" ORDER BY " + orderType);
+		}
+		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);

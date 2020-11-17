@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import sion.bookmanagement.service.book.Book;
+import sion.bookmanagement.service.book.BookOrderType;
 import sion.bookmanagement.service.book.BookSearchCondition;
 import sion.bookmanagement.service.book.BookSearchCondition.SearchType;
 import sion.bookmanagement.service.book.BookService;
@@ -29,10 +30,19 @@ public class BookSearchController implements Controller {
 			condition.setSearchType(SearchType.valueOf(searchType));
 			condition.setKeyword(keyword);
 			
-			List<Book> bookList = bookService.search(condition);
+			String orderType = (String) request.getParameter("order-type");
+			BookOrderType type = null;
+			
+			if (orderType != null && orderType.length() > 0) {
+				type = BookOrderType.valueOf(orderType);
+			}
+			
+			List<Book> bookList = bookService.search(condition, type);
 			
 			ModelAndView mav = new ModelAndView("book_list");
 			mav.addObject("bookList", bookList);
+			mav.addObject("searchCondition", condition);
+			mav.addObject("orderType", type);
 			
 			return mav;
 		}

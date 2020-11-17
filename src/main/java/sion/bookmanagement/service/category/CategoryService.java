@@ -42,8 +42,8 @@ public class CategoryService {
 		return categoryRepository.findOneById(categoryId);
 	}
 
-	public List<Category> search(CategorySearchCondition condition) {
-		List<Category> categoryList = categoryRepository.search(condition);
+	public List<Category> search(CategorySearchCondition condition, CategoryOrderType orderType) {
+		List<Category> categoryList = categoryRepository.search(condition, orderType);
 		return categoryList;
 	}
 }
