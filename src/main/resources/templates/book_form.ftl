@@ -43,39 +43,23 @@
              </div>
           </div>  
 				<div class="form-input">
-					<#if book??>
-					<input type="text" class="input input-name" data-type="title" placeholder="제목*" name="title" value="${book.title}">
-					<#else>
-					<input type="text" class="input input-name" data-type="title" placeholder="제목*" name="title" value="">
-					</#if>
+					<input type="text" class="input input-name" data-type="title" placeholder="제목*" name="title" value=${("'${book.title}'")!''}>
+				</div>
+				<div class="form-input">
+					<input type="text" class="input input-gender" data-type="author" placeholder="저자*" name="author" value=${("'${book.author}'")!''}>
+				</div>
+				<div class="form-input">
+					<input type="text" class="input input-age" data-type="price" placeholder="가격*" name="price" value=${("'${book.price}'")!''}>
 				</div>
 				<div class="form-input">
 					<#if book??>
-					<input type="text" class="input input-gender" data-type="author" placeholder="저자*" name="author" value="${book.author}">
-					<#else>
-					<input type="text" class="input input-gender" data-type="author" placeholder="저자*" name="author" value="">
-					</#if>
-				</div>
-				<div class="form-input">
-					<#if book??>
-					<input type="text" class="input input-age" data-type="price" placeholder="가격*" name="price" value="${book.price?replace(',','')}">
-					<#else>
-					<input type="text" class="input input-gender" data-type="author" placeholder="가격*" name="price" value="">
-					</#if>
-				</div>
-				<div class="form-input">
-					<#if book??>
-					<input type="text" class="input input-age" data-type="year" placeholder="출판년도*" name="year" value="${book.year?replace(',','')}">
+					<input type="text" class="input input-age" data-type="year" placeholder="출판년도*" name="year" value=${book.year?replace(',','')}>
 					<#else>
 					<input type="text" class="input input-gender" data-type="author" placeholder="출판년도*" name="year" value="">
 					</#if>
 				</div>
 				<div class="form-input">
-					<#if book??>
-					<input type="text" class="input input-age" data-type="stock" placeholder="재고*" name="stock" value="${book.stock}">
-					<#else>
-					<input type="text" class="input input-gender" data-type="author" placeholder="재고*" name="stock" value="">
-					</#if>
+					<input type="text" class="input input-age" data-type="stock" placeholder="재고*" name="stock" value=${("'${book.stock}'")!''}>
 				</div>
                 <div class="form-input">
                 	<#if book??>

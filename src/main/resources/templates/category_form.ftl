@@ -24,11 +24,7 @@
 		  <div class="form-input form-category">
             <div class="form-input form-category-select">
 				<div class="form-input">
-					<#if category??>
-					<input type="text" class="input input-name" data-type="name" placeholder="카테고리 명*" name="name" value="${category.name}">
-					<#else>
-					<input type="text" class="input input-name" data-type="name" placeholder="카테고리 명*" name="name" value="">
-					</#if>
+					<input type="text" class="input input-name" data-type="name" placeholder="카테고리 명*" name="name" value=${("'${category.name}'")!''}>
 				</div>
                 <div class="form-input">
                   <#if category??>

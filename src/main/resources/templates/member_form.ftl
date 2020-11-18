@@ -22,29 +22,13 @@
 			<form action="/members/create" method="POST">
 			</#if>
 				<div class="form-input">
-				  <#if member??>
-					<input type="text" class="input input-name" data-type="name" placeholder="이름*" name="name" value="${member.name}">
-				  <#else>
-					<input type="text" class="input input-name" data-type="name" placeholder="이름*" name="name" value="">
-				  </#if>
+					<input type="text" class="input input-name" data-type="name" placeholder="이름*" name="name" value=${("'${member.name}'")!''}>
 				</div>
 				<div class="form-input">
-				  <#if member??>
-					<input type="text" class="input input-name" data-type="gender"
-						placeholder="이름*" name="gender" value="${member.gender}">
-				  <#else>
-					<input type="text" class="input input-gender" data-type="gender"
-						placeholder="성별*" name="gender" value="">
-				  </#if>
+					<input type="text" class="input input-name" data-type="gender" placeholder="성별*" name="gender" value=${("'${member.gender}'")!''}>
 				</div>
 				<div class="form-input">
-				  <#if member??>
-				    <input type="text" class="input input-age" data-type="age"
-						placeholder="나이*" name="age" value="${member.age}">
-				  <#else>
-				  <input type="text" class="input input-age" data-type="age"
-						placeholder="나이*" name="age" value="">
-				  </#if>
+				  <input type="text" class="input input-age" data-type="age" placeholder="나이*" name="age" value=${("'${member.age}'")!''}>
 				</div>
 				<div class="form-input form-email">
 					<#if member??>
@@ -111,15 +95,9 @@
 					</#if>
 				</div>
 				<div class="form-input has-button">
-					<#if member??>
 					<input class="input phone" name="phone" data-type="phone"
-						placeholder="휴대폰*" type="tel" maxlength="11" value=${member.phone}
-						onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-					<#else>
-					<input class="input phone" name="phone" data-type="phone"
-					placeholder="휴대폰*" type="tel" maxlength="11" 
-					onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-					</#if>
+						placeholder="휴대폰*" type="tel" maxlength="11" 
+						onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value=${("'${member.phone}'")!''}>
 					<button class="btn-get-code btn-small" disabled>
 						<span>인증받기</span>
 					</button>
