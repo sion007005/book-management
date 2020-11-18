@@ -12,6 +12,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
 public class CategoryUpdateController implements Controller {
@@ -19,6 +20,7 @@ public class CategoryUpdateController implements Controller {
 	
 	@Login
 	@Override
+	@PostMapper("/categories/update")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int categoryId = NumberUtils.parseInt((String)request.getParameter("id"));
 		String categoryName = (String)request.getParameter("name");

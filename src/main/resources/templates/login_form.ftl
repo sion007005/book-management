@@ -28,7 +28,7 @@
 			<#if message??>
 				<p class="error-msg">${message}</p>
 			</#if>
-			<input type="text" name="returnUrl" value=${returnUrl} hidden>
+			<input type="hidden" name="returnUrl" value=${returnUrl}>
 				<div class="form-input">
 					<button class="btn-signup button button-primary" type="submit">로그인하기</button>
 				</div>

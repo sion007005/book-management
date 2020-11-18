@@ -30,7 +30,7 @@ public class LoginProcessController implements Controller {
 		Member member = memberService.findOneByEmail(email);
 		String encryptedPassword = SHA256Util.getEncrypt(plainPassword, member.getSalt());
 		
-		//일치하면 set-cookie 후 멤버 전체 리스트(임시)로 / 일치하지 않으면 로그인 페이지로 redirection
+		//일치하면 set-cookie 후 원래 가려던 페이지로 이동/ 일치하지 않으면 로그인 페이지로 redirection
 		if (encryptedPassword.equals(member.getPassword())) {
 			try {
 				AES256Util encryptUtil = new AES256Util();
@@ -49,7 +49,11 @@ public class LoginProcessController implements Controller {
 				throw new LoginProcessException(e.getMessage(), e);
 			} 
 		} else {
-			return new ModelAndView(ViewRender.REDIRECT_NAME + "/login/form?email="+email);
+			mav = new ModelAndView(ViewRender.REDIRECT_NAME  + "/login/form");
+			mav.addObject("returnUrl", request.getParameter("returnUrl"));
+			mav.addObject("email", email);
+			
+			return mav;
 		}
 	}
 }

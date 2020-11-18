@@ -55,7 +55,7 @@ public class MemberRepository extends BaseRepository {
 			return rs.getInt(1); //아이디 얻기  
 		} catch (SQLException e) {
 			throw new DataProcessException(e);
-		} finally {//TODO 나머지도 고치기 , 메서드는 항상 동사로!
+		} finally {
 			closeDbResource(conn, pstm);
 		}
 	}

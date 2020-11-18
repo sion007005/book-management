@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.service.category.CategoryService;
@@ -16,15 +15,17 @@ import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
-@Slf4j
+
 public class BookUpdateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
 	private BookService bookService = BookService.getInstance();
 	private CategoryService categoryService = CategoryService.getInstance();
 
-	@Override
 	@Login
+	@Override
+	@PostMapper("/books/update")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int categoryIdNumber = NumberUtils.parseInt((String)request.getParameter("form-category-select"));
 		String trimedTitle = StringUtils.trim((String)request.getParameter("title"));

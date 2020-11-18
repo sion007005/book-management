@@ -10,13 +10,15 @@ import sion.bookmanagement.util.validator.Validator;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
 public class BookRemoveController implements Controller {
 	private BookService bookService = BookService.getInstance();
 	
-	@Override
 	@Login
+	@Override
+	@PostMapper("/books/remove")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int id = NumberUtils.parseInt((String)request.getParameter("id"));
 		

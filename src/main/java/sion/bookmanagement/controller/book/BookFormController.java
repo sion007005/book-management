@@ -15,14 +15,16 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
 public class BookFormController implements Controller {	
 	private CategoryService categoryService = CategoryService.getInstance();
 	private BookService bookService = BookService.getInstance();
 
-	@Override
 	@Login
+	@Override
+	@GetMapper("/books/form")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("book_form");
 		List<Category> categoryList = categoryService.findAll(null);

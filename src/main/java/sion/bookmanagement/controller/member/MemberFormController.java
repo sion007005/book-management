@@ -9,6 +9,7 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
 public class MemberFormController implements Controller {
@@ -17,6 +18,7 @@ public class MemberFormController implements Controller {
 	
 	@Login
 	@Override
+	@GetMapper("/members/form")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("member_form");
 		

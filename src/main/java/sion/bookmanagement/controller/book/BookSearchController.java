@@ -12,11 +12,13 @@ import sion.bookmanagement.service.book.BookSearchCondition.SearchType;
 import sion.bookmanagement.service.book.BookService;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.GetMapper;
 
 public class BookSearchController implements Controller {
 	private BookService bookService = BookService.getInstance();
 	
 	@Override
+	@GetMapper("/books/search")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String searchType = (String) request.getParameter("search-type");
 		String keyword = (String) request.getParameter("keyword");

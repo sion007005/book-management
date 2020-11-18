@@ -10,11 +10,13 @@ import sion.bookmanagement.service.book.BookOrderType;
 import sion.bookmanagement.service.book.BookService;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.GetMapper;
 
 public class BookListController implements Controller {
 	private BookService bookService = BookService.getInstance();
 	
 	@Override
+	@GetMapper("/books/list")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String orderType = (String) request.getParameter("order-type");
 		BookOrderType type = null;

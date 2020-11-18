@@ -8,6 +8,7 @@ import sion.bookmanagement.service.category.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
 public class CategoryInfoController implements Controller {
@@ -15,6 +16,7 @@ public class CategoryInfoController implements Controller {
 	
 	@Login
 	@Override
+	@GetMapper("/categories/info")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int id = NumberUtils.parseInt((String) request.getParameter("id"));
 		Category category = categoryService.findOneById(id);

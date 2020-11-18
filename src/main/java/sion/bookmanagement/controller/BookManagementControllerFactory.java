@@ -44,6 +44,8 @@ public class BookManagementControllerFactory implements ControllerFactory {
 		// 2. command 메소드에 request mapping annotaion을 찾아서 controllers map(13번 줄)을 생성한다.
 	}
 	
+	
+	
 	private void initialize() {
 		controllers.put("/login/form&GET", new LoginFormController());
 		controllers.put("/login&POST", new LoginProcessController());

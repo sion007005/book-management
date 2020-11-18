@@ -8,6 +8,7 @@ import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
 public class BookInfoController implements Controller {
@@ -15,6 +16,7 @@ public class BookInfoController implements Controller {
 
 	@Login
 	@Override
+	@GetMapper("/books/info")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int id = NumberUtils.parseInt((String)request.getParameter("id"));
 		Book book = bookService.findOneById(id);

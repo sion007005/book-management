@@ -14,13 +14,15 @@ import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 @Slf4j
 public class MemberSearchController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 
-	@Override
 	@Login                                                                                                         
+	@Override
+	@GetMapper("/members/search")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String searchType = (String) request.getParameter("search-type");
 		String ageFromStr = (String) request.getParameter("age-from");

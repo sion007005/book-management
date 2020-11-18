@@ -13,14 +13,16 @@ import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
 public class MemberUpdateController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 
-	@Override
 	@Login
+	@Override
+	@PostMapper("/members/update")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String trimedName = StringUtils.trim((String)request.getParameter("name"));
 		String gender = (String)request.getParameter("gender");

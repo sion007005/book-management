@@ -10,13 +10,15 @@ import sion.bookmanagement.service.category.CategoryService;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
 public class CategoryCreateController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
-	@Override
 	@Login
+	@Override
+	@PostMapper("/categories/create")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String categoryName = (String)request.getParameter("name");
 		

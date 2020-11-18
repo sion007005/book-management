@@ -12,6 +12,7 @@ import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
+import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 import sion.mvc.support.SHA256Util;
 
@@ -19,9 +20,9 @@ public class MemberCreateController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 	
-// @PostMapper("/member/create")
-	@Override
 	@Login
+	@Override
+	@PostMapper("/members/create")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String trimedName = StringUtils.trim((String)request.getParameter("name"));
 		String trimedGender = StringUtils.trim((String)request.getParameter("gender"));
