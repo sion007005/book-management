@@ -17,7 +17,7 @@ public class MemberListController implements Controller {
 
 //	@Login
 	@Override
-	@GetMapper("/member/list")
+	@GetMapper("/members/list")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String orderType = (String) request.getParameter("order-type");
 		MemberOrderType type = null;
