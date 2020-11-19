@@ -13,12 +13,12 @@ import sion.bookmanagement.util.DateUtils;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.Login;
 import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
-public class BookUpdateController implements Controller {
+public class BookUpdateController implements Commander {
 	private BookValidator bookValidator = new BookValidator();
 	private BookService bookService = BookService.getInstance();
 	private CategoryService categoryService = CategoryService.getInstance();

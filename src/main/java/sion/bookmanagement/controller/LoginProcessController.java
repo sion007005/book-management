@@ -9,21 +9,20 @@ import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.mvc.ModelAndView;
 import sion.mvc.auth.LoginProcessException;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.render.ViewRender;
 import sion.mvc.support.AES256Util;
 import sion.mvc.support.SHA256Util;
 @Slf4j
-public class LoginProcessController implements Controller {
+public class LoginProcessController implements Commander {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = null;
-		
 		//TODO validation check
 		String email = (String)request.getParameter("email");
 		String plainPassword = (String)request.getParameter("password");
+		String returnUrl = (String)request.getParameter("returnUrl");
 		
 		//이메일이 db에 있는지 search 
 		//해당 이메일을 가진 멤버의  암호화된 비밀번호와 salt를 같이 꺼내와서 비교한다. 
@@ -43,15 +42,17 @@ public class LoginProcessController implements Controller {
 				
 				response.addCookie(cookie);
 				
-				return new ModelAndView(ViewRender.REDIRECT_NAME + request.getParameter("returnUrl"));
+//				return new ModelAndView(ViewRender.REDIRECT_NAME + returnUrl);
+				ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
+				mav.addObject("returnUrl", returnUrl);
+				return mav;
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 				throw new LoginProcessException(e.getMessage(), e);
 			} 
 		} else {
-			mav = new ModelAndView(ViewRender.REDIRECT_NAME  + "/login/form");
-			mav.addObject("returnUrl", request.getParameter("returnUrl"));
-			mav.addObject("email", email);
+			ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME  + "/login/form");
+			mav.addObject("errorMessage", "아이디와 패스워드가 정확하지 않습니다.");
 			
 			return mav;
 		}

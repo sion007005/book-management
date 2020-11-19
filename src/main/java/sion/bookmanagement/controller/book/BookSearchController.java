@@ -11,10 +11,10 @@ import sion.bookmanagement.service.book.BookSearchCondition;
 import sion.bookmanagement.service.book.BookSearchCondition.SearchType;
 import sion.bookmanagement.service.book.BookService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 
-public class BookSearchController implements Controller {
+public class BookSearchController implements Commander {
 	private BookService bookService = BookService.getInstance();
 	
 	@Override

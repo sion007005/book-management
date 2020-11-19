@@ -8,11 +8,11 @@ import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
-public class MemberFormController implements Controller {
+public class MemberFormController implements Commander {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 	

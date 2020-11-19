@@ -65,19 +65,20 @@ public class MemberRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Member> memberList = new ArrayList<Member>();
-		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members WHERE ";
+		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members ";
 		
-		if (condition.getSearchType().getColumnName().equals("name")) {
-			query += "name like ?";
-		} else if (condition.getSearchType().getColumnName().equals("email")) {
-			query += "email like ?";
-		} else if (condition.getSearchType().getColumnName().equals("phone")) {
-			query += "phone like ?";
-		} else {
-//TODO 			query += "email like ?"
-		}
 		
-		query += " AND age between ? and ?"; 
+		query = query + " where " + condition.getSearchType().getColumnName() + " like ? ";
+		
+//		if (condition.getSearchType().getColumnName().equals("name")) {
+//			query += " WHERE name like ?";
+//		} else if (condition.getSearchType().getColumnName().equals("email")) {
+//			query += " WHERE email like ?";
+//		} else {
+//			query += " WHERE phone like ?";
+//		}
+		
+		query += " AND age between ? and ?";
 		
 		if (orderType != null) {
 			query += (" ORDER BY " + orderType);

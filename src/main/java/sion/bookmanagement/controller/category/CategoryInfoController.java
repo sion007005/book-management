@@ -7,11 +7,11 @@ import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
-public class CategoryInfoController implements Controller {
+public class CategoryInfoController implements Commander {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Login

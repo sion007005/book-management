@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import sion.bookmanagement.auth.BookManagementUser;
 import sion.mvc.ModelAndView;
 import sion.mvc.auth.UserContext;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.render.ViewRender;
 
-public class LogoutProcessController implements Controller {
+public class LogoutProcessController implements Commander {
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		Cookie cookie = new Cookie("sid", "");

@@ -9,10 +9,10 @@ import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberOrderType;
 import sion.bookmanagement.service.member.MemberService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 
-public class MemberListController implements Controller {
+public class MemberListController implements Commander {
 	private MemberService memberService = MemberService.getInstance();
 
 //	@Login

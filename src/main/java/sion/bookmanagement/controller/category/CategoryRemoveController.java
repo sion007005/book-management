@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.Login;
 import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
-public class CategoryRemoveController implements Controller {
+public class CategoryRemoveController implements Commander {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Login

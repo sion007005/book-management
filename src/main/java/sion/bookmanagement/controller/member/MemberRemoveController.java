@@ -8,12 +8,12 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.validator.PlusNumberValidator;
 import sion.bookmanagement.util.validator.Validator;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.Login;
 import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
-public class MemberRemoveController implements Controller {
+public class MemberRemoveController implements Commander {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Login

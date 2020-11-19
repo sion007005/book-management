@@ -5,14 +5,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookOrderType;
 import sion.bookmanagement.service.book.BookService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 
-public class BookListController implements Controller {
+public class BookListController implements Commander {
 	private BookService bookService = BookService.getInstance();
 	
 	@Override
@@ -28,6 +29,7 @@ public class BookListController implements Controller {
 		List<Book> bookList = bookService.findAll(type);
 		ModelAndView mav = new ModelAndView("book_list");
 		mav.addObject("bookList", bookList);
+		mav.addObject("pagenation", new Pagenation());
 		
 		return mav;
 	}	

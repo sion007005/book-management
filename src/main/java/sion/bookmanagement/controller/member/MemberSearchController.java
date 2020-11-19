@@ -13,11 +13,11 @@ import sion.bookmanagement.service.member.MemberSearchCondition.SearchType;
 import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 @Slf4j
-public class MemberSearchController implements Controller {
+public class MemberSearchController implements Commander {
 	private MemberService memberService = MemberService.getInstance();
 
 	@Login                                                                                                         

@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.Login;
 import sion.mvc.dispatcher.PostMapper;
 import sion.mvc.render.ViewRender;
 
-public class CategoryCreateController implements Controller {
+public class CategoryCreateController implements Commander {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Login

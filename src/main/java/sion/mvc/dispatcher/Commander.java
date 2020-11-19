@@ -5,6 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import sion.mvc.ModelAndView;
 
-public interface Controller {
+public interface Commander {
 	ModelAndView command(HttpServletRequest request, HttpServletResponse response);
 }

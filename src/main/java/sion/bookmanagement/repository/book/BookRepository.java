@@ -62,11 +62,11 @@ public class BookRepository extends BaseRepository {
 		ResultSet rs = null;
 		List<Book> bookList = new ArrayList<Book>();
 		
-		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books where ";
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books ";
 		if (condition.getSearchType().getColumnName().equals("title")) {
-			query += "title like ?";
-		} else if (condition.getSearchType().getColumnName().equals("author")) {
-			query += "author like ?";
+			query += "where title like ?";
+		} else {
+			query += "where author like ?";
 		} 
 		
 		if (orderType != null) {

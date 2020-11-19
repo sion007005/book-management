@@ -11,10 +11,10 @@ import sion.bookmanagement.service.category.CategorySearchCondition;
 import sion.bookmanagement.service.category.CategorySearchCondition.SearchType;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 
-public class CategorySearchController implements Controller {
+public class CategorySearchController implements Commander {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override

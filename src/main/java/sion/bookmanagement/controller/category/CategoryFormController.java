@@ -10,11 +10,11 @@ import sion.bookmanagement.service.category.CategoryService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
-public class CategoryFormController implements Controller {
+public class CategoryFormController implements Commander {
 	CategoryService categoryService = CategoryService.getInstance();
 	
 	@Login

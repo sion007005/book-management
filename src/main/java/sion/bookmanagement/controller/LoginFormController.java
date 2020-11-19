@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 @Slf4j
-public class LoginFormController implements Controller {
+public class LoginFormController implements Commander {
 	@Override
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 //		TODO 불필요한 코드가 아닌가 ? interceptor에서 체크하고 넘어오니까  

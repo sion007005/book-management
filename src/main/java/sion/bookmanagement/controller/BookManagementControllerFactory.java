@@ -1,117 +1,21 @@
 package sion.bookmanagement.controller;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.ControllerFactory;
 import sion.mvc.dispatcher.FileNotFoundException;
-import sion.mvc.dispatcher.GetMapper;
-import sion.mvc.dispatcher.PostMapper;
 
 @Slf4j
 public class BookManagementControllerFactory implements ControllerFactory {
-	Map<String, Controller> controllers = new HashMap<>();
+	Map<String, Commander> controllers = new HashMap<>();
 	
 	public BookManagementControllerFactory() {
 		initialize();
-		initializeOfAnnotation();
-	}
-
-	private void initializeOfAnnotation() {
-		// annotation을 가지고 와서 controller 실행하는 로직 구현
-		Controller controller = null;
-		String requestUri = "";
-		
-		
-		// TODO(방법찾기) 1. 모든 controller class를 가지고 온다.
-		String[] controllerList = {
-				"LoginFormController",
-				"LoginProcessController",
-				"LogoutProcessController",
-				"MemberCreateController",
-				"MemberListController",
-				"MemberFormController",
-				"MemberInfoController",
-				"MemberSearchController",
-				"MemberUpdateController",
-				"MemberRemoveController",
-				"BookListController",
-				"BookCreateController",
-				"BookFormController",
-				"BookInfoController",
-				"BookRemoveController",
-				"BookSearchController",
-				"BookUpdateController",
-				"CategoryCreateController",
-				"CategoryFormController",
-				"CategoryInfoController",
-				"CategoryListController",
-				"CategoryRemoveController",
-				"CategorySearchController",
-				"CategoryUpdateController",
-		};
-		
-		// 2. command 메소드에 request mapping annotaion을 찾아서 controllers map(13번 줄)을 생성한다.
-		for (String cont : controllerList) {
-			if (cont.startsWith("Member")) {
-				controller = getController("member", cont);
-				requestUri = getPath(controller);
-			} else if (cont.startsWith("Book")) {
-				controller = getController("book", cont);
-				requestUri = getPath(controller);
-			} else if (cont.startsWith("Category")) {
-				controller = getController("category", cont);
-				requestUri = getPath(controller);
-			} else {
-				// TODO login 케이스 추가  
-				// 1. login패키지 만들고, login관련 컨트롤러를 넣는다. 
-				// 2. 전체적으로 다른 방법... 
-			}
-			
-			controllers.put(requestUri, controller);
-		}
-	}
-	
-	private String getPath(Controller controller) {
-		PostMapper post = null;
-		GetMapper get = null;
-		String path = "";
-		String method = "";
-		
-		try {
-			Method command = controller.getClass().getMethod("command", HttpServletRequest.class, HttpServletResponse.class);
-			post = command.getDeclaredAnnotation(PostMapper.class);
-			get = command.getDeclaredAnnotation(GetMapper.class);
-		} catch (Exception e) {
-			// TODO exception 던지기 
-			log.error("", e);
-		} 
-		
-		if (post != null) {
-			path = post.value();
-			method = "POST";
-		} else if (get != null) {
-			path = get.value();
-			method = "GET";
-		}
-		
-		return path +"&" + method;
-	}
-	
-	private Controller getController(String type, String cont) {
-		try {
-			return (Controller) Class.forName("sion.bookmanagement.controller." + type + "." + cont).newInstance();
-		} catch (Exception e) {
-			log.error("", e);
-		}
-		
-		return null;
 	}
 	
 	private void initialize() {
@@ -151,8 +55,8 @@ public class BookManagementControllerFactory implements ControllerFactory {
 	}
 	
 	@Override
-	public Controller getInstance(String key) {
-		Controller controller = controllers.get(key);
+	public Commander getInstance(String key) {
+		Commander controller = controllers.get(key);
 		
 		if (controller == null) {
 			throw new FileNotFoundException("해당하는 controller가 없습니다.");

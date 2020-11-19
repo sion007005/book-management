@@ -9,10 +9,10 @@ import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryOrderType;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 
-public class CategoryListController implements Controller {
+public class CategoryListController implements Commander {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override

@@ -15,10 +15,12 @@ import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
-public class BookFormController implements Controller {	
+@Controller
+public class BookFormController implements Commander {	
 	private CategoryService categoryService = CategoryService.getInstance();
 	private BookService bookService = BookService.getInstance();
 

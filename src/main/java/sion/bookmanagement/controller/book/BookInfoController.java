@@ -7,11 +7,11 @@ import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
+import sion.mvc.dispatcher.Commander;
 import sion.mvc.dispatcher.GetMapper;
 import sion.mvc.dispatcher.Login;
 
-public class BookInfoController implements Controller {
+public class BookInfoController implements Commander {
 	private BookService bookService = BookService.getInstance();
 
 	@Login
