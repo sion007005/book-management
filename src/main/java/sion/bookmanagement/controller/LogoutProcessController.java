@@ -7,11 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 import sion.bookmanagement.auth.BookManagementUser;
 import sion.mvc.ModelAndView;
 import sion.mvc.auth.UserContext;
-import sion.mvc.dispatcher.Commander;
+import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.GetMapping;
 import sion.mvc.render.ViewRender;
 
-public class LogoutProcessController implements Commander {
+@Controller
+public class LogoutProcessController implements ControllerAware {
 	@Override
+	@GetMapping("/logout")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		Cookie cookie = new Cookie("sid", "");
 		cookie.setDomain("localhost");

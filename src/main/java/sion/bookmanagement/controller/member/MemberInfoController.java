@@ -3,22 +3,22 @@ package sion.bookmanagement.controller.member;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.extern.slf4j.Slf4j;
+import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Commander;
-import sion.mvc.dispatcher.GetMapper;
+import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.GetMapping;
 import sion.mvc.dispatcher.Login;
 
-@Slf4j
-public class MemberInfoController implements Commander {
+@Controller
+public class MemberInfoController implements ControllerAware {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Login
 	@Override
-	@GetMapper("/members/info")
+	@GetMapping("/members/info")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int id = NumberUtils.parseInt((String) request.getParameter("id"));
 		Member member = memberService.findOneById(id);

@@ -92,7 +92,7 @@ public class Dispatcher {
 		return false;
 	}
 
-	private void preCommand(Commander controller, HttpRequest httpRequest, HttpResponse httpResponse) throws DispatcherException {
+	private void preCommand(ControllerAware controller, HttpRequest httpRequest, HttpResponse httpResponse) throws DispatcherException {
 		List<Interceptor> interceptors = interceptorRegistry.getInterceptors();
 		if (Objects.isNull(interceptors)) {
 			return;
@@ -119,7 +119,7 @@ public class Dispatcher {
 		httpResponse.setHttpStatus(HttpStatus.OK);
 	}
 
-	private void postCommand(Commander controller, HttpRequest httpRequest, HttpResponse httpResponse) {
+	private void postCommand(ControllerAware controller, HttpRequest httpRequest, HttpResponse httpResponse) {
 		List<Interceptor> interceptors = interceptorRegistry.getInterceptors();
 		if (Objects.isNull(interceptors)) {
 			return;

@@ -11,7 +11,7 @@ public class StringUtils {
 		return text.trim();
 	}
 	
-	public static Boolean isEmpty(String value) {
+	public static boolean isEmpty(String value) {
 		if (value == null || value.length() == 0) {
 			return true;
 		}

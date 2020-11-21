@@ -5,18 +5,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryOrderType;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Commander;
-import sion.mvc.dispatcher.GetMapper;
+import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.GetMapping;
 
-public class CategoryListController implements Commander {
+@Controller
+public class CategoryListController implements ControllerAware {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override
-	@GetMapper("/categories/list")
+	@GetMapping("/categories/list")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String orderType = (String) request.getParameter("order-type");
 		CategoryOrderType type = null;

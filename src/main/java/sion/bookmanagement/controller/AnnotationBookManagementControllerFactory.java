@@ -1,52 +1,65 @@
 package sion.bookmanagement.controller;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.reflections.Reflections;
+
 import lombok.extern.slf4j.Slf4j;
-import sion.mvc.dispatcher.Commander;
+import sion.bookmanagement.Application;
+import sion.mvc.dispatcher.ControllerAware;
 import sion.mvc.dispatcher.ControllerFactory;
 import sion.mvc.dispatcher.FileNotFoundException;
-import sion.mvc.dispatcher.GetMapper;
-import sion.mvc.dispatcher.PostMapper;
+import sion.mvc.dispatcher.GetMapping;
+import sion.mvc.dispatcher.PostMapping;
 
 @Slf4j
 public class AnnotationBookManagementControllerFactory implements ControllerFactory {
-	Map<String, Commander> controllers = new HashMap<>();
+	Map<String, ControllerAware> controllers = new HashMap<>();
 	
 	public AnnotationBookManagementControllerFactory() {
 		initialize();
 	}
 
 	private void initialize() {
+		// 1.  Controller클래스를 모두 가져온다.
+		String basePackageName = new Application().getClass().getPackage().getName();
+		log.info("basePackageName : {}", basePackageName);
+		Reflections reflector = new Reflections(basePackageName);
+//		Set<Class<? extends ControllerAware>> controllerSet = reflector.getSubTypesOf(ControllerAware.class);
 		
-		List<Commander> commanders = new ArrayList<>(); //TODO @Controller가 있는 Command클래스를 가져와야 한다.
+//		Set<Class<?>> list = reflector.getTypesAnnotatedWith(Controller.class);
 		
-		// 2. command 메소드에 request mapping annotaion을 찾아서 controllers map(13번 줄)을 생성한다.
-		for (Commander commander : commanders) {
-			String getKey = getGetMapperKey(commander);
-			if (Objects.nonNull(getKey)) {
-				controllers.put(getKey, commander);
-			}
-			
-			String postKey = getPostMapperKey(commander);
-			if (Objects.nonNull(postKey)) {
-				controllers.put(postKey, commander);
-			}
-		}
+		// 2. controllers map에  path, controller를 key value로 추가한다.
+		//TODO controllerSet으로 가져오도록 구현 (Controller annotation 지우기)
+//		
+//		for (Class<?> clazz : list) {
+//			try {
+//				ControllerAware controller = (ControllerAware) clazz.getDeclaredConstructor().newInstance();
+//				String getKey = getGetMappingKey(controller);
+//				if (Objects.nonNull(getKey)) {
+//					controllers.put(getKey, controller);
+//				}
+//				
+//				String postKey = getPostMappingKey(controller);
+//				if (Objects.nonNull(postKey)) {
+//					controllers.put(postKey, controller);
+//				}
+//			} catch (Exception e) {
+//				throw new RuntimeException(e);
+//			} 
+//		}
+
 	}
 	
-	private String getGetMapperKey(Commander controller) {
+	private String getGetMappingKey(ControllerAware controller) {
 		try {
 			Method command = getCommandMethod(controller);
-			GetMapper get = command.getDeclaredAnnotation(GetMapper.class);
+			GetMapping get = command.getDeclaredAnnotation(GetMapping.class);
 
 			if (get == null) {
 				return null;
@@ -60,10 +73,10 @@ public class AnnotationBookManagementControllerFactory implements ControllerFact
 		}
 	}
 	
-	private String getPostMapperKey(Commander controller) {
+	private String getPostMappingKey(ControllerAware controller) {
 		try {
 			Method command = getCommandMethod(controller);
-			PostMapper post = command.getDeclaredAnnotation(PostMapper.class);
+			PostMapping post = command.getDeclaredAnnotation(PostMapping.class);
 		
 			if (post == null) {
 				return null;
@@ -77,7 +90,7 @@ public class AnnotationBookManagementControllerFactory implements ControllerFact
 		}
 	}
 	
-	private Method getCommandMethod(Commander controller) throws NoSuchMethodException {
+	private Method getCommandMethod(ControllerAware controller) throws NoSuchMethodException {
 		Method command = controller.getClass().getMethod("command", HttpServletRequest.class, HttpServletResponse.class);
 		return command;
 	}
@@ -110,8 +123,8 @@ public class AnnotationBookManagementControllerFactory implements ControllerFact
 //	}
 		
 	@Override
-	public Commander getInstance(String key) {
-		Commander controller = controllers.get(key);
+	public ControllerAware getInstance(String key) {
+		ControllerAware controller = controllers.get(key);
 		
 		if (controller == null) {
 			throw new FileNotFoundException("해당하는 controller가 없습니다.");

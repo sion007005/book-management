@@ -7,7 +7,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface PostMapper {
+public @interface GetMapping {
+
 	String value();
-	String method() default "POST";
+	String method() default "GET";
+
 }

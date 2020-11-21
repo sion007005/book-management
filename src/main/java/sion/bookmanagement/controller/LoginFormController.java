@@ -3,13 +3,16 @@ package sion.bookmanagement.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Commander;
-@Slf4j
-public class LoginFormController implements Commander {
+import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.GetMapping;
+
+@Controller
+public class LoginFormController implements ControllerAware {
+	
 	@Override
+	@GetMapping("/login/form")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 //		TODO 불필요한 코드가 아닌가 ? interceptor에서 체크하고 넘어오니까  
 //		if (UserContext.isLogin()) {

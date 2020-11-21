@@ -68,6 +68,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
  	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3' 
 
+	// https://mvnrepository.com/artifact/org.reflections/reflections
+	compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
+
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	// annotation으로 로거를 쉽게 쓸 수 있도록 함
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'

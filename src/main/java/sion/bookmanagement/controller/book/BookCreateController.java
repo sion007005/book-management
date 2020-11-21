@@ -6,25 +6,25 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Controller;
-import sion.mvc.dispatcher.Commander;
+import sion.mvc.dispatcher.ControllerAware;
 import sion.mvc.dispatcher.Login;
-import sion.mvc.dispatcher.PostMapper;
+import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
 
 @Controller
-public class BookCreateController implements Commander {
+public class BookCreateController implements ControllerAware {
 	private BookValidator bookValidator = new BookValidator();
 	private BookService bookService = BookService.getInstance();
 	
 	@Login
 	@Override
-	@PostMapper("/books/create")
+	@PostMapping("/books/create")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {	
 		String trimedTitle = StringUtils.trim((String)request.getParameter("title"));
 		String trimedAuthor = StringUtils.trim((String)request.getParameter("author"));

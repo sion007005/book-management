@@ -54,9 +54,9 @@ public class ApplicationContext {
 	public static ControllerFactory getControllerFactory() {
 		try {
 			String className = ApplicationContext.properties.getProperty(NAME_CONTROLLER_FACTORY_CLASS);
-			//new 없이 객체 생성하는 방법
-			ControllerFactory object = (ControllerFactory) Class.forName(className).getConstructor().newInstance();
-			
+//			//new 없이 객체 생성하는 방법
+			ControllerFactory object = (ControllerFactory) Class.forName(className).newInstance();
+
 			return object;
 		} catch (Exception e) {
 			throw new ServerRunnerException(e);

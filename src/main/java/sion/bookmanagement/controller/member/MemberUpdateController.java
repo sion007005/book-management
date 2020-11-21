@@ -5,24 +5,26 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.DateUtils;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Commander;
+import sion.mvc.dispatcher.ControllerAware;
 import sion.mvc.dispatcher.Login;
-import sion.mvc.dispatcher.PostMapper;
+import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
 
-public class MemberUpdateController implements Commander {
+@Controller
+public class MemberUpdateController implements ControllerAware {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 
 	@Login
 	@Override
-	@PostMapper("/members/update")
+	@PostMapping("/members/update")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String trimedName = StringUtils.trim((String)request.getParameter("name"));
 		String gender = (String)request.getParameter("gender");

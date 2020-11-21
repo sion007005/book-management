@@ -9,15 +9,19 @@ import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.mvc.ModelAndView;
 import sion.mvc.auth.LoginProcessException;
-import sion.mvc.dispatcher.Commander;
+import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
 import sion.mvc.support.AES256Util;
 import sion.mvc.support.SHA256Util;
+
 @Slf4j
-public class LoginProcessController implements Commander {
+@Controller
+public class LoginProcessController implements ControllerAware {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
+	@PostMapping("/login")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		//TODO validation check
 		String email = (String)request.getParameter("email");

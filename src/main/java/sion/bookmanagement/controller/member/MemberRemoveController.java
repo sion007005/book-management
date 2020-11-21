@@ -3,22 +3,24 @@ package sion.bookmanagement.controller.member;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.validator.PlusNumberValidator;
 import sion.bookmanagement.util.validator.Validator;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Commander;
+import sion.mvc.dispatcher.ControllerAware;
 import sion.mvc.dispatcher.Login;
-import sion.mvc.dispatcher.PostMapper;
+import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
 
-public class MemberRemoveController implements Commander {
+@Controller
+public class MemberRemoveController implements ControllerAware {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Login
 	@Override
-	@PostMapper("/members/remove")
+	@PostMapping("/members/remove")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int id = NumberUtils.parseInt((String)request.getParameter("id"));
 		

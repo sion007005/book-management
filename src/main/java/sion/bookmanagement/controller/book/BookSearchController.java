@@ -5,20 +5,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookOrderType;
 import sion.bookmanagement.service.book.BookSearchCondition;
 import sion.bookmanagement.service.book.BookSearchCondition.SearchType;
 import sion.bookmanagement.service.book.BookService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.Commander;
-import sion.mvc.dispatcher.GetMapper;
+import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.GetMapping;
 
-public class BookSearchController implements Commander {
+@Controller
+public class BookSearchController implements ControllerAware {
 	private BookService bookService = BookService.getInstance();
 	
 	@Override
-	@GetMapper("/books/search")
+	@GetMapping("/books/search")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		String searchType = (String) request.getParameter("search-type");
 		String keyword = (String) request.getParameter("keyword");
