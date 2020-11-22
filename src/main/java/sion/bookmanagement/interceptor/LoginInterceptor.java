@@ -13,7 +13,7 @@ import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.mvc.auth.User;
 import sion.mvc.auth.UserContext;
-import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.DispatcherException;
 import sion.mvc.dispatcher.ForbiddenException;
 import sion.mvc.dispatcher.Interceptor;
@@ -26,7 +26,7 @@ public class LoginInterceptor implements Interceptor {
 	MemberService memberService = MemberService.getInstance();
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, ControllerAware controller) {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Controller controller) {
 		// dispatcher 의 precommand 로직 다 옮겨옴 
 		userSetting(request);
 		loginCheck(controller);
@@ -35,7 +35,7 @@ public class LoginInterceptor implements Interceptor {
 	}
 
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, ControllerAware controller) {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Controller controller) {
 //		response.addHeader("_user", value);
 		//TODO
 //		response.getModelAndView().getModel().put("_user", UserContext.get());
@@ -71,7 +71,7 @@ public class LoginInterceptor implements Interceptor {
 		} 
 	}
 
-	private void loginCheck(ControllerAware controller) {
+	private void loginCheck(Controller controller) {
 		//로그인 체크 -> 필요한가(=@Login이 있는가)? 
 		// 1) 필요하다면, 
 		//   1-1) 로그인이 되었는가? 확인 후, controller.command 실행 

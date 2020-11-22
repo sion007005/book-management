@@ -5,20 +5,18 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
 import sion.mvc.support.SHA256Util;
 
-@Controller
-public class MemberCreateController implements ControllerAware {
+public class MemberCreateController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();
 	private MemberService memberService = MemberService.getInstance();
 	

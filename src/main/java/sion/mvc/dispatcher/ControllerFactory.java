@@ -3,6 +3,6 @@ package sion.mvc.dispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 public interface ControllerFactory {
-	ControllerAware getInstance(String key);
+	Controller getController(String key);
 	String getKey(HttpServletRequest request);
 }

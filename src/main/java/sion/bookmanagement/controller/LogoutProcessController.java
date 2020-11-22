@@ -7,12 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import sion.bookmanagement.auth.BookManagementUser;
 import sion.mvc.ModelAndView;
 import sion.mvc.auth.UserContext;
-import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.GetMapping;
 import sion.mvc.render.ViewRender;
 
-@Controller
-public class LogoutProcessController implements ControllerAware {
+public class LogoutProcessController implements Controller {
 	@Override
 	@GetMapping("/logout")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {

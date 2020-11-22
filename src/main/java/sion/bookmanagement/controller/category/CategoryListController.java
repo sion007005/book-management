@@ -5,16 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sion.bookmanagement.controller.Controller;
 import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryOrderType;
 import sion.bookmanagement.service.category.CategoryService;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.GetMapping;
 
-@Controller
-public class CategoryListController implements ControllerAware {
+public class CategoryListController implements Controller {
 	private CategoryService categoryService = CategoryService.getInstance();
 	
 	@Override

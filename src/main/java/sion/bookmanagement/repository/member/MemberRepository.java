@@ -35,7 +35,7 @@ public class MemberRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "INSERT INTO members(name, gender, email, age, phone, password, salt, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO member(name, gender, email, age, phone, password, salt, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			pstm.setString(1, member.getName());
@@ -65,7 +65,7 @@ public class MemberRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Member> memberList = new ArrayList<Member>();
-		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM members ";
+		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM member ";
 		
 		
 		query = query + " where " + condition.getSearchType().getColumnName() + " like ? ";
@@ -111,7 +111,7 @@ public class MemberRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "UPDATE members SET name=?, gender=?, email=?, age=?, phone=?, password=?, created_at=?, updated_at=? WHERE member_id=?";
+			String query = "UPDATE member SET name=?, gender=?, email=?, age=?, phone=?, password=?, created_at=?, updated_at=? WHERE member_id=?";
 			pstm = conn.prepareStatement(query);
 			
 			pstm.setString(1, member.getName());
@@ -155,7 +155,7 @@ public class MemberRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Member> memberList = new ArrayList<Member>();
-		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM members";
+		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM member";
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
@@ -187,7 +187,7 @@ public class MemberRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM members WHERE member_id = ?";
+			String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM member WHERE member_id = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
 			
@@ -212,7 +212,7 @@ public class MemberRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "SELECT member_id, password, salt FROM members WHERE email = ?";
+			String query = "SELECT member_id, password, salt FROM member WHERE email = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, email);
 			

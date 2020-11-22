@@ -53,7 +53,7 @@ public class DispatcherServlet extends HttpServlet {
 			}
 			
 			// 인터페이스의 구현체를 꽂아넣음
-			ControllerAware controller = controllerFactory.getInstance(controllerFactory.getKey(request));
+			Controller controller = controllerFactory.getController(controllerFactory.getKey(request));
 			log.debug("controller : {}", controller);
 			
 			preCommand(controller, request, response);
@@ -87,7 +87,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 	}
 	
-	private void preCommand(ControllerAware controller, HttpServletRequest request, HttpServletResponse response) throws DispatcherException {
+	private void preCommand(Controller controller, HttpServletRequest request, HttpServletResponse response) throws DispatcherException {
 		List<Interceptor> interceptors = interceptorRegistry.getInterceptors();
 		
 		if (Objects.isNull(interceptors)) {
@@ -115,7 +115,7 @@ public class DispatcherServlet extends HttpServlet {
 		response.setStatus(HttpStatus.OK.getCode());
 	}
 	
-	private void postCommand(ControllerAware controller, HttpServletRequest request, HttpServletResponse response) {
+	private void postCommand(Controller controller, HttpServletRequest request, HttpServletResponse response) {
 		List<Interceptor> interceptors = interceptorRegistry.getInterceptors();
 		if (Objects.isNull(interceptors)) {
 			return;

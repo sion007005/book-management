@@ -9,15 +9,14 @@ import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.mvc.ModelAndView;
 import sion.mvc.auth.LoginProcessException;
-import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
 import sion.mvc.support.AES256Util;
 import sion.mvc.support.SHA256Util;
 
 @Slf4j
-@Controller
-public class LoginProcessController implements ControllerAware {
+public class LoginProcessController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 	
 	@Override
@@ -25,6 +24,7 @@ public class LoginProcessController implements ControllerAware {
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		//TODO validation check
 		String email = (String)request.getParameter("email");
+		log.debug("받아온 email:{}", email);
 		String plainPassword = (String)request.getParameter("password");
 		String returnUrl = (String)request.getParameter("returnUrl");
 		
@@ -49,13 +49,18 @@ public class LoginProcessController implements ControllerAware {
 //				return new ModelAndView(ViewRender.REDIRECT_NAME + returnUrl);
 				ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
 				mav.addObject("returnUrl", returnUrl);
+				mav.addObject("login", true);
 				return mav;
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 				throw new LoginProcessException(e.getMessage(), e);
 			} 
 		} else {
-			ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME  + "/login/form");
+//			ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME  + "/login/form");
+			ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
+			mav.addObject("returnUrl", returnUrl);
+			mav.addObject("login", false);
+			mav.addObject("email", email);
 			mav.addObject("errorMessage", "아이디와 패스워드가 정확하지 않습니다.");
 			
 			return mav;

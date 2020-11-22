@@ -5,11 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
-import sion.mvc.dispatcher.ControllerAware;
+import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.GetMapping;
 
-@Controller
-public class LoginFormController implements ControllerAware {
+public class LoginFormController implements Controller {
 	
 	@Override
 	@GetMapping("/login/form")
