@@ -58,6 +58,10 @@ public class BookService {
 		List<Book> bookList = bookRepository.search(condition, orderType);
 		return bookList;
 	}
+	
+	public int getListCount() {
+		return bookRepository.getListCount();
+	}
 }
 
 

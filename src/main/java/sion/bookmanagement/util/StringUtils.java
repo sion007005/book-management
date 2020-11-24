@@ -19,7 +19,7 @@ public class StringUtils {
 		return false;
 	}
 	
-	public static String getNullToEmpty(String value) {
+	public static String changeNullToEmpty(String value) {
 		if (Objects.isNull(value)) {
 			return "";
 		}

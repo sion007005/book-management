@@ -41,7 +41,8 @@ public class BookSearchCondition {
 	
 	public enum SearchType {
 		TITLE("제목", "title"),
-		AUTHOR("저자", "author");
+		AUTHOR("저자", "author"),
+		ALL("전체", "");
 		
 		private String name;
 		private String columnName;

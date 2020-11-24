@@ -1,1 +1,2 @@
-<div>footer입니다.</div>
+<div>
+</div>

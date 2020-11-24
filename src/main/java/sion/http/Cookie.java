@@ -12,8 +12,8 @@ public class Cookie {
 	public String generateCookieValue() {
 		//sid=memberId; Path=/; Domain=localhost; Expires=Sun, 07 Nov 2021 11:43:50 GMT
 		//TODO expires null인 경우
-		String cookieValue = StringUtils.getNullToEmpty(this.name)+"="+StringUtils.getNullToEmpty(this.value)
-									+"; Path="+StringUtils.getNullToEmpty(this.path)+"; Domain="+StringUtils.getNullToEmpty(this.domain)
+		String cookieValue = StringUtils.changeNullToEmpty(this.name)+"="+StringUtils.changeNullToEmpty(this.value)
+									+"; Path="+StringUtils.changeNullToEmpty(this.path)+"; Domain="+StringUtils.changeNullToEmpty(this.domain)
 									+"; Expires="+this.expires;
 		
 		return cookieValue;

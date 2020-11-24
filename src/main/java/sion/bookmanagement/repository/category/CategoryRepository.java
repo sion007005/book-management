@@ -33,7 +33,7 @@ public class CategoryRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "INSERT INTO categories(category_name, created_at, updated_at) VALUES(?, ?, ?)";
+			String query = "INSERT INTO category(category_name, created_at, updated_at) VALUES(?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			pstm.setString(1, category.getName());
@@ -58,7 +58,7 @@ public class CategoryRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "UPDATE categories SET category_name=?, created_at=?, updated_at=? WHERE category_id=?";
+			String query = "UPDATE category SET category_name=?, created_at=?, updated_at=? WHERE category_id=?";
 			pstm = conn.prepareStatement(query);
 			
 			pstm.setString(1, category.getName());
@@ -80,7 +80,7 @@ public class CategoryRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "DELETE FROM categories WHERE category_id=?";
+			String query = "DELETE FROM category WHERE category_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, categoryId);
 			
@@ -97,7 +97,7 @@ public class CategoryRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Category> categoryList = new ArrayList<Category>();
-		String query = "SELECT category_id, category_name, created_at, updated_at FROM categories";
+		String query = "SELECT category_id, category_name, created_at, updated_at FROM category";
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
@@ -129,7 +129,7 @@ public class CategoryRepository extends BaseRepository {
 
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "SELECT category_id, category_name, created_at, updated_at FROM categories WHERE category_id = ?";
+			String query = "SELECT category_id, category_name, created_at, updated_at FROM category WHERE category_id = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, categoryId);
 			
@@ -152,7 +152,7 @@ public class CategoryRepository extends BaseRepository {
 		ResultSet rs = null;
 		List<Category> categoryList = new ArrayList<Category>();
 		
-		String query = "SELECT category_id, category_name, created_at, updated_at FROM categories where category_name like ?";
+		String query = "SELECT category_id, category_name, created_at, updated_at FROM category where category_name like ?";
 			
 		if (orderType != null) {
 			query += (" ORDER BY " + orderType);

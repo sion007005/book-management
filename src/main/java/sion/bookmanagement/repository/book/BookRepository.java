@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import sion.bookmanagement.ConnectionManager;
 import sion.bookmanagement.repository.BaseRepository;
@@ -32,7 +33,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "INSERT INTO books(category_id, title, author, stock, year, price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO book(category_id, title, author, stock, year, price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			pstm.setInt(1, book.getCategoryId());
@@ -62,18 +63,25 @@ public class BookRepository extends BaseRepository {
 		ResultSet rs = null;
 		List<Book> bookList = new ArrayList<Book>();
 		
-		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books ";
-		if (condition.getSearchType().getColumnName().equals("title")) {
-			query += "where title like ?";
-		} else {
-			query += "where author like ?";
-		} 
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM book ";
+		query += "where " + condition.getSearchType().getColumnName() + " like ?";
+		System.out.println("condition.getSearchType().getColumnName(): "+ condition.getSearchType().getColumnName());
 		
-		if (orderType != null) {
+//		if (condition.getSearchType().getColumnName().equals("title")) {
+//			query += "where title like ?";
+//		} else if (condition.getSearchType().getColumnName().equals("author")) {
+//			query += "where author like ?";
+//		} else {
+//			query += "where (title || author) like ?";
+//		}
+		
+		if (Objects.nonNull(orderType)) {
 			query += (" ORDER BY " + orderType);
 		}
 		
 		try {
+			query += " LIMIT " + 0 + "," + 10;
+			System.out.println("쿼리쿼리 "+  query);
 			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%" + condition.getKeyword() + "%");
@@ -98,7 +106,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "update books set title=?, author=?, stock=?, year=?, price=?, created_at=?, updated_at=? where book_id=?";
+			String query = "update book set title=?, author=?, stock=?, year=?, price=?, created_at=?, updated_at=? where book_id=?";
 			pstm = conn.prepareStatement(query);
 			
 			pstm.setString(1, book.getTitle());
@@ -124,7 +132,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "delete from books where book_id=?";
+			String query = "delete from book where book_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, bookId);
 			
@@ -141,7 +149,7 @@ public class BookRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Book> bookList = new ArrayList<Book>();
-		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM books"; 
+		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM book"; 
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
@@ -149,7 +157,7 @@ public class BookRepository extends BaseRepository {
 			if (orderType != null) {
 				query += (" ORDER BY " + orderType);
 			}
-			
+			query += " LIMIT " + 0 + "," + 10; 
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			
@@ -175,7 +183,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "select book_id, category_id, title, author, stock, year, price, created from books where category_id=?";
+			String query = "select book_id, category_id, title, author, stock, year, price, created from book where category_id=?";
 			
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
@@ -207,7 +215,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "select book_id, category_id, title, author, stock, year, price, created_at, updated_at from books where book_id=?";
+			String query = "select book_id, category_id, title, author, stock, year, price, created_at, updated_at from book where book_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, bookId);
 			
@@ -238,5 +246,31 @@ public class BookRepository extends BaseRepository {
 		book.setUpdatedAt(rs.getTimestamp("updated_at"));
 		
 		return book;
+	}
+
+	public int getListCount() {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		try {
+			conn = ConnectionManager.getInstance().getConnection();
+			StringBuilder sql = new StringBuilder();
+			
+			sql.append("SELECT COUNT(*) as cnt FROM book");
+			pstm = conn.prepareStatement(sql.toString());
+			
+			rs = pstm.executeQuery();
+			if (rs.next()) { 
+				count = rs.getInt("cnt"); 
+			}
+		} catch (SQLException e) {
+			throw new DataProcessException(e);
+		} finally {
+			closeDbResource(conn, pstm);
+		}
+		
+		return count;
 	}
 }

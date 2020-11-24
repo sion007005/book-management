@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <#include "/common/head.ftl">
-    <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
   </head>
   
   <body>
@@ -20,9 +20,7 @@
 				<div class="form-input">
 					<input type="text" class="input input-gender" data-type="gender" placeholder="비밀번호*" name="password" id="password" value="">
 				</div>
-			<#if message??>
-				<p class="error-msg">${message}</p>
-			</#if>
+				<p id="error-msg" class="error-msg"></p>
 			<input type="hidden" name="returnUrl" id="returnUrl" value=${returnUrl}>
 				<div class="form-input">
 					<button class="btn-signup button button-primary" id="btnLogin" type="submit">로그인하기</button>
@@ -34,11 +32,13 @@
 	<script>
     $(document).ready(function() {
         $("#btnLogin").click(function(e) {
+        	e.preventDefault();
+        	$("#btnLogin").attr("disabled", true); 	
         	const action = $('#loginForm').attr("action");
         	const userEmail = $("#email").val();
         	const password = $("#password").val();
-            const params = "email="+userEmail+"&password="+password;
-            const returnUrl = $("#returnUrl").val();
+        	const returnUrl = $("#returnUrl").val();
+            const params = "email="+userEmail+"&password="+password+"&returnUrl="+returnUrl;
  
             if (userEmail == "") {
                 alert("이메일을 입력해주세요");
@@ -65,12 +65,20 @@
                 data : params,
                 dataType: "json",
                 url : action,
-                success : function(data) { //로그인 성공 시 보려던 페이지로 redirection
-                	if (data.login) {
-	                	location.href=returnUrl;
+                success : function(res) { //로그인 성공 시 보려던 페이지로 redirection
+                	if(res.login) {
+                		console.log("success",res)
+	                	location.href = res.returnUrl; 
                 	} else {
-	 					alert("로그인 실패");                		
+                		console.log("fail",res);
+						$("#error-msg").text(res.errorMessage);					
+                		$("#btnLogin").attr("disabled", false); 	
                 	}
+                },
+                fail: function(e) {
+                	console.log(e);
+					$("#error-msg").text("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
+					$("#btnLogin").attr("disabled", false);
                 }
             });
  

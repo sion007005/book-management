@@ -24,7 +24,6 @@ public class LoginProcessController implements Controller {
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		//TODO validation check
 		String email = (String)request.getParameter("email");
-		log.debug("받아온 email:{}", email);
 		String plainPassword = (String)request.getParameter("password");
 		String returnUrl = (String)request.getParameter("returnUrl");
 		
@@ -62,7 +61,6 @@ public class LoginProcessController implements Controller {
 			mav.addObject("login", false);
 			mav.addObject("email", email);
 			mav.addObject("errorMessage", "아이디와 패스워드가 정확하지 않습니다.");
-			
 			return mav;
 		}
 	}

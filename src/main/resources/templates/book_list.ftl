@@ -18,7 +18,6 @@
       <div class="search-container">
         <div class="search-area">
           <div class="group_flex">
-       	   <!-- TODO 카테고리 리스트 받아와서 카테고리 검색 select box 만들기  -->
             <div class="select-box">
               <select name="search-type" id="form-search-select">
               <#if searchCondition??>
@@ -43,7 +42,7 @@
        	    </div>
        	    <div class="input input-box keyword">
        	    <#if searchCondition??>
-			  <input type="text" class="input input-text" placeholder="검색어*" name="keyword" value=${searchCondition.keyword}>
+			  <input type="text" class="input input-text" placeholder="검색어*" name="keyword" value=${("'${searchCondition.keyword}'")!''}>
 			<#else>
 			  <input type="text" class="input input-text" placeholder="검색어*" name="keyword" value="">
 			</#if>
@@ -77,6 +76,7 @@
       </form>
       <div id="result-container">
         <div class="result-area">
+        <#if bookList??>
          <#list bookList as item>
           <div class="group_flex">
           <!-- 가급적 절대경로를 쓸 것 -->
@@ -87,24 +87,33 @@
             <div>${item.stock}</div>
           </div>
          </#list>
+         </#if>
+         <#if message??>
+          <div class="no-result-msg">${message}</div>
+         </#if>
         </div>
+        <#if pagenation??>
+        <div class="pagebar"><#include "pagenation.ftl"></div>
+      	</#if>
       </div>
     </div>    
     <div><#include "/common/footer.ftl"></div>
     <script>
-      const orderSelectBox = document.querySelector('#form-order-select');
-      orderSelectBox.addEventListener("click", submitOrderType);
+		const orderSelectBox = document.querySelector('#form-order-select');
+		orderSelectBox.addEventListener("click", submitOrderType);
     
-      function submitOrderType(e) {
-    	  console.log("clicked!")
-  	    const selected = e.target.value;
+		function submitOrderType(e) {
+    		console.log("clicked!")
+  	    	const selected = e.target.value;
   	  
-  	    if(selected === '' || selected === undefined) {
-  		  return;
-  	    }
+  	    	if(selected === '' || selected === undefined) {
+  				return;
+  	    	}
   	  
-  	  searchForm.submit();
-    }
+		searchForm.submit();
+    	}
+		
+		
    
     </script>
   </body>
