@@ -71,6 +71,7 @@
 	                	location.href = res.returnUrl; 
                 	} else {
                 		console.log("fail",res);
+                		$("#password").val("");
 						$("#error-msg").text(res.errorMessage);					
                 		$("#btnLogin").attr("disabled", false); 	
                 	}
