@@ -93,6 +93,10 @@ input:disabled {
 	font-family: 'Caveat', cursive;
 }
 
+.title h1 {
+	margin-bottom: 30px;
+}
+
 .btn-join {
 	height: 30px;
 	width: 120px;
@@ -223,7 +227,6 @@ input:disabled {
 	  
 	  .search-container .search-area {
 	    position: relative;
-	    height: 120px;
 	    border-boton: 1px solid #e4e8eb;
 	    border-radius: 2px;
 	  }
@@ -333,6 +336,7 @@ input:disabled {
 	  	padding: 15px 30px;
 	  	margin: 0 auto;
 	  	background: beige;
+	  	margin-top: 20px;
 	  }
 	  
 	  #list-container .group_flex {
@@ -382,6 +386,14 @@ input:disabled {
 	  	color: #eee;
 	  }
 	  
+	  .curPage {
+	  	font-weight: bold;
+	  }
+	  
+	  .menu-list span a{
+	  	color: #828282;
+	  	font-weight: bold;
+	  }
 	  
 #modal {
 	display: none;
