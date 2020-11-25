@@ -17,9 +17,9 @@
           </#if>
         </div>
         <#if book??>
-          <form action="./update?id=${book.id}" method="POST">
+          <form action="/books/update?id=${book.id}" method="POST">
         <#else>
-          <form action="./create" method="POST">
+          <form action="/books/create" method="POST">
         </#if>
 		  <div class="form-input form-category">
             <div class="form-input form-category-select">

@@ -14,7 +14,7 @@
       <div class="title">
         <h1>Category List</h1>
       </div>
-      <form name="searchForm" action="/categories/search" method="GET">
+      <form name="searchForm" action="/categories/search?page=${pagenation.curPage}" method="GET">
       <div class="search-container">
         <div class="search-area">
           <div class="group_flex">

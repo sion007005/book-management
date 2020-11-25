@@ -16,4 +16,12 @@ public class NumberUtils {
 			return defaultValue;
 		}
 	}
+	
+	public static Integer removeComma(String value) {
+		try {
+			return Integer.parseInt(value.replace(",", ""));
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

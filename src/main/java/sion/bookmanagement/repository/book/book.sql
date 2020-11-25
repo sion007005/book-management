@@ -11,8 +11,10 @@ create table book(
   primary key(book_id)
 ); 
 
-alter table `books` CHANGE created created_at DATETIME;
-alter table `books` ADD `updated_at` DATETIME COMMENT '수정날짜';
+alter table `book` CHANGE created created_at DATETIME;
+alter table `book` ADD `updated_at` DATETIME COMMENT '수정날짜';
+
+INSERT INTO book(category_id, title, author, stock, year, price, created_at, updated_at)(SELECT category_id, title, author, stock, year, price, created_at, updated_at FROM book);
 
 desc book;
 select * from book;

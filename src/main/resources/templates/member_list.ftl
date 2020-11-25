@@ -9,12 +9,12 @@
     <div><#include "/common/menu.ftl"></div>
     <div id="wrapper">
       <div class="button join-container">
-      	<div><form action="./form"><button type="submit" class="btn-join">New Member</button></form></div>
+      	<div><form action="/members/form"><button type="submit" class="btn-join">New Member</button></form></div>
       </div>
       <div class="title">
         <h1>Member List</h1>
       </div>
-      <form name="searchForm" action="./search" method="GET">
+      <form name="searchForm" action="/members/search?page=${pagenation.curPage}" method="GET">
       <div class="search-container">
         <div class="search-area">
           <div class="group_flex">
@@ -104,7 +104,6 @@
         <div class="result-area">
          <#list memberList as item>
           <div class="group_flex">
-          <!-- 가급적 절대경로를 쓸 것 -->
             <div><a href="/members/info?id=${item.id}">${item.name}</a></div>
             <div>${item.gender}</div>
             <div>${item.age}</div>
@@ -122,7 +121,6 @@
       orderSelectBox.addEventListener("click", submitOrderType);
       
       function submitOrderType(e) {
-    	  console.log("clicekd!!!")
     	  const selected = e.target.value;
     	  
     	  if(selected === '' || selected === undefined) {

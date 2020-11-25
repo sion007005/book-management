@@ -30,7 +30,7 @@
         <span>${category.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <a href="/categories/list">목록</a>
-      <a href="/categories/update?id=${category.id}">수정</a>
+      <a href="/categories/form?id=${category.id}">수정</a>
         <button type="submit" id="modal_opne_btn">삭제</button>
       </div>
      <div id="modal">

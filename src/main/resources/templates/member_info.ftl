@@ -42,7 +42,7 @@
         <span>${member.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <a href="/members/list">목록</a>
-      <a href="/members/update?id=${member.id}">수정</a>
+      <a href="/members/form?id=${member.id}">수정</a>
         <button type="submit" id="modal_opne_btn">삭제</button>
       </div>
      <div id="modal">

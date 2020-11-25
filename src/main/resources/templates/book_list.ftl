@@ -79,7 +79,6 @@
         <#if bookList??>
          <#list bookList as item>
           <div class="group_flex">
-          <!-- 가급적 절대경로를 쓸 것 -->
             <div><a href="/books/info?id=${item.id}">${item.title}</a></div>
             <div>${item.author}</div>
             <div>${item.price}</div>
