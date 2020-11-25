@@ -70,6 +70,9 @@
           </div>
          </#list>
         </div>
+        <#if pagenation??>
+        <div class="pagebar"><#include "pagenation.ftl"></div>
+      	</#if>
       </div>
     </div>    
     <div><#include "/common/footer.ftl"></div>

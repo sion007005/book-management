@@ -51,4 +51,7 @@ public class MemberService {
 	public Member findOneByEmail(String email) {
 		return memberRepository.findOneByEmail(email);
 	}
+	public int getListCount() {
+		return memberRepository.getListCount();
+	}
 }

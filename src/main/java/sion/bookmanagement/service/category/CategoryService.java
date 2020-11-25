@@ -46,4 +46,8 @@ public class CategoryService {
 		List<Category> categoryList = categoryRepository.search(condition, orderType);
 		return categoryList;
 	}
+
+	public int getListCount() {
+		return categoryRepository.getListCount();
+	}
 }

@@ -5,10 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.mysql.jdbc.Statement;
 
 import sion.bookmanagement.ConnectionManager;
+import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.repository.BaseRepository;
 import sion.bookmanagement.repository.DataProcessException;
 import sion.bookmanagement.service.category.Category;
@@ -100,12 +102,12 @@ public class CategoryRepository extends BaseRepository {
 		String query = "SELECT category_id, category_name, created_at, updated_at FROM category";
 		
 		try {
-			conn = ConnectionManager.getInstance().getConnection();
-			
 			if (orderType != null) {
 				query += (" ORDER BY " + orderType.getColumnName());
 			}
-			
+
+			conn = ConnectionManager.getInstance().getConnection();
+			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset;
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			
@@ -152,9 +154,10 @@ public class CategoryRepository extends BaseRepository {
 		ResultSet rs = null;
 		List<Category> categoryList = new ArrayList<Category>();
 		
-		String query = "SELECT category_id, category_name, created_at, updated_at FROM category where category_name like ?";
-			
-		if (orderType != null) {
+		String query = "SELECT category_id, category_name, created_at, updated_at FROM category ";
+		query += "where " + condition.getSearchType().getColumnName() + " like ?";
+		
+		if (Objects.nonNull(orderType)) {
 			query += (" ORDER BY " + orderType);
 		}
 		
@@ -185,5 +188,31 @@ public class CategoryRepository extends BaseRepository {
 		category.setUpdatedAt(rs.getTimestamp("updated_at"));
 		
 		return category;
+	}
+
+	public int getListCount() {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		try {
+			conn = ConnectionManager.getInstance().getConnection();
+			StringBuilder sql = new StringBuilder();
+			
+			sql.append("SELECT COUNT(*) as cnt FROM category");
+			pstm = conn.prepareStatement(sql.toString());
+			
+			rs = pstm.executeQuery();
+			if (rs.next()) { 
+				count = rs.getInt("cnt"); 
+			}
+		} catch (SQLException e) {
+			throw new DataProcessException(e);
+		} finally {
+			closeDbResource(conn, pstm);
+		}
+		
+		return count;
 	}
 }

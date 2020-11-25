@@ -142,13 +142,12 @@ public class BookRepository extends BaseRepository {
 		List<Book> bookList = new ArrayList<Book>();
 		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM book"; 
 		
-		if (Objects.nonNull(orderType)) {
-			query += (" ORDER BY " + orderType);
-		}
-		
 		try {
-			conn = ConnectionManager.getInstance().getConnection();
+			if (Objects.nonNull(orderType)) {
+				query += (" ORDER BY " + orderType);
+			}
 			
+			conn = ConnectionManager.getInstance().getConnection();
 			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset; 
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();

@@ -5,11 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.mysql.jdbc.Statement;
 
 import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.ConnectionManager;
+import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.repository.BaseRepository;
 import sion.bookmanagement.repository.DataProcessException;
 import sion.bookmanagement.service.member.Member;
@@ -65,22 +67,12 @@ public class MemberRepository extends BaseRepository {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Member> memberList = new ArrayList<Member>();
+		
 		String query = "SELECT member_id, name, gender, email, age, phone, created_at, updated_at FROM member ";
-		
-		
-		query = query + " where " + condition.getSearchType().getColumnName() + " like ? ";
-		
-//		if (condition.getSearchType().getColumnName().equals("name")) {
-//			query += " WHERE name like ?";
-//		} else if (condition.getSearchType().getColumnName().equals("email")) {
-//			query += " WHERE email like ?";
-//		} else {
-//			query += " WHERE phone like ?";
-//		}
-		
+		query += " where " + condition.getSearchType().getColumnName() + " like ? ";
 		query += " AND age between ? and ?";
 		
-		if (orderType != null) {
+		if (Objects.nonNull(orderType)) {
 			query += (" ORDER BY " + orderType);
 		}
 		
@@ -158,12 +150,12 @@ public class MemberRepository extends BaseRepository {
 		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM member";
 		
 		try {
-			conn = ConnectionManager.getInstance().getConnection();
-			
 			if (orderType != null) {
 				query += (" ORDER BY " + orderType.getColumnName());
 			}
 			
+			conn = ConnectionManager.getInstance().getConnection();
+			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset; 
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			
@@ -264,4 +256,29 @@ public class MemberRepository extends BaseRepository {
 		return member;
 	}
 
+	public int getListCount() {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		try {
+			conn = ConnectionManager.getInstance().getConnection();
+			StringBuilder sql = new StringBuilder();
+			
+			sql.append("SELECT COUNT(*) as cnt FROM member");
+			pstm = conn.prepareStatement(sql.toString());
+			
+			rs = pstm.executeQuery();
+			if (rs.next()) { 
+				count = rs.getInt("cnt"); 
+			}
+		} catch (SQLException e) {
+			throw new DataProcessException(e);
+		} finally {
+			closeDbResource(conn, pstm);
+		}
+		
+		return count;
+	}
 }
