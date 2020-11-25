@@ -18,6 +18,7 @@ import sion.bookmanagement.util.validator.NoStringValueValidator;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.GetMapping;
+import sion.mvc.render.ViewRender;
 @Slf4j
 public class BookSearchController implements Controller {
 	private BookService bookService = BookService.getInstance();
@@ -29,34 +30,39 @@ public class BookSearchController implements Controller {
 		String searchType = (String) request.getParameter("search-type");
 		String orderType = (String) request.getParameter("order-type");
 		String keyword = (String) request.getParameter("keyword");
-		String page_ = (String)request.getParameter("page");
-		int curPage = NumberUtils.parseInt((String)request.getParameter("page"), 1);
 
-		int totalListCnt = bookService.getListCount();
-		Pagenation pagenation = new Pagenation(totalListCnt, curPage);
-		
+		if (NoStringValueValidator.validate(keyword) || NoStringValueValidator.validate(searchType)) {
+			return new ModelAndView(ViewRender.REDIRECT_NAME + "/books/list?order-type="+request.getParameter("order-type"));
+		}
+
 		BookOrderType type = null;
 		if (!StringUtils.isEmpty(orderType)) {
 			type = BookOrderType.valueOf(orderType);
 		}
-
-		if (NoStringValueValidator.validate(keyword) || NoStringValueValidator.validate(searchType)) {
-			List<Book> bookList = bookService.findAll(type);
-			mav.addObject("bookList", bookList);
-			mav.addObject("pagenation", pagenation);
-			return mav;
-		}
-
+		
 		BookSearchCondition condition = new BookSearchCondition();
 		condition.setSearchType(SearchType.valueOf(searchType));
 		condition.setKeyword(keyword);
 		
 		List<Book> bookList = bookService.search(condition, type);
+		int totalItemCnt = bookList.size();
+		int curPage = NumberUtils.parseInt((String)request.getParameter("page"), 1);
+		curPage = (totalItemCnt == 0) ? 0 : curPage;
+		Pagenation pagenation = new Pagenation(totalItemCnt, curPage);
 		
-		mav.addObject("bookList", bookList);
+		int endIdx = 0;
+		if (Pagenation.limit + Pagenation.offset > totalItemCnt) {
+			endIdx = totalItemCnt;
+		} else {
+			endIdx = Pagenation.limit + Pagenation.offset;
+		}
+		
+		mav.addObject("bookList", bookList.subList(Pagenation.limit, endIdx));
 		mav.addObject("searchCondition", condition);
+		mav.addObject("keyword", keyword);
 		mav.addObject("orderType", type);
 		mav.addObject("pagenation", pagenation);
+		mav.addObject("path", "/books/search");
 		
 		return mav;
 	}

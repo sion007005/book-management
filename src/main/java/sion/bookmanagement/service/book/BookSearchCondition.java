@@ -4,24 +4,8 @@ public class BookSearchCondition {
 	public static final int PAGE_SIZE = 10;
 	private SearchType searchType; 
 	private String keyword;
-	private int page;
-	
-	//TODO page == 0 이면 1 리
-	public int getPage() {
-		return (page == 0)? 1 : page;
-	}
-	
-	public int getLimit() {
-		return PAGE_SIZE;
-	}
-	
-	/**
-	 * 1page : 0, 2page : 10
-	 * select * from aaa limit ${limit} @{offset}
-	 */
-	public int getOffset() {
-		return (getPage() - 1) * PAGE_SIZE;
-	}
+	private int limit;
+	private int offset;
 	
 	public SearchType getSearchType() {
 		return searchType;
@@ -39,6 +23,22 @@ public class BookSearchCondition {
 		this.keyword = keyword;
 	}
 	
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 	public enum SearchType {
 		TITLE("제목", "title"),
 		AUTHOR("저자", "author"),

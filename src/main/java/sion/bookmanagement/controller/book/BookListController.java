@@ -21,21 +21,22 @@ public class BookListController implements Controller {
 	@Override
 	@GetMapping("/books/list")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		BookOrderType type = null;
 		String orderType = (String) request.getParameter("order-type");
-		String page_ = (String)request.getParameter("page");
 		int curPage = NumberUtils.parseInt((String)request.getParameter("page"), 1);
+		int totalListCnt = bookService.getListCount();
+		Pagenation pagenation = new Pagenation(totalListCnt, curPage);
 		
+		BookOrderType type = null;
 		if (!StringUtils.isEmpty(orderType)) {
 			type = BookOrderType.valueOf(orderType);
 		}
 		
 		List<Book> bookList = bookService.findAll(type);
-		int totalListCnt = bookList.size();
 		
 		ModelAndView mav = new ModelAndView("book_list");
 		mav.addObject("bookList", bookList);
-		mav.addObject("pagenation", new Pagenation(totalListCnt, curPage));
+		mav.addObject("pagenation", pagenation);
+		mav.addObject("path", "/books/list");
 		return mav;
 	}	
 }

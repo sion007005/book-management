@@ -14,7 +14,7 @@
       <div class="title">
         <h1>Book List</h1>
       </div>
-      <form name="searchForm" action="./search" method="GET">
+      <form name="searchForm" action="/books/search?page=${pagenation.curPage}" method="GET">
       <div class="search-container">
         <div class="search-area">
           <div class="group_flex">

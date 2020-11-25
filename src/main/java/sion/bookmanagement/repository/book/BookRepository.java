@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 import sion.bookmanagement.ConnectionManager;
+import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.repository.BaseRepository;
 import sion.bookmanagement.repository.DataProcessException;
 import sion.bookmanagement.service.book.Book;
@@ -65,23 +66,13 @@ public class BookRepository extends BaseRepository {
 		
 		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM book ";
 		query += "where " + condition.getSearchType().getColumnName() + " like ?";
-		System.out.println("condition.getSearchType().getColumnName(): "+ condition.getSearchType().getColumnName());
-		
-//		if (condition.getSearchType().getColumnName().equals("title")) {
-//			query += "where title like ?";
-//		} else if (condition.getSearchType().getColumnName().equals("author")) {
-//			query += "where author like ?";
-//		} else {
-//			query += "where (title || author) like ?";
-//		}
 		
 		if (Objects.nonNull(orderType)) {
 			query += (" ORDER BY " + orderType);
 		}
 		
 		try {
-			query += " LIMIT " + 0 + "," + 10;
-			System.out.println("쿼리쿼리 "+  query);
+//			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset;
 			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%" + condition.getKeyword() + "%");
@@ -151,13 +142,14 @@ public class BookRepository extends BaseRepository {
 		List<Book> bookList = new ArrayList<Book>();
 		String query = "SELECT book_id, category_id, title, author, stock, year, price, created_at, updated_at FROM book"; 
 		
+		if (Objects.nonNull(orderType)) {
+			query += (" ORDER BY " + orderType);
+		}
+		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
 			
-			if (orderType != null) {
-				query += (" ORDER BY " + orderType);
-			}
-			query += " LIMIT " + 0 + "," + 10; 
+			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset; 
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			

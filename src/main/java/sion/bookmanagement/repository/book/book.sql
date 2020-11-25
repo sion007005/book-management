@@ -1,5 +1,5 @@
-drop table books;
-create table books(
+drop table book;
+create table book(
   book_id int(11) not null auto_increment COMMENT '책 ID',
   category_id int(6) not null COMMENT '카테고리 ID',
   title varchar(100) not null COMMENT '제목',
@@ -14,7 +14,7 @@ create table books(
 alter table `books` CHANGE created created_at DATETIME;
 alter table `books` ADD `updated_at` DATETIME COMMENT '수정날짜';
 
-desc books;
-select * from books;
+desc book;
+select * from book;
 
 
