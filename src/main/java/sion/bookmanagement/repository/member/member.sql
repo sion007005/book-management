@@ -22,3 +22,8 @@ alter table member modify password varchar(100) not null;
 alter table `member` add `salt` varchar(100);
 
 DELETE FROM member WHERE `created_at` is null || `updated_at` is null;
+
+INSERT INTO member(name, gender, email, age, phone, created_at, updated_at, password, salt)(SELECT name, gender, email, age, phone, created_at, updated_at, password, salt FROM member);
+
+
+
