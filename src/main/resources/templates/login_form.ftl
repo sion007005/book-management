@@ -2,12 +2,10 @@
 <html lang="ko">
   <head>
     <#include "/common/head.ftl">
-    <script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
   </head>
-  
   <body>
-  	<div><#include "/common/header.ftl"></div>
-    <div><#include "/common/menu.ftl"></div>
+  	<#include "/common/header.ftl">
+    <#include "/common/menu.ftl">
     <div id="wrapper">
 		<div class="content-container">
 			<div class="title">
@@ -28,7 +26,7 @@
 			</form>
 		</div>
 	</div> 
-	<div><#include "/common/footer.ftl"></div>   
+	<#include "/common/footer.ftl">  
 	<script>
     $(document).ready(function() {
         $("#btnLogin").click(function(e) {
@@ -82,14 +80,8 @@
 					$("#btnLogin").attr("disabled", false);
                 }
             });
- 
-            /*             
-             document.form1.action=""
-             document.from1.submit();
-             */
         });
- 
     });
-</script>
-  </body>
+	</script>
+	</body>
 </html>

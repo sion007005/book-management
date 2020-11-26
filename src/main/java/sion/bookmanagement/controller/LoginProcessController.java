@@ -42,10 +42,8 @@ public class LoginProcessController implements Controller {
 				Cookie cookie = new Cookie("sid", encryptUtil.encrypt(String.valueOf(member.getId())));
 				cookie.setDomain("localhost");
 				cookie.setPath("/");
-				
 				response.addCookie(cookie);
 				
-//				return new ModelAndView(ViewRender.REDIRECT_NAME + returnUrl);
 				ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
 				mav.addObject("returnUrl", returnUrl);
 				mav.addObject("login", true);
@@ -55,7 +53,6 @@ public class LoginProcessController implements Controller {
 				throw new LoginProcessException(e.getMessage(), e);
 			} 
 		} else {
-//			ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME  + "/login/form");
 			ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
 			mav.addObject("returnUrl", returnUrl);
 			mav.addObject("login", false);

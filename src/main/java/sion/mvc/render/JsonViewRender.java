@@ -21,10 +21,9 @@ public class JsonViewRender implements ViewRender {
 
 		try {
 			addJsonContextHeader(response); //내려가는 컨텐츠가 json이라고 브라우저에게 알려줌
-//			response.sendResponseHeaders(response.getStatusCode(), 0);
 			//model에 있는 데이터를 json value로 만들어준다.
 			String jsonValue = mapper.writeValueAsString(mav.getModel());
-			
+			response.reset();
 			out = response.getOutputStream();
 			out.write(jsonValue.getBytes());
 		} catch (Exception e) {

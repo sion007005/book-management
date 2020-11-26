@@ -135,7 +135,7 @@ input:disabled {
 
 /*폼*/
 .content-container form {
-	   padding-top: 20px;
+	  padding-top: 20px;
        width: 400px;
        margin: 0 auto;
 }
@@ -143,6 +143,12 @@ input:disabled {
 .content-container form div {
 	   maring-bottom: 10px;
 	 }
+	 
+.content-container #fileForm {
+	margin: 0 auto;
+	padding: 0;
+}
+	 
 	 
 	 .content-container input {
 	   padding: 12px 14px;
@@ -154,9 +160,7 @@ input:disabled {
        box-sizing: border-box;
 	 }
 	 
-	 .content-container .form-input.form-email {
-       overflow: hidden;
-     }
+	
      
      .content-container .form-input.form-email input {
        float: left;
@@ -172,7 +176,7 @@ input:disabled {
       font-family: 'NotoSansKR';
     }
 
-    .content-container .form-input.form-email-select select {
+    .content-container .form-input.form-select-container select {
       margin-bottom: 10px;
       padding: 5px 12px;
       font-size: 16px;
@@ -393,6 +397,19 @@ input:disabled {
 	  .menu-list span a{
 	  	color: #828282;
 	  	font-weight: bold;
+	  }
+	  
+	  .file-upload-container {
+	  	width: 400px;
+	  	margin: 0 auto;
+	  }
+	  
+	  .book-img {
+	  	width: auto;
+    	height: auto;
+   		max-width: 100px;
+    	max-height: 100px;
+    	margin: 10px 0;
 	  }
 	  
 #modal {

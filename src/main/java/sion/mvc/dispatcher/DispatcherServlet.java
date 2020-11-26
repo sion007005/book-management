@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import sion.mvc.support.PropertiesLoader;
 
 @SuppressWarnings("serial")
 @Slf4j
+@MultipartConfig(maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
 @WebServlet(name = "DispatcherServlet", urlPatterns = {"/"})
 public class DispatcherServlet extends HttpServlet {
 	private ControllerFactory controllerFactory;

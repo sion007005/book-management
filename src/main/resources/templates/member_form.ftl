@@ -42,7 +42,7 @@
 					  <input type="text" class="input email-end" data-type="check-email" placeholder="이메일 뒷자리*" disabled>
 					</#if>	
 				</div>
-				<div class="form-input form-email-select">
+				<div class="form-input form-select-container">
 					<select name="form-email-select" id="form-email-select">
 					  <#if member??>
 					 <#assign idx = member.email?index_of('@')>

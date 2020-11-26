@@ -5,8 +5,8 @@
   </head>
   
   <body>
-  	<div><#include "/common/header.ftl"></div>
-    <div><#include "/common/menu.ftl"></div>
+  	<#include "/common/header.ftl">
+    <#include "/common/menu.ftl">
     <div id="wrapper">
       <div class="button join-container">
       	<div><form action="/books/form"><button type="submit" class="btn-join">New Book</button></form></div>
@@ -96,7 +96,7 @@
       	</#if>
       </div>
     </div>    
-    <div><#include "/common/footer.ftl"></div>
+    <#include "/common/footer.ftl">
     <script>
 		const orderSelectBox = document.querySelector('#form-order-select');
 		orderSelectBox.addEventListener("click", submitOrderType);
@@ -111,9 +111,6 @@
   	  
 		searchForm.submit();
     	}
-		
-		
-   
     </script>
   </body>
 </html>
