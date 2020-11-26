@@ -1,20 +1,18 @@
 package sion.bookmanagement.controller;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 /** 
- * 용어 설명 붙여넣기(item은 뭘 의미하는지 등)
- * 현재 페이지가 1 페이지면 "이전" 이 안보이고, 최종 마지막 페이지면 "다음"이 안보인다.
- * pagenation.ftl을 만들고 모든 목록페이지에 include 시키기
+ * item : 레코드
+ * block : 한 화면에 보여지는 페이지 숫자 범위(1페이지~10페이지 1블럭)
+ * 현재 페이지가 1 페이지면 "처음"이 안보이고, 최종 마지막 페이지면 "마지막"이 안보인다.
  */
-@Slf4j
 @Getter
 public class Pagenation {
 	public final static int ITEM_SIZE_PER_PAGE = 10;  // 한 페이지당 리스트 수 
 	public final static int RANGE_SIZE_PER_BLOCK = 10; // 한 블럭 당 페이지 수(페이지 범위) 
-	public static int limit; // 가져올 레코드 시작 번호
-	public static int offset; // 가져올 레코드 끝 번호
+	public static int startIndex; // 가져올 레코드 시작 번호
+	public static int endIndex; // 가져올 레코드 끝 번호
 
 	private int curPage; // 현재 페이지
 	private int totalItemCnt; // 전체 리스트 수
@@ -29,8 +27,8 @@ public class Pagenation {
 	public Pagenation(int totalItemCnt, int curPage) {
 		this.curPage = (curPage == 0) ? 1 : curPage;
 		this.totalItemCnt = totalItemCnt;
-		Pagenation.limit = calculateLimit();
-		Pagenation.offset = Pagenation.ITEM_SIZE_PER_PAGE;
+		Pagenation.startIndex = calculateStartIndex();
+		Pagenation.endIndex = calculateEndIndex();
 		this.totalPageCnt = calculateTotalPageCnt();
 		this.totalBlockCnt = calculateTotalBlockCnt();
 		this.curBlock = calculateCurBlock();
@@ -38,6 +36,22 @@ public class Pagenation {
 		this.endPage = calculateEndPage();
 		this.prev = checkIsPrev();
 		this.next = checkIsNext();
+	}
+
+	public int calculateStartIndex() {
+		if (this.totalItemCnt == 0) {
+			return 0;
+		}
+		
+		return (this.curPage - 1) * ITEM_SIZE_PER_PAGE; 
+	}
+
+	private int calculateEndIndex() {
+		if (Pagenation.startIndex + ITEM_SIZE_PER_PAGE > this.totalItemCnt) {
+			return this.totalItemCnt;
+		}
+		
+		return Pagenation.startIndex + ITEM_SIZE_PER_PAGE;
 	}
 
 	public boolean checkIsPrev() {
@@ -61,7 +75,7 @@ public class Pagenation {
 			return 0;
 		}
 		
-		return (this.curBlock - 1) * Pagenation.RANGE_SIZE_PER_BLOCK + 1;
+		return (this.curBlock - 1) * RANGE_SIZE_PER_BLOCK + 1;
 	}
 
 	public int calculateEndPage() {
@@ -73,24 +87,15 @@ public class Pagenation {
 			return this.totalPageCnt;
 		}
 		
-		return this.curBlock * Pagenation.RANGE_SIZE_PER_BLOCK;
+		return this.curBlock * RANGE_SIZE_PER_BLOCK;
 	}
-
 
 	public int calculateCurBlock() {
 		if (this.totalItemCnt == 0) {
 			return 0;
 		}
 		
-		return (int)((curPage-1) / Pagenation.RANGE_SIZE_PER_BLOCK) + 1;
-	}
-
-	public int calculateLimit() {
-		if (this.totalItemCnt == 0) {
-			return 0;
-		}
-		
-		return (this.curPage - 1) * Pagenation.offset; 
+		return (int)((curPage-1) / RANGE_SIZE_PER_BLOCK) + 1;
 	}
 
 	public int calculateTotalPageCnt() {
@@ -98,18 +103,18 @@ public class Pagenation {
 			return 0;
 		}
 		
-		if (this.totalItemCnt % Pagenation.offset == 0) {
-			return this.totalItemCnt / Pagenation.offset;
+		if (this.totalItemCnt % ITEM_SIZE_PER_PAGE == 0) {
+			return this.totalItemCnt / ITEM_SIZE_PER_PAGE;
 		} 
 		
-		return this.totalItemCnt / Pagenation.offset + 1;
+		return this.totalItemCnt / ITEM_SIZE_PER_PAGE + 1;
 	}
 
 	public int calculateTotalBlockCnt() {
-		if (this.totalItemCnt % (Pagenation.offset * Pagenation.RANGE_SIZE_PER_BLOCK) == 0) {
-			return this.totalItemCnt / (Pagenation.offset * Pagenation.RANGE_SIZE_PER_BLOCK);
+		if (this.totalItemCnt % (ITEM_SIZE_PER_PAGE * RANGE_SIZE_PER_BLOCK) == 0) {
+			return this.totalItemCnt / (ITEM_SIZE_PER_PAGE * RANGE_SIZE_PER_BLOCK);
 		}
 		
-		return this.totalItemCnt / (Pagenation.offset * Pagenation.RANGE_SIZE_PER_BLOCK) + 1;
+		return this.totalItemCnt / (ITEM_SIZE_PER_PAGE * RANGE_SIZE_PER_BLOCK) + 1;
 	}
 }

@@ -37,7 +37,7 @@ public class MemberSearchController implements Controller {
 		int ageTo = NumberUtils.parseInt(ageToStr, 200);
 
 		if (NoStringValueValidator.validate(keyword) || NoStringValueValidator.validate(searchType)) {
-			return new ModelAndView(ViewRender.REDIRECT_NAME + "/members/list?order-type="+request.getParameter("order-type"));
+			return new ModelAndView(ViewRender.REDIRECT_NAME + "/members/list?order-type=" + request.getParameter("order-type"));
 		} 
 		
 		MemberOrderType type = null;
@@ -56,15 +56,15 @@ public class MemberSearchController implements Controller {
 		int curPage = NumberUtils.parseInt((String)request.getParameter("page"), 1);
 		curPage = (totalItemCnt == 0) ? 0 : curPage;
 		Pagenation pagenation = new Pagenation(totalItemCnt, curPage);
-		System.out.println("전체 리스트 수 : "+totalItemCnt);
+		
 		int endIdx = 0;
-		if (Pagenation.limit + Pagenation.offset > totalItemCnt) {
+		if (Pagenation.startIndex + Pagenation.endIndex > totalItemCnt) {
 			endIdx = totalItemCnt;
 		} else {
-			endIdx = Pagenation.limit + Pagenation.offset;
+			endIdx = Pagenation.startIndex + Pagenation.endIndex;
 		}
 			
-		mav.addObject("memberList", memberList.subList(Pagenation.limit, endIdx));
+		mav.addObject("memberList", memberList.subList(Pagenation.startIndex, endIdx));
 		mav.addObject("searchCondition", condition);
 		mav.addObject("keyword", keyword);
 		mav.addObject("orderType", type);

@@ -25,12 +25,11 @@ public class BookListController implements Controller {
 		int curPage = NumberUtils.parseInt((String)request.getParameter("page"), 1);
 		int totalListCnt = bookService.getListCount();
 		Pagenation pagenation = new Pagenation(totalListCnt, curPage);
-		
 		BookOrderType type = null;
+
 		if (!StringUtils.isEmpty(orderType)) {
 			type = BookOrderType.valueOf(orderType);
 		}
-		
 		List<Book> bookList = bookService.findAll(type);
 		
 		ModelAndView mav = new ModelAndView("book_list");

@@ -73,7 +73,7 @@ public class MemberRepository extends BaseRepository {
 		query += " AND age between ? and ?";
 		
 		if (Objects.nonNull(orderType)) {
-			query += (" ORDER BY " + orderType);
+			query += (" ORDER BY " + orderType.getColumnName());
 		}
 		
 		try {
@@ -150,12 +150,12 @@ public class MemberRepository extends BaseRepository {
 		String query = "SELECT member_id, name, gender, email, age, phone, password, created_at, updated_at FROM member";
 		
 		try {
-			if (orderType != null) {
+			if (Objects.nonNull(orderType)) {
 				query += (" ORDER BY " + orderType.getColumnName());
 			}
 			
 			conn = ConnectionManager.getInstance().getConnection();
-			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset; 
+			query += " LIMIT " + Pagenation.startIndex + "," + Pagenation.ITEM_SIZE_PER_PAGE; 
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			

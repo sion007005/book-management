@@ -68,11 +68,10 @@ public class BookRepository extends BaseRepository {
 		query += "where " + condition.getSearchType().getColumnName() + " like ?";
 		
 		if (Objects.nonNull(orderType)) {
-			query += (" ORDER BY " + orderType);
+			query += (" ORDER BY " + orderType.getColumnName());
 		}
 		
 		try {
-//			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset;
 			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "%" + condition.getKeyword() + "%");
@@ -144,11 +143,11 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			if (Objects.nonNull(orderType)) {
-				query += (" ORDER BY " + orderType);
+				query += (" ORDER BY " + orderType.getColumnName());
 			}
 			
 			conn = ConnectionManager.getInstance().getConnection();
-			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset; 
+			query += " LIMIT " + Pagenation.startIndex + "," + Pagenation.ITEM_SIZE_PER_PAGE; 
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			

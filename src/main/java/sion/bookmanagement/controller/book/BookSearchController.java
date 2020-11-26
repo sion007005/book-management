@@ -26,7 +26,6 @@ public class BookSearchController implements Controller {
 	@Override
 	@GetMapping("/books/search")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("book_list");
 		String searchType = (String) request.getParameter("search-type");
 		String orderType = (String) request.getParameter("order-type");
 		String keyword = (String) request.getParameter("keyword");
@@ -50,14 +49,8 @@ public class BookSearchController implements Controller {
 		curPage = (totalItemCnt == 0) ? 0 : curPage;
 		Pagenation pagenation = new Pagenation(totalItemCnt, curPage);
 		
-		int endIdx = 0;
-		if (Pagenation.limit + Pagenation.offset > totalItemCnt) {
-			endIdx = totalItemCnt;
-		} else {
-			endIdx = Pagenation.limit + Pagenation.offset;
-		}
-		
-		mav.addObject("bookList", bookList.subList(Pagenation.limit, endIdx));
+		ModelAndView mav = new ModelAndView("book_list");
+		mav.addObject("bookList", bookList.subList(Pagenation.startIndex, Pagenation.endIndex));
 		mav.addObject("searchCondition", condition);
 		mav.addObject("keyword", keyword);
 		mav.addObject("orderType", type);

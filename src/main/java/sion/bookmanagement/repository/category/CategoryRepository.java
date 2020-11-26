@@ -102,12 +102,12 @@ public class CategoryRepository extends BaseRepository {
 		String query = "SELECT category_id, category_name, created_at, updated_at FROM category";
 		
 		try {
-			if (orderType != null) {
+			if (Objects.nonNull(orderType)) {
 				query += (" ORDER BY " + orderType.getColumnName());
 			}
 
 			conn = ConnectionManager.getInstance().getConnection();
-			query += " LIMIT " + Pagenation.limit + "," + Pagenation.offset;
+			query += " LIMIT " + Pagenation.startIndex + "," + Pagenation.ITEM_SIZE_PER_PAGE;
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			
@@ -158,7 +158,7 @@ public class CategoryRepository extends BaseRepository {
 		query += "where " + condition.getSearchType().getColumnName() + " like ?";
 		
 		if (Objects.nonNull(orderType)) {
-			query += (" ORDER BY " + orderType);
+			query += (" ORDER BY " + orderType.getColumnName());
 		}
 		
 		try {

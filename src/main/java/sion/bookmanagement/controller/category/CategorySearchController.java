@@ -50,13 +50,13 @@ public class CategorySearchController implements Controller {
 		Pagenation pagenation = new Pagenation(totalItemCnt, curPage);
 		
 		int endIdx = 0;
-		if (Pagenation.limit + Pagenation.offset > totalItemCnt) {
+		if (Pagenation.startIndex + Pagenation.endIndex > totalItemCnt) {
 			endIdx = totalItemCnt;
 		} else {
-			endIdx = Pagenation.limit + Pagenation.offset;
+			endIdx = Pagenation.startIndex + Pagenation.endIndex;
 		}
 		
-		mav.addObject("categoryList", categoryList.subList(Pagenation.limit, endIdx));
+		mav.addObject("categoryList", categoryList.subList(Pagenation.startIndex, endIdx));
 		mav.addObject("searchCondition", condition);
 		mav.addObject("keyword", keyword);
 		mav.addObject("orderType", type);
