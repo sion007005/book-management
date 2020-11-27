@@ -65,8 +65,9 @@
                 url : action,
                 success : function(res) { //로그인 성공 시 보려던 페이지로 redirection
                 	if(res.login) {
+                		alert("로그인성공");
                 		console.log("success",res)
-	                	location.href = res.returnUrl; 
+	                	location.href = res.returnUrl;
                 	} else {
                 		console.log("fail",res);
                 		$("#password").val("");

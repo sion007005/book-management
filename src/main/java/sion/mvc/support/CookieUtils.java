@@ -13,14 +13,15 @@ public class CookieUtils {
 	public static String getValue(HttpServletRequest request, String name) {
 		Cookie[] list = request.getCookies();
 		
-		if (list == null) 
+		if (list == null) {
 			return null;
+		}
 		
-			for (Cookie cookie : list) {   
-				if (cookie.getName().equals(name)) {    
-					return cookie.getValue();   
-				}  
-			}
+		for (Cookie cookie : list) {   
+			if (cookie.getName().equals(name)) {    
+				return cookie.getValue();   
+			}  
+		}
 		
 		return null;
 	}

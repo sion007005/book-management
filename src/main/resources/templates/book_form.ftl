@@ -18,7 +18,7 @@
         </div>
         <div class="file-upload-container">
         <img src="" class="book-img" id="image">
-         <form class="form-input" id="fileForm" action="/file/upload" method="post" enctype="multipart/form-data">
+         <form class="form-input" id="fileForm" action="/file/upload?imageType=book" method="post" enctype="multipart/form-data">
 			<span class="file" id="file">
     			<input type="file" id="uploadFile" name="file" onchange="displayImage(this)">
     			<input type="button" id="btn-upload" value="등록하기" />

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import lombok.extern.slf4j.Slf4j;
+import sion.mvc.ApplicationContext;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.PostMapping;
@@ -20,15 +21,17 @@ public class FileUploadController implements Controller {
 	@Override
 	@PostMapping("/file/upload")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
-		 final String CHARSET = "utf-8";
-	    final String UPLOADED_DIR = "C:\\uploaded";
+	    final String UPLOAD_BASE_PATH = "C:\\uploaded";
+	    String imageType = request.getParameter("imageType");
+	    String uploadPath = UPLOAD_BASE_PATH + '\\' + imageType;
 	    String contentType = null;
 	    String fileName = "";
+	    
+	   try {
+	   	response.setContentType("text/html; charset=UTF-8");
+	   	PrintWriter out = response.getWriter();
 
-	    try {
-      	response.setContentType("text/html; charset=UTF-8");
-			request.setCharacterEncoding(CHARSET);
-			PrintWriter out = response.getWriter();
+	   	request.setCharacterEncoding(ApplicationContext.getCharsetType());
 			contentType = request.getContentType();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -48,7 +51,7 @@ public class FileUploadController implements Controller {
 						
 						if (part.getSize() > 0) {
 							//업로드 파일 명 : fileName
-							part.write(UPLOADED_DIR + File.separator  + fileName);
+							part.write(imageType + File.separator  + fileName);
 							part.delete();
 						}
 					} else {

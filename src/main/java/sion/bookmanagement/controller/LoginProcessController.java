@@ -43,7 +43,7 @@ public class LoginProcessController implements Controller {
 				cookie.setDomain("localhost");
 				cookie.setPath("/");
 				response.addCookie(cookie);
-				
+			
 				ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
 				mav.addObject("returnUrl", returnUrl);
 				mav.addObject("login", true);
