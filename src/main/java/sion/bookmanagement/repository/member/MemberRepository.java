@@ -23,7 +23,7 @@ import sion.bookmanagement.util.DateUtils;
 public class MemberRepository extends BaseRepository {
 	private static MemberRepository memberRepository = new MemberRepository();
 	
-	private MemberRepository() {
+	public MemberRepository() {
 	}
 	
 	public static MemberRepository getInstance() {

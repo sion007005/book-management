@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.ConnectionManager;
 import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.repository.BaseRepository;
@@ -16,7 +17,7 @@ import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookOrderType;
 import sion.bookmanagement.service.book.BookSearchCondition;
 import sion.bookmanagement.util.DateUtils;
-
+@Slf4j
 public class BookRepository extends BaseRepository {
 	private static BookRepository bookRepository = new BookRepository();
 
@@ -34,7 +35,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "INSERT INTO book(category_id, title, author, stock, year, price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO book(category_id, title, author, stock, year, price, created_at, updated_at, image_path) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			pstm.setInt(1, book.getCategoryId());
@@ -45,6 +46,7 @@ public class BookRepository extends BaseRepository {
 			pstm.setInt(6, book.getPrice());
 			pstm.setTimestamp(7, DateUtils.getTimestamp(book.getCreatedAt()));
 			pstm.setTimestamp(8, DateUtils.getTimestamp(book.getUpdatedAt()));
+			pstm.setString(9, book.getImgPath());
 			pstm.executeUpdate();
 			
 			rs = pstm.getGeneratedKeys();
@@ -205,13 +207,25 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "select book_id, category_id, title, author, stock, year, price, created_at, updated_at from book where book_id=?";
+			String query = "select book_id, category_id, title, author, stock, year, price, created_at, updated_at, image_path from book where book_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, bookId);
 			
 			rs = pstm.executeQuery();
 			if (rs.next()) {
-				Book book = newBook(rs);
+				Book book = new Book();
+				
+				book.setCategoryId(rs.getInt("category_id"));
+				book.setId(rs.getInt("book_id"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setStock(rs.getInt("stock"));
+				book.setYear(rs.getInt("year"));
+				book.setPrice(rs.getInt("price"));
+				book.setCreatedAt(rs.getTimestamp("created_at"));
+				book.setUpdatedAt(rs.getTimestamp("updated_at"));
+				book.setImgPath(rs.getString("image_path"));
+
 				return book;
 			}
 		} catch (SQLException e) {

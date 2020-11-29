@@ -17,6 +17,7 @@ import sion.http.HttpStatus;
 import sion.mvc.ApplicationContext;
 import sion.mvc.FreemarkerViewRenderFactory;
 import sion.mvc.ModelAndView;
+import sion.mvc.render.ImageViewRender;
 import sion.mvc.render.JsonViewRender;
 import sion.mvc.render.StaticResourceViewRender;
 import sion.mvc.render.ViewRender;
@@ -53,7 +54,7 @@ public class DispatcherServlet extends HttpServlet {
 				
 				return;
 			}
-			
+
 			// 인터페이스의 구현체를 꽂아넣음
 			Controller controller = controllerFactory.getController(controllerFactory.getKey(request));
 			log.debug("controller : {}", controller);
@@ -138,6 +139,11 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		
 		ViewRender viewRender = FreemarkerViewRenderFactory.getInstance(response.getStatus()); 
+		
+		if (request.getRequestURI().startsWith("/image")) {
+			viewRender = new ImageViewRender();
+		}
+		
 		viewRender.render(request, response, mav);
 	}
 	

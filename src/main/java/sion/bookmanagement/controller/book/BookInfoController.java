@@ -19,9 +19,14 @@ public class BookInfoController implements Controller {
 	@GetMapping("/books/info")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		int id = NumberUtils.parseInt((String)request.getParameter("id"));
+		String returnUrl = request.getRequestURI();
+		
 		Book book = bookService.findOneById(id);
+//		String imgPath = 
 		ModelAndView mav = new ModelAndView("book_info");
 		mav.addObject("book", book);
+		mav.addObject("returnUrl", returnUrl);
+//		mav.addObject(("imgPath", imgPath);
 		
 		return mav;
 		

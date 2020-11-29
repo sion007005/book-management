@@ -15,6 +15,7 @@ public class Book {
 	private Category category;
 	private Date createdAt;
 	private Date updatedAt;
+	private String imgPath;
 	
 	public Book() {}
 
@@ -106,5 +107,13 @@ public class Book {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public String getImgPath() {
+		return imgPath;
 	}
 }

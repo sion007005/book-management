@@ -79,7 +79,7 @@
         <#if bookList??>
          <#list bookList as item>
           <div class="group_flex">
-            <div><a href="/books/info?id=${item.id}">${item.title}</a></div>
+            <div><a href="/books/info?id=${item.id?replace(',','')}">${item.title}</a></div>
             <div>${item.author}</div>
             <div>${item.price}</div>
             <div>${item.year?replace(",","")}</div>

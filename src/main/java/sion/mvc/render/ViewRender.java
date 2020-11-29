@@ -8,6 +8,7 @@ import sion.mvc.ModelAndView;
 public interface ViewRender {
 	public static final String REDIRECT_NAME = "redirect:";
 	public static final String JSON_VIEW_NAME = "_json";
+	public static final String IMG_VIEW_NAME = "image";
 	
 	void render(HttpServletRequest request, HttpServletResponse response, ModelAndView mav);
 	
@@ -28,6 +29,11 @@ public interface ViewRender {
 	
 	public default void addJsonContextHeader(HttpServletResponse response) {
 		response.addHeader("Content-Type", "application/json;charset=UTF-8"); 
+		response.addHeader("Access-Control-Allow-Origin", "*");
+	}
+	
+	public default void addImageContextHeader(HttpServletResponse response) {
+		response.addHeader("Content-Type", "image/*");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 	}
 }

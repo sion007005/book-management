@@ -129,6 +129,7 @@ input:disabled {
 	margin: 0 auto;
 	width: 300px;
 }
+
 .content .content-row {
 	margin-bottom: 10px;
 }
@@ -410,6 +411,11 @@ input:disabled {
    		max-width: 100px;
     	max-height: 100px;
     	margin: 10px 0;
+	  }
+	  
+	  .book-info-image {
+	  	width: 150px;
+	  	height: auto;
 	  }
 	  
 #modal {

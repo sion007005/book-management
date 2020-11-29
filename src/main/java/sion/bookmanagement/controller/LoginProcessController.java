@@ -42,6 +42,7 @@ public class LoginProcessController implements Controller {
 				Cookie cookie = new Cookie("sid", encryptUtil.encrypt(String.valueOf(member.getId())));
 				cookie.setDomain("localhost");
 				cookie.setPath("/");
+				cookie.setMaxAge(-1);
 				response.addCookie(cookie);
 			
 				ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);

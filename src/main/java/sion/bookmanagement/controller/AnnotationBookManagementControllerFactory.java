@@ -28,10 +28,8 @@ public class AnnotationBookManagementControllerFactory implements ControllerFact
 	}
 
 	private void initialize() {
-		//TODO controllerSet으로 가져오도록 구현 (Controller annotation 지우기)
 		// 1.  Controller클래스를 모두 가져온다.
 		String basePackageName = new Application().getClass().getPackage().getName();
-		log.info("basePackageName : {}", basePackageName);
 		Reflections reflector = new Reflections(basePackageName);
 		Set<Class<? extends Controller>> controllerSet = reflector.getSubTypesOf(Controller.class);
 

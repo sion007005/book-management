@@ -45,8 +45,11 @@ public class BookUpdateController implements Controller {
 		bookValidator.validate(book);
 		bookService.update(book);
 		
-		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
-		mav.addObject("book", book);
+//		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/books/info?id=" + bookIdNumber);
+		ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
+		mav.addObject("updated", true);
+		mav.addObject("returnUrl", "/books/info?id=" + bookIdNumber);
+//		mav.addObject("book", book);
 		
 		return mav;
 	}

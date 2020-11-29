@@ -14,7 +14,6 @@ public class StaticResourceViewRender implements ViewRender {
 
 	@Override
 	public void render(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
-//		InputStreamReader reader = null;
 		BufferedInputStream in = null;
 		ServletOutputStream out = null;
 

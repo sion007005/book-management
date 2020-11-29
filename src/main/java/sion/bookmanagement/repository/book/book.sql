@@ -13,6 +13,7 @@ create table book(
 
 alter table `book` CHANGE created created_at DATETIME;
 alter table `book` ADD `updated_at` DATETIME COMMENT '수정날짜';
+alter table `book` ADD `image_path` varchar COMMENT '이미지 경로';
 
 INSERT INTO book(category_id, title, author, stock, year, price, created_at, updated_at)(SELECT category_id, title, author, stock, year, price, created_at, updated_at FROM book);
 

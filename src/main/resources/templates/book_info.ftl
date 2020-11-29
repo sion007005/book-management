@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
+
   <head>
+  <meta charset="UTF-8">
     <#include "/common/head.ftl">
   </head>
   
@@ -13,6 +15,9 @@
           <h1>Book Details</h1>
         </div>
       <div class="content">
+      <div class="content-book-image">
+        <span><img src="http://localhost:3000/image?imgPath=${book.imgPath}" class="book-info-image"></span>
+      </div>
       <div class="content-row">
         <span>제목:</span>
         <span>${book.title}</span>

@@ -16,23 +16,17 @@
           	<h1>Book Register</h1>
           </#if>
         </div>
-        <div class="file-upload-container">
-        <img src="" class="book-img" id="image">
-         <form class="form-input" id="fileForm" action="/file/upload?imageType=book" method="post" enctype="multipart/form-data">
-			<span class="file" id="file">
-    			<input type="file" id="uploadFile" name="file" onchange="displayImage(this)">
-    			<input type="button" id="btn-upload" value="등록하기" />
-			</span>
-			<p id="success-msg" class="success-msg"></p>
-			<p id="error-msg" class="error-msg"></p>
-		</form>
-		</div>
+        
         <#if book??>
-          <form action="/books/update?id=${book.id}" method="POST">
+          <form action="/books/update?id=${book.id}" method="POST" enctype="multipart/form-data" id="sumbitForm" name="sumbitForm"  onsubmit="return false;">
         <#else>
-          <form action="/books/create" method="POST">
+          <form action="/books/create" method="POST" enctype="multipart/form-data" id="sumbitForm" name="sumbitForm"  onsubmit="return false;">
         </#if>
             <div class="form-input form-select-container">
+	            <span class="file" id="file">
+        			<img src="" class="book-img" id="image">	
+	    			<input type="file" id="uploadFile" name="file" onchange="displayImage(this)">
+				</span>
               <select name="form-category-select" id="form-category-select">
               		<#if book??>
                  		<option value="카테고리 선택">카테고리 선택</option>
@@ -70,11 +64,12 @@
 				<div class="form-input">
 					<input type="text" class="input input-age" data-type="stock" placeholder="재고*" name="stock" value=${("'${book.stock}'")!''}>
 				</div>
+				
                 <div class="form-input">
                 	<#if book??>
-          		    <inpupt type="submit" value="수정하기" class="btn-signup button button-primary"></button>
+          		    <input type="submit" value="수정하기" class="btn-signup button button-primary btnSubmit"></button>
                    	 <#else>
-                     <input type="submit" value="등록하기" class="btn-signup button button-primary"></button>
+                     <input type="submit" onclick="" value="등록하기" class="btn-signup button button-primary btnSubmit"></button>
                      </#if>
                 </div>
                 <#if book??>
@@ -82,7 +77,7 @@
 					<input type="text" class="input input-created" data-type="created" placeholder=등록일* name="createdAt" value="${book.createdAt?string('yyyy-MM-dd hh:mm:ss')}">
 		  		</div>
 		  		<div class="form-input" style="display:none">
-					<input type="text" data-type="file-name" placeholder=이미지* name="img-file-name" id="img-file-name" value=${("'${book.imgFileName}'")!''}>
+					<input type="text" data-type="file-name" placeholder=이미지* name="img-file-name" id="img-file-name" value=${("'${book.imgPath}'")!''}>
 		  		</div>
 		  		</#if>
 			</form>
@@ -91,27 +86,34 @@
     <#include "/common/footer.ftl">
     <script>
     $(document).ready(function(){
-    	$('#btn-upload').click(function(e) {
+    	$('.btnSubmit').click(function(e) {
     		e.preventDefault();
-    		const form = $("#fileForm")[0];
-    		const formData = new FormData(form);
+    		const form = $('#sumbitForm')[0];
+    		const params = $("#sumbitForm").serialize();
+    		const action = $('#sumbitForm').attr("action");
+    		const data = new FormData(form);
+    		const returnUrl = $("#returnUrl").val();
+    		
+    		$("#btnSubmit").prop("disabled", true);
     		
     		$.ajax({
     			type: 'POST',
-    			url: '/file/upload',
-    			data: formData,
-    			dataType: "json",
-    			contentType: false,
+    			enctype: 'multipart/form-data',
+    			url: action,
+    			data: data,
     			processData: false,
+                contentType: false,
+    			dataType: "json",
     			success: function(res) {
-    				if (res.uploaded) {
-    				$("#success-msg").text(res.message);
-    				$("#img-file-name").val(res.fileName);
-    				alert("파일명 " + res.fileName);
+    				$("#btnSubmit").prop("disabled", false);
+    				
+    				if (res.proccessed) {
+    					alert("등록 성공!");
+    					location.href="./info?id="+ res.bookId;
     				}
     			},
     			error: function(e) {
-    				$("#error-msg").text("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
+    				alert("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
     			}
     		})
     	})

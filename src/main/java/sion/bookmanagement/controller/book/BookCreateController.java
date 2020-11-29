@@ -6,6 +6,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+
+import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.util.NumberUtils;
@@ -16,31 +19,44 @@ import sion.mvc.dispatcher.Login;
 import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
 
+@Slf4j
 public class BookCreateController implements Controller {
 	private BookValidator bookValidator = new BookValidator();
 	private BookService bookService = BookService.getInstance();
+	public final static String UPLOAD_ROOT_DIRECTORY = "C:/uploaded"; 
+	public final static String UPLOAD_BOOK_DIRECTORY = "/book";
 	
 	@Login
 	@Override
 	@PostMapping("/books/create")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {	
-		String trimedTitle = StringUtils.trim((String)request.getParameter("title"));
-		String trimedAuthor = StringUtils.trim((String)request.getParameter("author"));
-		int categoryId = NumberUtils.parseInt((String)request.getParameter("form-category-select"));
-		int price = NumberUtils.parseInt((String)request.getParameter("price"));
-		int year = NumberUtils.parseInt((String)request.getParameter("year"));
-		int stock = NumberUtils.parseInt((String)request.getParameter("stock"));
 		
-		Book book = new Book(categoryId, trimedTitle, trimedAuthor, stock, year, price);
-		book.setCreatedAt(new Date());
-		book.setUpdatedAt(new Date());
-		
-		bookValidator.validate(book);
-		int bookId = bookService.create(book);
-		
-		ModelAndView mav = new ModelAndView(ViewRender.REDIRECT_NAME + "/books/info?id="+bookId);
-		mav.addObject("bookId", bookId);
-		
-		return mav;
+		try {
+			// 서버의 루트 폴더 내에 book 폴더 안 
+			MultipartRequest mr = new MultipartRequest(request, "C:/uploaded" + UPLOAD_BOOK_DIRECTORY, 1024 * 1024 * 10, "UTF-8");
+
+			String trimedTitle = StringUtils.trim((String)mr.getParameter("title"));
+			String trimedAuthor = StringUtils.trim((String)mr.getParameter("author"));
+			int categoryId = NumberUtils.parseInt((String)mr.getParameter("form-category-select"));
+			int price = NumberUtils.parseInt((String)mr.getParameter("price"));
+			int year = NumberUtils.parseInt((String)mr.getParameter("year"));
+			int stock = NumberUtils.parseInt((String)mr.getParameter("stock"));
+			
+			Book book = new Book(categoryId, trimedTitle, trimedAuthor, stock, year, price);
+			book.setImgPath(UPLOAD_BOOK_DIRECTORY + "/" + mr.getFilesystemName("file"));
+			book.setCreatedAt(new Date());
+			book.setUpdatedAt(new Date());
+			
+			bookValidator.validate(book);
+			int bookId = bookService.create(book);
+			ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
+			mav.addObject("proccessed", true);
+			mav.addObject("bookId", bookId);
+			mav.addObject("updated", true);
+			
+			return mav;
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 	}
 }
