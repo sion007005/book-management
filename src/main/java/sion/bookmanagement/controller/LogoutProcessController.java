@@ -22,7 +22,7 @@ public class LogoutProcessController implements Controller {
 		UserContext.remove(); 
 		UserContext.set(BookManagementUser.newLogoutUser(request.getLocalAddr()));
 		response.addCookie(cookie);
-		
+		//TODO 로그아웃시 돌아갈 위치 
 		return new ModelAndView(ViewRender.REDIRECT_NAME + "/login/form");
 	}
 }

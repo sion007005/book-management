@@ -22,7 +22,6 @@ public class BookInfoController implements Controller {
 		String returnUrl = request.getRequestURI();
 		
 		Book book = bookService.findOneById(id);
-//		String imgPath = 
 		ModelAndView mav = new ModelAndView("book_info");
 		mav.addObject("book", book);
 		mav.addObject("returnUrl", returnUrl);

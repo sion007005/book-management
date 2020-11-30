@@ -62,7 +62,8 @@ public class DispatcherServlet extends HttpServlet {
 			preCommand(controller, request, response);
 			ModelAndView mav = controller.command(request, response);
 			makeStatus(response, mav);
-			postCommand(controller, request, response);
+//			postCommand(controller, request, response);
+			postCommand(controller, request, response, mav);
 			render(request, response, mav);	
 		} catch (ForbiddenException e) {
 			log.debug(e.getMessage());
@@ -118,7 +119,7 @@ public class DispatcherServlet extends HttpServlet {
 		response.setStatus(HttpStatus.OK.getCode());
 	}
 	
-	private void postCommand(Controller controller, HttpServletRequest request, HttpServletResponse response) {
+	private void postCommand(Controller controller, HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 		List<Interceptor> interceptors = interceptorRegistry.getInterceptors();
 		if (Objects.isNull(interceptors)) {
 			return;
@@ -127,7 +128,8 @@ public class DispatcherServlet extends HttpServlet {
 		// 인터셉터 등록된 순서와 거꾸로 실행한다.
 		for (int i = interceptors.size() - 1; i >= 0; i--) {
 			Interceptor interceptor = interceptors.get(i);
-			interceptor.postHandle(request, response, controller);
+//			interceptor.postHandle(request, response, controller);
+			interceptor.postHandle(request, response, controller, mav);
 		}
 	}
 	

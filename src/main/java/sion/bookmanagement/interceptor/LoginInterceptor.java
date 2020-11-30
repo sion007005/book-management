@@ -11,6 +11,7 @@ import sion.bookmanagement.auth.BookManagementUser;
 import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberService;
 import sion.bookmanagement.util.NumberUtils;
+import sion.mvc.ModelAndView;
 import sion.mvc.auth.User;
 import sion.mvc.auth.UserContext;
 import sion.mvc.dispatcher.Controller;
@@ -35,10 +36,11 @@ public class LoginInterceptor implements Interceptor {
 	}
 
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Controller controller) {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Controller controller, ModelAndView mav) {
 //		response.addHeader("_user", value);
 		//TODO
 //		response.getModelAndView().getModel().put("_user", UserContext.get());
+		mav.addObject("user", UserContext.get());
 	}
 
 	/*

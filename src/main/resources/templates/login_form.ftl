@@ -19,7 +19,7 @@
 					<input type="text" class="input input-gender" data-type="gender" placeholder="비밀번호*" name="password" id="password" value="">
 				</div>
 				<p id="error-msg" class="error-msg"></p>
-				<input type="hidden" name="returnUrl" id="returnUrl" value=${returnUrl}>
+				<input type="hidden" name="returnUrl" id="returnUrl" value=${("'${returnUrl}'")!'/members/list'}>
 				<div class="form-input">
 					<button class="btn-signup button button-primary" id="btnLogin" type="submit">로그인하기</button>
 				</div>
