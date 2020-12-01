@@ -98,7 +98,7 @@ public class BookRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "update book set title=?, author=?, stock=?, year=?, price=?, created_at=?, updated_at=? where book_id=?";
+			String query = "update book set title=?, author=?, stock=?, year=?, price=?, created_at=?, updated_at=?, image_path=? where book_id=?";
 			pstm = conn.prepareStatement(query);
 			
 			pstm.setString(1, book.getTitle());
@@ -108,7 +108,8 @@ public class BookRepository extends BaseRepository {
 			pstm.setInt(5, book.getPrice());
 			pstm.setTimestamp(6, DateUtils.getTimestamp(book.getCreatedAt()));
 			pstm.setTimestamp(7, DateUtils.getTimestamp(book.getUpdatedAt()));
-			pstm.setInt(8, book.getId());
+			pstm.setString(8, book.getImgPath());
+			pstm.setInt(9, book.getId());
 			
 			pstm.executeUpdate();
 		} catch (SQLException e) {

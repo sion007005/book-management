@@ -16,7 +16,7 @@
 					<input type="text" class="input input-name" data-type="name" placeholder="이메일*" name="email" id="email" value=${("'${email}'")!''}>
 				</div>
 				<div class="form-input">
-					<input type="text" class="input input-gender" data-type="gender" placeholder="비밀번호*" name="password" id="password" value="">
+					<input type="password" class="input input-gender" data-type="gender" placeholder="비밀번호*" name="password" id="password" value="">
 				</div>
 				<p id="error-msg" class="error-msg"></p>
 				<input type="hidden" name="returnUrl" id="returnUrl" value=${("'${returnUrl}'")!'/members/list'}>

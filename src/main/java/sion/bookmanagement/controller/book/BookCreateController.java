@@ -49,10 +49,10 @@ public class BookCreateController implements Controller {
 			
 			bookValidator.validate(book);
 			int bookId = bookService.create(book);
+			
 			ModelAndView mav = new ModelAndView(ViewRender.JSON_VIEW_NAME);
 			mav.addObject("proccessed", true);
 			mav.addObject("bookId", bookId);
-			mav.addObject("updated", true);
 			
 			return mav;
 		} catch (Exception e) {

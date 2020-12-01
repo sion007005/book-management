@@ -45,7 +45,7 @@ public class Status404ViewRender implements ViewRender {
 	public void displayViewPage(HttpServletResponse response, ModelAndView mav) {
 		OutputStreamWriter writer = null;
 		
-		try { //TODO template 값이 제대로 안 넘어오면?
+		try {
 //			TODO아래로 바뀌는 이유 알기      
 			//writer = new OutputStreamWriter(response.getResponseBody(), ApplicationContext.getCharsetType());
 	      writer = new OutputStreamWriter(response.getOutputStream(), ApplicationContext.getCharsetType());

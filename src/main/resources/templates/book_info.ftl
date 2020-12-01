@@ -47,7 +47,7 @@
         <span>${book.updatedAt?string("yyyy-MM-dd hh:mm:ss")}</span>
       </div>
       <a href="/books/list">목록</a>
-      <a href="/books/form?id=${book.id}">수정</a>
+      <a href="/books/form?id=${book.id?replace(',','')}">수정</a>
         <button type="submit" id="modal_opne_btn">삭제</button>
       </div>
      <div id="modal">

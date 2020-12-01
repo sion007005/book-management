@@ -31,7 +31,8 @@ public class BookFormController implements Controller {
 		
 		String id = (String) request.getParameter("id");
 		if(!StringUtils.isEmpty(id)) {
-			Book book = bookService.findOneById(NumberUtils.parseInt(id));
+			int idNumber = NumberUtils.removeComma(id);
+			Book book = bookService.findOneById(idNumber);
 			mav.addObject("book", book);
 		}
 		

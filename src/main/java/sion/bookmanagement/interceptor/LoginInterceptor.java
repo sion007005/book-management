@@ -28,7 +28,6 @@ public class LoginInterceptor implements Interceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Controller controller) {
-		// dispatcher 의 precommand 로직 다 옮겨옴 
 		userSetting(request);
 		loginCheck(controller);
 		
@@ -37,7 +36,6 @@ public class LoginInterceptor implements Interceptor {
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Controller controller, ModelAndView mav) {
-//		response.addHeader("_user", value);
 		//TODO
 //		response.getModelAndView().getModel().put("_user", UserContext.get());
 		mav.addObject("user", UserContext.get());
@@ -98,8 +96,6 @@ public class LoginInterceptor implements Interceptor {
 	   	// 1-1) 로그인 되었는지 체크
 			// 쿠키에 sid 값이 있으면 로그인이 된 것이고, 없으면 로그인이 필요하지만 안 된 것으로 판단-> 예외던짐(403 forbidden 접근금지)  
 //			String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
-//			
-//			//TODO sid에 넣어준 아이디값이 db에 정말 있는 회원인지 체크해줘야 함  
 //			
 //			//sid 값이 없으면 예외를 던진다. (위에 dispatch 메서드가 예외를 받아서, 에러 페이지 띄운다) 
 //			if (StringUtils.isEmpty(sid)) {

@@ -24,7 +24,12 @@
         </#if>
             <div class="form-input form-select-container">
 	            <span class="file" id="file">
+	            	<#if book??>
+        			<img src="http://localhost:3000/image?imgPath=${book.imgPath}" class="book-img" id="image">	
+					<input type="hidden" name="imgPath" value="${book.imgPath}">
+					<#else>
         			<img src="" class="book-img" id="image">	
+	    			</#if>
 	    			<input type="file" id="uploadFile" name="file" onchange="displayImage(this)">
 				</span>
               <select name="form-category-select" id="form-category-select">

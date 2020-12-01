@@ -25,7 +25,6 @@ public class BookInfoController implements Controller {
 		ModelAndView mav = new ModelAndView("book_info");
 		mav.addObject("book", book);
 		mav.addObject("returnUrl", returnUrl);
-//		mav.addObject(("imgPath", imgPath);
 		
 		return mav;
 		
