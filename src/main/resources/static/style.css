@@ -122,6 +122,17 @@ input:disabled {
 	
 }
 
+#message {
+	margin-bottom: 10px;
+    font-size: 12px;
+    color: black;	
+}
+
+#error-message {
+	margin-bottom: 10px;
+    font-size: 12px;
+    color: red;
+}
 .content-container {
 	padding: 60px 0;
 	background: beige;

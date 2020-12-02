@@ -33,16 +33,18 @@
 				<div class="form-input form-email">
 					<#if member??>
 					 <#assign idx = member.email?index_of('@')>
-                      <input type="text" name="email-front" value="${member.email?substring(0,idx)}" class="input email-front" data-type="email" placeholder="이메일 앞자리*">
+                      <input type="text" name="email-front" value="${member.email?substring(0,idx)}" class="input email-front" data-type="email" id="email-front" placeholder="이메일 앞자리*">
 					  <span>@</span>
-					  <input type="text" name="email-end" class="input email-end" data-type="check-email" placeholder="이메일 뒷자리*" value="${member.email?substring(idx+1)}" disabled>
+					  <input type="text" name="email-end" class="input email-end" id="email-end" data-type="check-email" placeholder="이메일 뒷자리*" value="${member.email?substring(idx+1)}" disabled>
 					<#else>
-					  <input type="text" name="email-front" class="input email-front" data-type="email" placeholder="이메일 앞자리*" value=""> 
+					  <input type="text" name="email-front" class="input email-front" id="email-front" data-type="email" placeholder="이메일 앞자리*" value=""> 
 					  <span>@</span>
-					  <input type="text" class="input email-end" data-type="check-email" placeholder="이메일 뒷자리*" disabled>
+					  <input type="text" class="input email-end" data-type="check-email" id="email-end" placeholder="이메일 뒷자리*">
 					</#if>	
 				</div>
-				<div class="form-input form-select-container">
+				<div id="message" class="message"></div>
+				<div id="error-message" class="error-message"></div>
+				<div style="display:none;" class="form-input form-select-container">
 					<select name="form-email-select" id="form-email-select">
 					  <#if member??>
 					 <#assign idx = member.email?index_of('@')>
@@ -127,15 +129,68 @@
     		const selected = e.target.value;
     		const emailInput = document.querySelector('.email-end');
         	
+    		if (selected === '이메일 선택') {
+    			return; 
+    		}
+    		
     		if(selected === '직접입력') {
         		emailInput.placeholder = '';
         		emailInput.value = '';
         		emailInput.disabled = false;
-        	} else {
-        		emailInput.value = selected;
-        		emailInput.disabled = true;
-        	}
+        		return;
+        	} 
+    		
+       		emailInput.value = selected;
+       		emailInput.disabled = true;
     	};
+	</script>
+	<script>
+	$(document).ready(function(){
+    	$('#email-front').blur(checkEmail);
+    	$('#email-end').blur(checkEmail);
+    })	
+    
+    function checkEmail() {
+   		const action = '/check/email';
+   		let emailFront = $("#email-front").val();
+   		let emailEnd = $("#email-end").val();
+   		const params = "email=" + emailFront + "@" + emailEnd;
+   		const regex = RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i);
+
+   		if (!emailFront || !emailEnd) {
+   			$("#error-message").text("이메일을 입력해주세요.");
+   			return;
+   		}
+   		
+   		if (!regex.test(emailFront + "@" + emailEnd)) {
+   			console.log("이메일 :" +emailFront + "@" + emailEnd );
+   			$("#message").text("");
+   			$("#error-message").text("이메일 형식이 올바르지 않습니다.");
+   			return;
+   		}
+   		
+   		$("#form-email-select").prop("disabled", true);
+   		
+   		$.ajax({
+   			type: 'POST',
+   			url: action,
+   			data: params,
+   			dataType: "json",
+   			success: function(res) {
+   				if (!res.valid) {
+   					$("#error-message").text(res.errorMessage);
+   					$("#message").text("");
+   					return;
+   				}
+   				
+   				$("#message").text(res.message);
+   				$("#error-message").text("");
+   			},
+   			error: function(e) {
+   				alert("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
+   			}
+   		})
+    	}
 	</script>
   </body>
 </html>

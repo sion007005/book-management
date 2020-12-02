@@ -130,7 +130,7 @@ public class MemberRepository extends BaseRepository {
 		
 		try {
 			conn = ConnectionManager.getInstance().getConnection();
-			String query = "DELETE FROM members WHERE member_id=?";
+			String query = "DELETE FROM member WHERE member_id=?";
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, memberId);
 			
