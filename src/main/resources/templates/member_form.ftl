@@ -158,6 +158,7 @@
    		const regex = RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i);
 
    		if (!emailFront || !emailEnd) {
+   			$("#message").text("");
    			$("#error-message").text("이메일을 입력해주세요.");
    			return;
    		}

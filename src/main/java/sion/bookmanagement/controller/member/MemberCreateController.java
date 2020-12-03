@@ -35,7 +35,15 @@ public class MemberCreateController implements Controller {
       String newPassword = SHA256Util.getEncrypt(password, salt);
 		String emailAddress = emailFront + "@" + emailEnd;
 		
-		Member member = new Member(trimedName, trimedGender, emailAddress, ageNumber, phone, newPassword);
+		// 생성자에 인자값이 많을 때는 아래 처럼 member.set 이렇게 값을 넣어 주는 것이 더 좋다
+//		Member member = new Member(trimedName, trimedGender, emailAddress, ageNumber, phone, newPassword);
+		Member member = new Member();
+		member.setName(trimedName);
+		member.setGender(trimedGender);
+		member.setEmail(emailAddress);
+		member.setAge(ageNumber);
+		member.setPhone(phone);
+		member.setPhone(newPassword);
 		member.setCreatedAt(new Date());
 		member.setUpdatedAt(new Date());
 		member.setSalt(salt);
