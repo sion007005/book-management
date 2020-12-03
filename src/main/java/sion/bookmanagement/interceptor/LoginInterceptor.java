@@ -43,11 +43,11 @@ public class LoginInterceptor implements Interceptor {
 
 	/*
 	 * 쿠키에 저장된 sid값을 읽어와서, threadLocal에 user 저장
-	 */
+	 */ 
 	private void userSetting(HttpServletRequest request) {
 		String encryptedSid = CookieUtils.getValue(request, "sid");
 
-		if (Objects.isNull(encryptedSid)) {
+		if (Objects.isNull(encryptedSid) || encryptedSid.equals("")) {
 			UserContext.set(BookManagementUser.newLogoutUser(request.getRemoteAddr()));
 			return;
 		}
@@ -57,14 +57,10 @@ public class LoginInterceptor implements Interceptor {
 			String decryptedSid = encryptUtil.decrypt(encryptedSid);
 			Integer memberId = NumberUtils.parseInt(decryptedSid);
 			
-			if (Objects.isNull(memberId)) {
-				UserContext.set(BookManagementUser.newLogoutUser(request.getRemoteAddr()));
-				return;
-			}
-			
 			Member member = memberService.findOneById(memberId);
 			User loginUser = BookManagementUser.newLoginUser(memberId, member.getEmail(), member.getName(), request.getRemoteAddr()); 
 			UserContext.set(loginUser); // threadLocal에 user 저장 
+			log.info("loginUser setting"); 
 		} catch (Exception e) {
 			log.debug(e.getMessage(), e);
 			throw new DispatcherException(e.getMessage(), e); //e도 함께 넘겨야 디버깅 가능
@@ -92,15 +88,6 @@ public class LoginInterceptor implements Interceptor {
 			if (UserContext.isNotLogin()) {
 				throw new ForbiddenException("권한이 없는 페이지입니다.");
 			}
-			
-	   	// 1-1) 로그인 되었는지 체크
-			// 쿠키에 sid 값이 있으면 로그인이 된 것이고, 없으면 로그인이 필요하지만 안 된 것으로 판단-> 예외던짐(403 forbidden 접근금지)  
-//			String sid = CookieUtils.getValue(httpRequest.getHeaders(), "sid");
-//			
-//			//sid 값이 없으면 예외를 던진다. (위에 dispatch 메서드가 예외를 받아서, 에러 페이지 띄운다) 
-//			if (StringUtils.isEmpty(sid)) {
-//				throw new ForbiddenException("권한이 없는 페이지입니다.");
-//			} 
 	   }
 	}
 	
