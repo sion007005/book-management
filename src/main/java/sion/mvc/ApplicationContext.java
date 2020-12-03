@@ -37,7 +37,7 @@ public class ApplicationContext {
 			 ApplicationContext.properties.put(k, value);
 		});
 	}
-
+	// 특별한 로직이 없는 경우에는, 이 메소드를 활용하고 따로 만들 필요 없음(getDbUrl과 같은 메소드는 불필요)
 	public static String getProperty(String key) {
 		return ApplicationContext.properties.getProperty(key);
 	}
