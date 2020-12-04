@@ -1,7 +1,5 @@
 package sion.mvc.render;
 
-import java.io.IOException;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,14 +27,7 @@ public class JsonViewRender implements ViewRender {
 		} catch (Exception e) {
 			throw new ViewRenderException(e);
 		} finally {
-			if (out != null) {
-				try {
-					out.flush();
-					out.close();
-				} catch (IOException e) {
-					throw new ViewRenderException(e);
-				}
-			}
+			closeStream(null, out);
 		}
 	}
 

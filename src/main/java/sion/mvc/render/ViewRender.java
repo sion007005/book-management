@@ -1,5 +1,10 @@
 package sion.mvc.render;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,5 +40,21 @@ public interface ViewRender {
 	public default void addImageContextHeader(HttpServletResponse response) {
 		response.addHeader("Content-Type", "image/*");
 		response.addHeader("Access-Control-Allow-Origin", "*");
+	}
+	
+	public default void closeStream(InputStream in, OutputStream out) {
+		try {
+			if (Objects.nonNull(in)) {
+				in.close();
+			}
+			
+			if (Objects.nonNull(out)) {
+				out.flush();
+				out.close();
+			}
+		} catch (IOException e) {
+			throw new ViewRenderException(e);
+		}
+		
 	}
 }

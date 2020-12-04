@@ -1,4 +1,4 @@
-package sion.mvc.support;
+package sion.mvc.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

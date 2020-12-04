@@ -14,7 +14,7 @@ import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
 import sion.mvc.dispatcher.PostMapping;
 import sion.mvc.render.ViewRender;
-import sion.mvc.support.SHA256Util;
+import sion.mvc.util.SHA256Util;
 
 public class MemberCreateController implements Controller {
 	private MemberValidator memberValidator = new MemberValidator();

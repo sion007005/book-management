@@ -1,4 +1,4 @@
-package sion.mvc.support;
+package sion.mvc.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class CookieUtils {
 		}
 		
 		for (Cookie cookie : list) {   
-			if (cookie.getName().equals(name)) {    
+			if (cookie.getName().equals(name)) { 
 				return cookie.getValue();   
 			}  
 		}

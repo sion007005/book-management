@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.service.member.Member;
 import sion.bookmanagement.service.member.MemberOrderType;
@@ -14,7 +15,7 @@ import sion.bookmanagement.util.StringUtils;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.GetMapping;
-
+@Slf4j
 public class MemberListController implements Controller {
 	private MemberService memberService = MemberService.getInstance();
 
@@ -29,6 +30,7 @@ public class MemberListController implements Controller {
 		
 		MemberOrderType type = null;
 		if (!StringUtils.isEmpty(orderType)) {
+			log.info("orderType: {}", orderType);
 			type = MemberOrderType.valueOf(orderType);
 		}
 		

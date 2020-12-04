@@ -19,8 +19,8 @@ import sion.mvc.dispatcher.DispatcherException;
 import sion.mvc.dispatcher.ForbiddenException;
 import sion.mvc.dispatcher.Interceptor;
 import sion.mvc.dispatcher.Login;
-import sion.mvc.support.AES256Util;
-import sion.mvc.support.CookieUtils;
+import sion.mvc.util.AES256Util;
+import sion.mvc.util.CookieUtils;
 
 @Slf4j
 public class LoginInterceptor implements Interceptor {
@@ -46,13 +46,16 @@ public class LoginInterceptor implements Interceptor {
 	 */ 
 	private void userSetting(HttpServletRequest request) {
 		String encryptedSid = CookieUtils.getValue(request, "sid");
+		log.info("encryptedSid : {}", encryptedSid);
 
 		if (Objects.isNull(encryptedSid) || encryptedSid.equals("")) {
+			log.info("logout User setting");
 			UserContext.set(BookManagementUser.newLogoutUser(request.getRemoteAddr()));
 			return;
 		}
 		
 		try {
+			log.info("cookie 에 세팅된 sid : {}", encryptedSid);
 			AES256Util encryptUtil = new AES256Util();
 			String decryptedSid = encryptUtil.decrypt(encryptedSid);
 			Integer memberId = NumberUtils.parseInt(decryptedSid);

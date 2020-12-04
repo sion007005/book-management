@@ -27,9 +27,11 @@ public class ApplicationContext {
 	private static final String NAME_CHARSET = "charset.name";
 	private static final String NAME_VIEW_FILE = "view.file.extension.name";
 	private static final String NAME_STATIC_RESOURCES_PATH = "static.resources.path";
+	private static final String NAME_IMAGE_FILE_TYPE = "image.file.type";
 	
 	private static Properties properties = new Properties();
 	private static List<String> staticResourcesPathList;
+	private static List<String> imageFileTypeList;
 
 	public static void addProperties(Properties properties) {
 		properties.forEach((k, v) -> {
@@ -118,6 +120,23 @@ public class ApplicationContext {
 		}
 
 		return staticResourcesPathList;
+	}
+	
+	public static List<String> getImageFileTypeList() {
+		if (imageFileTypeList == null) {
+			imageFileTypeList = new ArrayList<>();
+		}
+		
+		String typeString = ApplicationContext.properties.getProperty(NAME_IMAGE_FILE_TYPE);
+		String[] types = typeString.split(",");
+		
+		if (types != null) {
+			for (String type : types) {
+				imageFileTypeList.add(type.trim());
+			}
+		}
+		
+		return imageFileTypeList;
 	}
 	
 	public static String getDbTestQuery() {

@@ -1,8 +1,6 @@
 package sion.mvc.render;
 
 import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.util.Objects;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -31,18 +29,7 @@ public class StaticResourceViewRender implements ViewRender {
 		} catch (Exception e) {
 			throw new ViewRenderException(e);
 		} finally {
-			//TODO in/out close 시켜주는 메소드를 만들어 사용하자.
-			try {
-				if (Objects.nonNull(in)) {
-					in.close();
-				}
-				
-				if (Objects.nonNull(out)) {
-					out.close();
-				}
-			} catch (IOException e) {
-				throw new ViewRenderException(e);
-			}
+			closeStream(in, out);
 		}
 	}
 }

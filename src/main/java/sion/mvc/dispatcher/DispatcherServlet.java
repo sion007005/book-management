@@ -21,7 +21,7 @@ import sion.mvc.render.ImageViewRender;
 import sion.mvc.render.JsonViewRender;
 import sion.mvc.render.StaticResourceViewRender;
 import sion.mvc.render.ViewRender;
-import sion.mvc.support.PropertiesLoader;
+import sion.mvc.util.PropertiesLoader;
 
 @SuppressWarnings("serial")
 @Slf4j
@@ -87,8 +87,6 @@ public class DispatcherServlet extends HttpServlet {
 			
 			render(request, response, mav);
 		}
-		
-		
 	}
 	
 	private void preCommand(Controller controller, HttpServletRequest request, HttpServletResponse response) throws DispatcherException {

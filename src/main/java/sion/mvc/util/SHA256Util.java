@@ -1,4 +1,4 @@
-package sion.mvc.support;
+package sion.mvc.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -32,7 +32,6 @@ public class Status200ViewRender implements ViewRender {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		} finally {
-			//TODO in/out close 시켜주는 메소드를 만들어 사용하자.
 			if (writer != null) {
 				try {
 					writer.close();
