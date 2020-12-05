@@ -10,9 +10,13 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TomcatServerRunner {
 
 	public static void main(String[] args) throws Exception {
+		log.info("profile : {}", args[0]);
 		TomcatServerRunner runner = new TomcatServerRunner();
 		runner.serverStart();
 	}
