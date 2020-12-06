@@ -39,7 +39,7 @@
 					<#else>
 					  <input type="text" name="email-front" class="input email-front" id="email-front" data-type="email" placeholder="이메일 앞자리*" value=""> 
 					  <span>@</span>
-					  <input type="text" class="input email-end" data-type="check-email" id="email-end" placeholder="이메일 뒷자리*">
+					  <input type="text" class="input email-end" name="form-email-select" data-type="check-email" id="email-end" placeholder="이메일 뒷자리*">
 					</#if>	
 				</div>
 				<div id="message" class="message"></div>
