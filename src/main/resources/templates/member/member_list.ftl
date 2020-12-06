@@ -112,7 +112,7 @@
           </div>
          </#list>
         </div>
-      	<div class="pagebar"><#include "pagenation.ftl"></div>
+      	<div class="pagebar"><#include "../pagenation.ftl"></div>
       </div>
     </div>    
     <div><#include "/common/footer.ftl"></div>
