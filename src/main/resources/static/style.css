@@ -122,6 +122,19 @@ input:disabled {
 	
 }
 
+.login_info {
+	line-height: 14px;
+    padding-top: 18px;
+    text-align: center;
+    color: #8e8e8e;
+}
+
+.login_info a {
+	text-decoration: none;
+	color: #8e8e8e;
+}
+
+
 #message {
 	margin-bottom: 10px;
     font-size: 12px;
