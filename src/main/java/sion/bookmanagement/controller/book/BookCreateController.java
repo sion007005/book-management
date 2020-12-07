@@ -13,6 +13,7 @@ import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.util.NumberUtils;
 import sion.bookmanagement.util.StringUtils;
+import sion.mvc.ApplicationContext;
 import sion.mvc.ModelAndView;
 import sion.mvc.dispatcher.Controller;
 import sion.mvc.dispatcher.Login;
@@ -33,7 +34,7 @@ public class BookCreateController implements Controller {
 		
 		try {
 			// 서버의 루트 폴더 내에 book 폴더 안 
-			MultipartRequest mr = new MultipartRequest(request, "C:/uploaded" + UPLOAD_BOOK_DIRECTORY, 1024 * 1024 * 10, "UTF-8");
+			MultipartRequest mr = new MultipartRequest(request, UPLOAD_ROOT_DIRECTORY + UPLOAD_BOOK_DIRECTORY, 1024 * 1024 * 10, ApplicationContext.getCharsetType());
 
 			String trimedTitle = StringUtils.trim((String)mr.getParameter("title"));
 			String trimedAuthor = StringUtils.trim((String)mr.getParameter("author"));
