@@ -221,7 +221,6 @@ input:disabled {
 
 .form-input.has-button {
 	position: relative;
-	padding-right: 106px;
 }
 
 .form-input.has-button .btn-small {

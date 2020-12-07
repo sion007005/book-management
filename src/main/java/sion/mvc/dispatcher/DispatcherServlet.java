@@ -57,10 +57,10 @@ public class DispatcherServlet extends HttpServlet {
 
 			// 인터페이스의 구현체를 꽂아넣음
 			Controller controller = controllerFactory.getController(controllerFactory.getKey(request));
-			log.debug("controller : {}", controller);
 			
 			preCommand(controller, request, response);
 			ModelAndView mav = controller.command(request, response);
+			log.debug("controller 실행 : {}", controller);
 			makeStatus(response, mav);
 //			postCommand(controller, request, response);
 			postCommand(controller, request, response, mav);

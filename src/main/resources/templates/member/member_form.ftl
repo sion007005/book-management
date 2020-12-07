@@ -30,21 +30,21 @@
 				<div class="form-input">
 				  <input type="text" class="input input-age" data-type="age" placeholder="나이*" name="age" value=${("'${member.age}'")!''}>
 				</div>
-				<div class="form-input form-email">
 					<#if member??>
 					 <#assign idx = member.email?index_of('@')>
-                      <input type="text" name="email-front" value="${member.email?substring(0,idx)}" class="input email-front" data-type="email" id="email-front" placeholder="이메일 앞자리*">
+					<div class="form-input form-email" style="display:none;">
+                      <input type="text" name="email-front" value=${member.email?substring(0,idx)} class="input email-front" data-type="email" id="email-front" placeholder="이메일 앞자리*"  readOnly/>
 					  <span>@</span>
-					  <input type="text" name="email-end" class="input email-end" id="email-end" data-type="check-email" placeholder="이메일 뒷자리*" value="${member.email?substring(idx+1)}" disabled>
+					  <input type="text" name="email-end" value=${member.email?substring(idx+1)} class="input email-end" id="email-end" data-type="check-email" placeholder="이메일 뒷자리*" readOnly />
+					</div>
 					<#else>
+					<div class="form-input form-email">
 					  <input type="text" name="email-front" class="input email-front" id="email-front" data-type="email" placeholder="이메일 앞자리*" value=""> 
 					  <span>@</span>
 					  <input type="text" class="input email-end" name="form-email-select" data-type="check-email" id="email-end" placeholder="이메일 뒷자리*">
+					</div>
 					</#if>	
-				</div>
-				<div id="message" class="message"></div>
-				<div id="error-message" class="error-message"></div>
-				<div style="display:none;" class="form-input form-select-container">
+					<div style="display:none;" class="form-input form-select-container">
 					<select name="form-email-select" id="form-email-select">
 					  <#if member??>
 					 <#assign idx = member.email?index_of('@')>
@@ -85,12 +85,15 @@
 					  </#if>
 					</select>
 				</div>
+				<div id="message" class="message"></div>
+				<div id="error-message" class="error-message"></div>
+				
 				<div class="form-input">
 					<#if member??>
-					<input class="input password" name="password" data-type="password"
-					placeholder="비밀번호 변경*" type="password" maxlength="20" value=${member.password}
-					onkeyup="this.value=this.value.replace(/' '/g,'');">
+					<input type="password" style="display:none;" class="input password" name="password" data-type="password" maxlength="20" value=${member.password}/>
 					<#else>
+				</div>
+				<div class="form-input">
 					<input class="input password" name="password" data-type="password"
 					placeholder="비밀번호 설정*" type="password" maxlength="20" 
 					onkeyup="this.value=this.value.replace(/' '/g,'');">
@@ -100,9 +103,6 @@
 					<input class="input phone" name="phone" data-type="phone"
 						placeholder="휴대폰*" type="tel" maxlength="11" 
 						onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value=${("'${member.phone}'")!''}>
-					<button class="btn-get-code btn-small" disabled>
-						<span>인증받기</span>
-					</button>
 				</div>
 		  		<#if member??>
 				  <div class="form-input" style="display:none">
