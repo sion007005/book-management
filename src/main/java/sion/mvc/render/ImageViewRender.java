@@ -39,7 +39,6 @@ public class ImageViewRender implements ViewRender {
 			out = response.getOutputStream();
 			BufferedOutputStream bos = new BufferedOutputStream(out);
 			
-			//TODO BufferedOutputStream 사용해서 바꾸기 
 			byte[] buffer = new byte[512];
 			int readByte = 0;
 			while ((readByte = in.read(buffer)) != -1) {
@@ -54,7 +53,7 @@ public class ImageViewRender implements ViewRender {
 	}
 
 	private boolean validateImage(File imageFile) {
-		//TODO 이미지 validation check 로직 필요 파일이 존재하는지 /  이게 파일인지 디렉토리인지 / 이미지 파일이 맞는 지 
+		// validation check 로직 필요 파일이 존재하는지 /  이게 파일인지 디렉토리인지 / 이미지 파일이 맞는 지 
 //		imageFile.exists();
 //		imageFile.isFile();
 //		imageFile.isDirectory();
@@ -68,14 +67,14 @@ public class ImageViewRender implements ViewRender {
 		}
 		
 		//확장자가 이미지 인지 확인
-		if (!checkIsImageType(imageFile)) {
+		if (!checkImageType(imageFile)) {
 			return false;
 		}
 		
 		return true;
 	}
 	
-	private boolean checkIsImageType(File imageFile) {
+	private boolean checkImageType(File imageFile) {
 		int index = imageFile.getAbsolutePath().indexOf(".");
 		String fileType = imageFile.getAbsolutePath().substring(index + 1);
 		
