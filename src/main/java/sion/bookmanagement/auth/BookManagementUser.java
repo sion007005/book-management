@@ -10,11 +10,11 @@ import sion.mvc.auth.User;
  * 접속한 사용자 정보
  * immutable 객체(처음 생성할 때 데이터를 넣은 후엔 수정할 수 없도록 함, setter 없음)  
  */
-public class BookManagementUser implements User { 
-	private Integer memberId;
-	private String userName;
-	private String name;
-	private String accessIp;
+public final class BookManagementUser implements User { 
+	private final Integer memberId;
+	private final String userName;
+	private final String name;
+	private final String accessIp;
 	
 	private BookManagementUser(Integer memberId, String userName, String name, String accessIp) {
 		this.memberId = memberId;
