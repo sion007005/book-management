@@ -49,7 +49,6 @@ public class LoginInterceptor implements Interceptor {
 	 */ 
 	private void userSetting(HttpServletRequest request) {
 		String encryptedSid = CookieUtils.getValue(request, "sid");
-		log.info("encryptedSid : {}", encryptedSid);
 
 		if (Objects.isNull(encryptedSid) || encryptedSid.equals("")) {
 			log.info("logout User setting");
@@ -58,7 +57,6 @@ public class LoginInterceptor implements Interceptor {
 		}
 		
 		try {
-			log.info("cookie 에 세팅된 sid : {}", encryptedSid);
 			AES256Util encryptUtil = new AES256Util();
 			String decryptedSid = encryptUtil.decrypt(encryptedSid);
 			Integer memberId = NumberUtils.parseInt(decryptedSid);
@@ -66,7 +64,6 @@ public class LoginInterceptor implements Interceptor {
 			Member member = memberService.findOneById(memberId);
 			User loginUser = BookManagementUser.newLoginUser(memberId, member.getEmail(), member.getName(), request.getRemoteAddr()); 
 			UserContext.set(loginUser); // threadLocal에 user 저장 
-			log.info("loginUser setting"); 
 		} catch (Exception e) {
 			log.debug(e.getMessage(), e);
 			throw new DispatcherException(e.getMessage(), e); //e도 함께 넘겨야 디버깅 가능

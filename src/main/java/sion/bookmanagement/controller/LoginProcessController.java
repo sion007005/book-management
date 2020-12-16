@@ -44,14 +44,11 @@ public class LoginProcessController implements Controller {
 		
 		//일치하면 set-cookie 후 원래 가려던 페이지로 이동/ 일치하지 않으면 로그인 페이지로 redirection
 		if (encryptedPassword.equals(member.getPassword())) {
-			log.info("일치 쿠키세팅");
+
 			try {
 				AES256Util encryptUtil = new AES256Util();
-//				OffsetDateTime oneHourFromNow = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofHours(1));
-//				String cookieExpires = DateTimeFormatter.RFC_1123_DATE_TIME.format(oneHourFromNow);
 
 				Cookie cookie = new Cookie("sid", encryptUtil.encrypt(String.valueOf(member.getId())));
-//				cookie.setDomain("localhost");
 				cookie.setPath("/");
 				cookie.setMaxAge(-1);
 				response.addCookie(cookie);

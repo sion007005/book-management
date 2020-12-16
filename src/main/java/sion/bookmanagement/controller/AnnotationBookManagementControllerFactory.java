@@ -51,10 +51,8 @@ public class AnnotationBookManagementControllerFactory implements ControllerFact
 			} catch (Exception e) {
 				throw new RuntimeException(e.getMessage(), e);
 			} 
-
 		}
-		     
-		}
+	}
 	
 	private String getGetMappingKey(Controller controller) {
 		try {
