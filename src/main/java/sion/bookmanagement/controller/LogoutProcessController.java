@@ -16,7 +16,6 @@ public class LogoutProcessController implements Controller {
 	@GetMapping("/logout")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		Cookie cookie = new Cookie("sid", "");
-		cookie.setDomain("localhost");
 		cookie.setPath("/");
 		
 		UserContext.remove(); 
