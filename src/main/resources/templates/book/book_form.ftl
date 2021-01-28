@@ -24,7 +24,7 @@
         </#if>
             <div class="form-input form-select-container">
 	            <span class="file" id="file">
-	            	<#if book.imgPath??>
+	            	<#if book??>
         			<img src="/image?imgPath=${book.imgPath}" class="book-img" id="image">	
 					<input type="hidden" name="imgPath" value="${book.imgPath}">
 					<#else>

@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CookieUtils {
-//Cookie: test1=1234; test2=abcd; sid=1; sid=0
 	public static String getValue(HttpServletRequest request, String name) {
 		Cookie[] list = request.getCookies();
 		

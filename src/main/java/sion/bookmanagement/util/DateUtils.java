@@ -7,6 +7,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DateUtils {
+	
+	public static java.util.Date getSimpleDate(String date) {
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date created = null;
+		
+		try {
+			created = fm.parse(date);
+		} catch (ParseException e) {
+			log.error(e.getMessage(), e);
+		}
+		return created;
+	}
+	
 	public static java.util.Date getDate(String date) {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		java.util.Date created = null;

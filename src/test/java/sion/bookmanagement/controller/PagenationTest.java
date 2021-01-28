@@ -25,7 +25,7 @@ public class PagenationTest {
 	
 	@Test
 	public void test_limit() {
-		assertEquals(10, new Pagenation(100, 2).calculateLimit());
+		assertEquals(10, new Pagenation(100, 2).calculateStartIndex());
 	}
 	
 	@Test

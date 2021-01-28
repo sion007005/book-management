@@ -41,5 +41,12 @@ public class StringUtilsTest {
 		String expected_4 = "ab cd";
 		assertEquals(expected_4, actual_4);
 	}
+	
+	
+	@Test
+	public void test_changeNullToEmpty() {
+		String text_1 = null;
+		assertEquals("", StringUtils.changeNullToEmpty(text_1));
+	}
 
 }

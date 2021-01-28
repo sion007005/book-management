@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.service.book.Book;
 import sion.bookmanagement.service.book.BookService;
 import sion.bookmanagement.service.category.Category;
@@ -25,10 +26,12 @@ public class BookFormController implements Controller {
 	@GetMapping("/books/form")
 	public ModelAndView command(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("book_form");
-		List<Category> categoryList = categoryService.findAll(null);
+		Pagenation.startIndex = 0;
+		
+		List<Category> categoryList = categoryService.findAll();
 		String returnUrl = request.getRequestURI();
 		mav.addObject("categoryList", categoryList);
-		
+
 		String id = (String) request.getParameter("id");
 		if(!StringUtils.isEmpty(id)) {
 			int idNumber = NumberUtils.removeComma(id);

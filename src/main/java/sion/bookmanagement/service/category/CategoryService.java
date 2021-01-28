@@ -32,6 +32,11 @@ public class CategoryService {
 		
 		categoryRepository.deleteById(categoryId);
 	}
+
+	public List<Category> findAll() {
+		List<Category> categoryList = categoryRepository.findAll();
+		return categoryList;
+	}
 	
 	public List<Category> findAll(CategoryOrderType orderType) {
 		List<Category> categoryList = categoryRepository.findAll(orderType);

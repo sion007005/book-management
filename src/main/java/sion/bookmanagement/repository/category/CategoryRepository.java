@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import com.mysql.jdbc.Statement;
 
+import lombok.extern.slf4j.Slf4j;
 import sion.bookmanagement.ConnectionManager;
 import sion.bookmanagement.controller.Pagenation;
 import sion.bookmanagement.repository.BaseRepository;
@@ -17,7 +18,7 @@ import sion.bookmanagement.service.category.Category;
 import sion.bookmanagement.service.category.CategoryOrderType;
 import sion.bookmanagement.service.category.CategorySearchCondition;
 import sion.bookmanagement.util.DateUtils;
-
+@Slf4j
 public class CategoryRepository extends BaseRepository {
 	private static CategoryRepository categoryRepository = new CategoryRepository();
 	  
@@ -108,6 +109,32 @@ public class CategoryRepository extends BaseRepository {
 
 			conn = ConnectionManager.getInstance().getConnection();
 			query += " LIMIT " + Pagenation.startIndex + "," + Pagenation.ITEM_SIZE_PER_PAGE;
+			
+			pstm = conn.prepareStatement(query);
+			rs = pstm.executeQuery();
+			
+			while (rs.next()) {
+				Category category = newCategory(rs);
+				categoryList.add(category);
+			}
+		} catch (SQLException e) {
+			throw new DataProcessException(e);
+		} finally {
+			closeDbResource(conn, pstm);
+		}
+		
+		return categoryList;
+	}
+	
+	public List<Category> findAll() {
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Category> categoryList = new ArrayList<Category>();
+		String query = "SELECT category_id, category_name, created_at, updated_at FROM category";
+		
+		try {
+			conn = ConnectionManager.getInstance().getConnection();
 			pstm = conn.prepareStatement(query);
 			rs = pstm.executeQuery();
 			

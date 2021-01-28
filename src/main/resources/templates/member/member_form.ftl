@@ -145,53 +145,53 @@
     	};
 	</script>
 	<script>
-	$(document).ready(function(){
-    	$('#email-front').blur(checkEmail);
-    	$('#email-end').blur(checkEmail);
-    })	
-    
-    function checkEmail() {
-   		const action = '/check/email';
-   		let emailFront = $("#email-front").val();
-   		let emailEnd = $("#email-end").val();
-   		const params = "email=" + emailFront + "@" + emailEnd;
-   		const regex = RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i);
-
-   		if (!emailFront || !emailEnd) {
-   			$("#message").text("");
-   			$("#error-message").text("이메일을 입력해주세요.");
-   			return;
-   		}
-   		
-   		if (!regex.test(emailFront + "@" + emailEnd)) {
-   			console.log("이메일 :" +emailFront + "@" + emailEnd );
-   			$("#message").text("");
-   			$("#error-message").text("이메일 형식이 올바르지 않습니다.");
-   			return;
-   		}
-   		
-   		$("#form-email-select").prop("disabled", true);
-   		
-   		$.ajax({
-   			type: 'POST',
-   			url: action,
-   			data: params,
-   			dataType: "json",
-   			success: function(res) {
-   				if (!res.valid) {
-   					$("#error-message").text(res.errorMessage);
-   					$("#message").text("");
-   					return;
-   				}
-   				
-   				$("#message").text(res.message);
-   				$("#error-message").text("");
-   			},
-   			error: function(e) {
-   				alert("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
-   			}
-   		})
-    	}
+		$(document).ready(function(){
+	    	$('#email-front').blur(checkEmail);
+	    	$('#email-end').blur(checkEmail);
+	    })	
+	    
+	    function checkEmail() {
+	   		const action = '/check/email';
+	   		let emailFront = $("#email-front").val();
+	   		let emailEnd = $("#email-end").val();
+	   		const params = "email=" + emailFront + "@" + emailEnd;
+	   		const regex = RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i);
+	
+	   		if (!emailFront || !emailEnd) {
+	   			$("#message").text("");
+	   			$("#error-message").text("이메일을 입력해주세요.");
+	   			return;
+	   		}
+	   		
+	   		if (!regex.test(emailFront + "@" + emailEnd)) {
+	   			console.log("이메일 :" +emailFront + "@" + emailEnd );
+	   			$("#message").text("");
+	   			$("#error-message").text("이메일 형식이 올바르지 않습니다.");
+	   			return;
+	   		}
+	   		
+	   		$("#form-email-select").prop("disabled", true);
+	   		
+	   		$.ajax({
+	   			type: 'POST',
+	   			url: action,
+	   			data: params,
+	   			dataType: "json",
+	   			success: function(res) {
+	   				if (!res.valid) {
+	   					$("#error-message").text(res.errorMessage);
+	   					$("#message").text("");
+	   					return;
+	   				}
+	   				
+	   				$("#message").text(res.message);
+	   				$("#error-message").text("");
+	   			},
+	   			error: function(e) {
+	   				alert("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
+	   			}
+	   		})
+	    	}
 	</script>
   </body>
 </html>
